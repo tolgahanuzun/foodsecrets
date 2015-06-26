@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+	
+	<title>{{ title }}</title>
+</head>
+<body>
+
+    <h1> {{ title }} Formu </h1>
+
+    {% if forms.errors %}
+        <font color="red">
+            <p> Lütfen hatalı/eksik alanları düzeltip tekrar gönderin.</p>
+        </font>
+    {% endif %}
+
+    <form method="POST" action="/user/add/">
+    {% csrf_token %}
+        <table border=1>
+            {{ form }}
+        </table>
+        <input type="submit" value="Gönder">
+    </form>
+
+    <br>
+
+    {% ifequal error 1 %}
+         <font color="red">
+            <p> Girilen şifreler aynı değil tekrar deneyiniz. </p>
+        </font>
+    {% endifequal %}
+  
+</body>
+</html>
+
+</body>
+</html>
