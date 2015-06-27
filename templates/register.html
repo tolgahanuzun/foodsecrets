@@ -18,14 +18,7 @@
 		  <h2>Please Sign Up <small>It's free and always will be.</small></h2>
 		  <hr class="colorgraph">
 
-
-		  <div class="wrapper5 inputWrapper">
-    <input class="input" type="text" value="crap"/>
-    <span class="validation"><span class="iconExclamationFull"></span><span class="validationBox">This is a very strange value!</span></span>
-  </div>
-		  
-
-		  {% for alan in form %}
+		{% for alan in form %}
 
 		    {% if alan.name != "email" %}
               
@@ -36,10 +29,8 @@
 		  	  <div class="col-xs-12 col-sm-6 col-md-6">
 		  		<div class="form-group">
 
-		  		
-
 		  		  {% if alan.name == "first_name" %}
-		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1">{{ alan.errors }}
+		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." >{{ alan.errors }}
 		  		  {% elif alan.name == "last_name" %}
 		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2">{{ alan.errors }}
 		  		  {% elif alan.name == "username" %}
