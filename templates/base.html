@@ -12,8 +12,9 @@
   <script src="{% static "js/form.js" %}"></script>
   <link href="maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static "css/form.css" %}">
+  <link rel="stylesheet" href="{% static "css/index.css" %}">
   <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
-
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -74,6 +75,8 @@
 	</nav>
 
 	{% block body %}{% endblock %}
+	{% block slider %}{% endblock %}
+
 
 <footer> 
 	<div class="navbar navbar-default navbar-fixed-bottom">
@@ -81,9 +84,14 @@
       <p class="navbar-text pull-left">© 2015 - Site Built 
         <a href="http://www.unicrow.com/" target="_blank" >Unicrow</a>
       </p>
-      
-      <a href="http://youtu.be/zJahlKPCL9g" class="navbar-btn btn-danger btn pull-right">
-      <span class="glyphicon glyphicon-star"></span>  Subscribe on YouTube</a>
-    </div></footer>
+
+	<div id="social">
+        <i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-twitter-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-google-plus-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+      </div>
+   </div>
+</footer>
 </body>
 </html>
