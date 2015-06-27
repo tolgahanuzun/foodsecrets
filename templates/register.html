@@ -30,17 +30,53 @@
 		  		<div class="form-group">
 
 		  		  {% if alan.name == "first_name" %}
-		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." >{{ alan.errors }}
+		  		    
+		  		    {% if alan.errors %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}">
+		  		    {% else %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1">
+		  		    {% endif %}
+
 		  		  {% elif alan.name == "last_name" %}
-		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2">{{ alan.errors }}
+
+		  		    {% if alan.errors %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
+		  		    {% else %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+		  		    {% endif %}
+
 		  		  {% elif alan.name == "username" %}
-		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3">{{ alan.errors }}
+
+		  		    {% if alan.errors %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
+		  		    {% else %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3">
+		  		    {% endif %}
+
 		  		  {% elif alan.name == "phone" %}
-		  		    <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Telephone" tabindex="4">{{ alan.errors }}
+		  		    
+		  		    {% if alan.errors %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Phone" tabindex="4" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
+		  		    {% else %}
+		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Phone" tabindex="4">
+		  		    {% endif %}
+
 		  		  {% elif alan.name == "password1" %}
-		  		    <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Password" tabindex="6">{{ alan.errors }}
+		  		    
+		  		    {% if alan.errors %}
+		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Password" tabindex="6" onclick="true" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
+		  		    {% else %}
+		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Password" tabindex="6">
+		  		    {% endif %}
+
 		  		  {% elif alan.name == "password2" %}
-		  		    <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7">{{ alan.errors }}
+		  		    
+		  		    {% if alan.errors %}
+		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
+		  		    {% else %}
+		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7">
+		  		    {% endif %}
+
 		  		  {% endif %}
 
     	  		</div>
@@ -53,7 +89,13 @@
             {% else %}	    
 		     
 		     <div class="form-group">
-			   <input type="email" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Email Address" tabindex="5">{{ alan.errors}}
+			   
+			   {% if alan.errors %}
+		  		  <input type="email" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Email Adress" tabindex="5" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}">
+		  		{% else %}
+		  		   <input type="email" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Email Adress" tabindex="5">
+		  		{% endif %}
+
 		     </div>
 
             {% endif %}
