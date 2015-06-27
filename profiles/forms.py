@@ -3,32 +3,37 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
-class userAdd_form(forms.Form):
-    username = forms.CharField(label=u"KULLANICI ADI:")
-    first_name = forms.CharField(label=u"AD:")
-    last_name = forms.CharField(label=u"SOYAD:")
-    email = forms.EmailField(label=u"E-Mail:")
-    phone = forms.CharField(required=False,label=u"Telefon")
-    password = forms.CharField(label=u"Şifre")
-    password_again = forms.CharField(label=u"Şifre(Tekrar)")
-
-    def clean_e_mail(self):
-        e_mail_adress = self.cleaned_data['e_mail']
-        if '@' in e_mail_adress:
-            (user, area) = e_mail_adress.split('@')
-            if user in ('root', 'admin', 'administator'):
-                raise forms.ValidationError(u'Bu adres geçersizdir.')
-    
-        return e_mail_adress
+from profiles.models import Profile
 
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(label=u"Ad:")
-    last_name = forms.CharField(label=u"Soyad:")
-    phone = forms.CharField(required=False,label=u"Telefon")
+    first_name = forms.CharField(label="First Name", required=True)
+    last_name = forms.CharField(label="Last Name", required=True)
+    email = forms.EmailField(label="Email", required=True)
+    phone = forms.CharField(label=u"Phone:", required=False)
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email", "phone")
+        fields = ("first_name", "last_name", "username", "phone", "email", "password1", "password2")
+
+    def clean_email(self):
+        data = self.cleaned_data
+        user = User.objects.filter(email=data.get('email'))
+        if user:
+            raise forms.ValidationError(u'Bu mail adresinde bir kullanıcı zaten mevcut.')
+    
+        return data.get('email')
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+
+        if commit:
+            user.save()
+            
+            user_profile = Profile()
+            user_profile.profile = user
+            user_profile.phone = self.cleaned_data["phone"]
+            user_profile.save()
+        
+        return user
 
  
