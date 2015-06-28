@@ -33,47 +33,68 @@
 	  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav navbar-right">
 		  <li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-			  <ul id="login-dp" class="dropdown-menu">
-				<li>
-				  <div class="row">
-					<div class="col-md-12">
-																
-					  <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-										
-					    <div class="form-group">
-						  <label class="sr-only" for="exampleInputEmail2">Email address</label>
-						  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-						</div>
-											
-						<div class="form-group">
-						  <label class="sr-only" for="exampleInputPassword2">Password</label>
-						  <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-						  <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-						</div>
-											
-						<div class="form-group">
-						  <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-						</div>
+		  <li class="dropdown">
+			<a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+			<ul id="login-dp" class="dropdown-menu">
+			  <li>
+			    <div class="row">
+				  <div class="col-md-12">
 						
-						<div class="checkbox">
-						  <label>
-						    <input type="checkbox"> Keep me logged-in
-						  </label>
-						</div>
+					<!--        Login Form      -->
 
-					  </form>
+					<form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav">
+                    
+                      {% csrf_token %}
+					  {% for alan in form_login %}
+					    
+					    {% if alan.name == "username"%}
 
-					</div>
-				  </div> 
-				</li>
-			  </ul>
-			</li>
-		  </ul>
-		</div>
+					      <div class="form-group">
+						    <label class="sr-only" for="id_{{ alan.name }}">User Name</label>
+						    <input type="text" name="{{ alan.name }}" class="form-control" id="id_{{ alan.name }}" placeholder="User Name" tabindex="1" required>
+						  </div>
+
+						{% endif%}
+
+						{% if alan.name == "password" %}
+											
+						  <div class="form-group">
+						    <label class="sr-only" for="id_{{ alan.name }}">Password</label>
+						    <input type="password" name="{{ alan.name }}" class="form-control" id="id_{{ alan.name }}" placeholder="Password" tabindex="2" required>
+						    <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+						  </div>
+
+						{% endif %}
+
+					  {% endfor %}
+
+					  {% if alan.errors %}
+					    <label> {{ alan.errors }} </label>
+					  {% endif %}
+											
+					  <div class="form-group">
+						<button type="submit" value="Login" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
+					  </div>
+						
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox"> Keep me logged-in
+						</label>
+					  </div>
+
+					</form>
+
+					<!--                        -->
+
+			      </div>
+				</div> 
+		      </li>
+			</ul>
+		  </li>
+		</ul>
 	  </div>
-	</nav>
+	</div>
+  </nav>
 
 	{% block body %}{% endblock %}
 	{% block slider %}{% endblock %}

@@ -1,14 +1,18 @@
 #-*- coding: utf-8 -*-
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
+
 from profiles.models import Profile
 
+# Kullanıcı kayıt formu.
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(label="First Name", required=True)
-    last_name = forms.CharField(label="Last Name", required=True)
-    email = forms.EmailField(label="Email", required=True)
+    first_name = forms.CharField(label=u"First Name", required=True)
+    last_name = forms.CharField(label=u"Last Name", required=True)
+    email = forms.EmailField(label=u"Email", required=True)
     phone = forms.CharField(label=u"Phone:", required=False)
 
     class Meta:
@@ -35,5 +39,34 @@ class RegistrationForm(UserCreationForm):
             user_profile.save()
         
         return user
+
+# Kullanıcı giriş formu.
+class LoginForm(forms.Form):
+    username = forms.CharField(label=u"User Name", required=True)
+    password = forms.CharField(label=u"Password", widget=forms.PasswordInput, required=True)
+
+    class Meta:
+        fields = ("username", "password")
+
+    def clean(self):
+        username = self.cleaned_data.get("username")
+        password = self.cleaned_data.get("password")
+
+        if not username or not password:
+            return self.cleaned_data
+
+        user = authenticate(username=username,
+                            password=password)
+
+        if user:
+            self.user = user
+        else:
+            raise forms.ValidationError(u"Yanlış kullanıcı adı veya şifre!")
+
+        return self.cleaned_data
+
+
+
+
 
  
