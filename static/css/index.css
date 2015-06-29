@@ -10,7 +10,7 @@
     .carousel .carousel-control {
         background: none;
         border: none;
-        top: 1%;
+        
     }
     /*full width container*/
     @media (max-width: 767px) {
@@ -25,14 +25,9 @@
 /********************************/
 #social{
   float: right;  
-<<<<<<< HEAD
   padding:13px;
   margin:0 auto;
-  padding-right: 5%;
-=======
-  padding: 13px;
-  margin: auto;
->>>>>>> c95746f4cc5f9e25a8e400fce8bd41b1b47608b4
+  padding-right: 5%;  
 }
 
 #social .fa{
