@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.template.context_processors import csrf
 
-
 from .models import *
 from .forms import *
 
@@ -18,9 +17,10 @@ def login(request):
     if request.method == "POST":
         form_login = LoginForm(request.POST)
 
-        if form_login.is_valid():
+        if form_login.is_valid():  
             auth_login(request, form_login.user)
             url = "/" + form_login.cleaned_data.get("username") + "/"
+
             return HttpResponse("Merhaba "+ form_login.cleaned_data.get("username"))
         else: 
             return HttpResponse("Hata!")
@@ -39,25 +39,25 @@ def logout(request):
 # Kullanıcı kaydı yapan fonksiyon.
 def register(request):
 
-    #  Kullanıcı kayıt sayfasın'da login formunu görüntüleyebilmek için tanımlandı.
+    #  Kullanıcı kayıt sayfasında login formunu görüntüleyebilmek için tanımlandı.
     form_login = LoginForm()
 
     if request.method == 'POST':
         form_register = RegistrationForm(request.POST)
 
-        if form_register.is_valid():
+        if  form_register.is_valid():
+            user = form_register.save()
+            auth_login(request, user)
 
-            if form_register.clean_email(): 
-               form_register.save()
-               return HttpResponseRedirect('/register/') # Parametre olarak verilen url'e geçer.
+            return HttpResponse("Merhaba "+ form_register.cleaned_data.get("username"))
 
-            else:
-               return render(request, "register.html",
-                               { 'form_register':form_register, 'form_login':form_login})
+            return HttpResponseRedirect('/register/') # Parametre olarak verilen url'e geçer.
         
         else:
+            values = form_register.previous_values()
             return render(request, "register.html",
-                            { 'form_register':form_register, 'form_login':form_login})
+                            { 'form_register':form_register, 'form_login':form_login,
+                            'values':values})
     else:
         form_register = RegistrationForm()
         return render(request, "register.html",
