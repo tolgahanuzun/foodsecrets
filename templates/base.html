@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 <head>
 
@@ -10,7 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
   <script src="{% static "js/form.js" %}"></script>
-  <link href="maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static "css/form.css" %}">
   <link rel="stylesheet" href="{% static "css/index.css" %}">
   <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
@@ -103,18 +103,24 @@
 <footer> 
   
   <div class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
+  	<div id="hakkinda">
+  		<p class="navbar-text pull-left">
+  			<a href="http://www.unicrow.com/" target="_blank" >Github</a>
+     	</p>
+    </div>
+
+   	<div class="copyr">
       <p class="navbar-text pull-left">© 2015 - Site Built 
         <a href="http://www.unicrow.com/" target="_blank" >Unicrow</a>
       </p>
-
+    </div>
 	<div id="social">
       <i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
       <i class="fa fa-twitter-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
       <i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
       <i class="fa fa-google-plus-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
     </div>
-   </div>
+  
 
 </footer>
 
