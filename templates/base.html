@@ -43,24 +43,24 @@
 					<!--        Login Form      -->
 
 					<form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav">
-                    
-                      {% csrf_token %}
-					  {% for alan in form_login %}
+                    {% csrf_token %}
+					  
+					  {% for area in form_login %}
 					    
-					    {% if alan.name == "username"%}
+					    {% if area.name == "username"%}
 
 					      <div class="form-group">
-						    <label class="sr-only" for="id_{{ alan.name }}">User Name</label>
-						    <input type="text" name="{{ alan.name }}" class="form-control" id="id_{{ alan.name }}" placeholder="User Name" tabindex="1" required>
+						    <label class="sr-only" for="id_{{ area.name }}">User Name</label>
+						    <input type="text" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="User Name" tabindex="1" required>
 						  </div>
 
 						{% endif%}
 
-						{% if alan.name == "password" %}
+						{% if area.name == "password" %}
 											
 						  <div class="form-group">
-						    <label class="sr-only" for="id_{{ alan.name }}">Password</label>
-						    <input type="password" name="{{ alan.name }}" class="form-control" id="id_{{ alan.name }}" placeholder="Password" tabindex="2" required>
+						    <label class="sr-only" for="id_{{ area.name }}">Password</label>
+						    <input type="password" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="Password" tabindex="2" required>
 						    <div class="help-block text-right"><a href="">Forget the password ?</a></div>
 						  </div>
 
@@ -68,8 +68,8 @@
 
 					  {% endfor %}
 
-					  {% if alan.errors %}
-					    <label> {{ alan.errors }} </label>
+					  {% if area.errors %}
+					    <label> {{ area.errors }} </label>
 					  {% endif %}
 											
 					  <div class="form-group">
@@ -107,14 +107,15 @@
       <p class="navbar-text pull-left">© 2015 - Site Built 
         <a href="http://www.unicrow.com/" target="_blank" >Unicrow</a>
       </p>
-
-	<div id="social">
-      <i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
-      <i class="fa fa-twitter-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
-      <i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
-      <i class="fa fa-google-plus-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+      
+	  <div id="social">
+        <i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-twitter-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+        <i class="fa fa-google-plus-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+      </div>
     </div>
-   </div>
+  </div>
 
 </footer>
 
