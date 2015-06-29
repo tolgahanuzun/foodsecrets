@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.hashers import check_password
+from django.db.models import Q
+
 
 from profiles.models import Profile
 
@@ -20,6 +23,7 @@ class RegistrationForm(UserCreationForm):
         fields = ("first_name", "last_name", "username", "phone", "email", "password1", "password2")
 
     def clean_email(self):
+
         data = self.cleaned_data
         user = User.objects.filter(email=data.get('email'))
         if user:
@@ -27,10 +31,26 @@ class RegistrationForm(UserCreationForm):
     
         return data.get('email')
 
+    def previous_values(self):
+        data = self.cleaned_data
+
+        values = {
+           "first_name":data.get("first_name"),
+           "last_name":data.get("last_name"),
+           "username":data.get("username"),
+           "phone":data.get("phone"),
+           "email":data.get("email"),
+           "password1":data.get("password1"),
+           "password2":data.get("password2")
+        }
+
+        return values
+    
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
 
         if commit:
+            user.backend='django.contrib.auth.backends.ModelBackend'
             user.save()
             
             user_profile = Profile()
@@ -40,6 +60,7 @@ class RegistrationForm(UserCreationForm):
         
         return user
 
+
 # Kullanıcı giriş formu.
 class LoginForm(forms.Form):
     username = forms.CharField(label=u"User Name", required=True)
@@ -48,7 +69,13 @@ class LoginForm(forms.Form):
     class Meta:
         fields = ("username", "password")
 
-    def clean(self):
+    def is_valid(self):
+
+        valid = super(LoginForm, self).is_valid()
+
+        if not valid:
+            return valid
+
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
 
@@ -64,6 +91,9 @@ class LoginForm(forms.Form):
             raise forms.ValidationError(u"Yanlış kullanıcı adı veya şifre!")
 
         return self.cleaned_data
+
+
+
 
 
 

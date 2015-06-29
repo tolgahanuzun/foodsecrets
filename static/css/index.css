@@ -25,9 +25,14 @@
 /********************************/
 #social{
   float: right;  
+<<<<<<< HEAD
   padding:13px;
   margin:0 auto;
   padding-right: 5%;
+=======
+  padding: 13px;
+  margin: auto;
+>>>>>>> c95746f4cc5f9e25a8e400fce8bd41b1b47608b4
 }
 
 #social .fa{

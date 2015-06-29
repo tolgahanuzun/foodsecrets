@@ -1,49 +1,22 @@
 {% extends "base.html" %}
 
 {% block slider %}
-<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
-  <!-- Overlay -->
-  <div class="overlay"></div>
+<section class="block">
+    <div id="myCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="active item">
+                <img src="http://www.ledgogroup.com/ledgroup/wp-content/uploads/2015/02/me-slider-background.jpg" alt="Slide1" style=" background-attachment: scroll;" />
+            </div>
+            <div class="item">
+                <img src="http://lorempixel.com/1024/750" alt="Slide2" />
+            </div>
+            <div class="item">
+                <img src="http://lorempixel.com/1024/750" alt="Slide3" />
+            </div>
+        </div>
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a>
+ <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
 
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#bs-carousel" data-slide-to="1"></li>
-    <li data-target="#bs-carousel" data-slide-to="2"></li>
-  </ol>
-  
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item slides active">
-      <div class="slide-1"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>We are creative</h1>        
-            <h3>Get start your next awesome project</h3>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
     </div>
-    <div class="item slides">
-      <div class="slide-2"></div>
-      <div class="hero">        
-        <hgroup>
-            <h1>We are smart</h1>        
-            <h3>Get start your next awesome project</h3>
-        </hgroup>       
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-    </div>
-    <div class="item slides">
-      <div class="slide-3"></div>
-      <div class="hero">        
-        <hgroup>
-            <h1>We are amazing</h1>        
-            <h3>Get start your next awesome project</h3>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-    </div>
-  </div> 
-</div>
+</section>
 {% endblock %}

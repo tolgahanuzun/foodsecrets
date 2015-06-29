@@ -18,71 +18,71 @@
 		  <h2>Please Sign Up <small>It's free and always will be.</small></h2>
 		  <hr class="colorgraph">
 
-		{% for alan in form_register %}
+		{% for area in form_register %}
 
-		    {% if alan.name != "email" %}
+		    {% if area.name != "email" %}
               
-              {% if alan.name == "first_name" or alan.name == "username" or alan.name == "password1"%}
+              {% if area.name == "first_name" or area.name == "username" or area.name == "password1"%}
                 <div class="row">
               {% endif %}
 
 		  	  <div class="col-xs-12 col-sm-6 col-md-6">
 		  		<div class="form-group">
 
-		  		  {% if alan.name == "first_name" %}
+
+		  		  {% if area.name == "first_name" %}
 		  		    
-		  		    {% if alan.errors %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}">
-		  		    {% else %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1">
-		  		    {% endif %}
+		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" "{% if area.errors %}" 
+		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		     "{% else %}"
+		  		       value="{{ values.first_name }}"
+		  		     "{% endif %}" >
 
-		  		  {% elif alan.name == "last_name" %}
+		  		  {% elif area.name == "last_name" %}
 
-		  		    {% if alan.errors %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
-		  		    {% else %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2">
-		  		    {% endif %}
+		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2" "{% if area.errors %}" 
+		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		     "{% else %}"
+		  		       value="{{ values.last_name }}"
+		  		     "{% endif %}" >
 
-		  		  {% elif alan.name == "username" %}
+		  		  {% elif area.name == "username" %}
 
-		  		    {% if alan.errors %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
-		  		    {% else %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3">
-		  		    {% endif %}
+		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3" "{% if area.errors %}" 
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		    "{% else %}"
+		  		      value="{{ values.username }}"
+		  		    "{% endif %}" >
 
-		  		  {% elif alan.name == "phone" %}
+		  		  {% elif area.name == "phone" %}
 		  		    
-		  		    {% if alan.errors %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Phone" tabindex="4" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
-		  		    {% else %}
-		  		      <input type="text" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Phone" tabindex="4">
-		  		    {% endif %}
+		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Telephone Number" tabindex="4" 
+		  		    "{% if area.errors %}" 
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		    "{% else %}"
+		  		      value="{{ values.phone }}"
+		  		    "{% endif %}" >
 
-		  		  {% elif alan.name == "password1" %}
+		  		  {% elif area.name == "password1" %}
 		  		    
-		  		    {% if alan.errors %}
-		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Password" tabindex="6" onclick="true" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
-		  		    {% else %}
-		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Password" tabindex="6">
-		  		    {% endif %}
+		  		    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Password" tabindex="6" 
+		  		    "{% if area.errors %}" 
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		    "{% endif %}" >
 
-		  		  {% elif alan.name == "password2" %}
-		  		    
-		  		    {% if alan.errors %}
-		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}" >
-		  		    {% else %}
-		  		      <input type="password" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7">
-		  		    {% endif %}
+		  		  {% elif area.name == "password2" %}
 
+		  		    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7" 
+		  		    "{% if area.errors %}" 
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		    "{% endif %}" >
+		  		      
 		  		  {% endif %}
 
     	  		</div>
         	  </div>
         	  
-        	  {% if alan.name == "last_name" or alan.name == "phone" or alan.name == "password2"%}
+        	  {% if area.name == "last_name" or area.name == "phone" or area.name == "password2"%}
                 </div>
               {% endif %}
             
@@ -90,11 +90,12 @@
 		     
 		     <div class="form-group">
 			   
-			   {% if alan.errors %}
-		  		  <input type="email" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Email Adress" tabindex="5" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ alan.errors|removetags:'ul li' }}">
-		  		{% else %}
-		  		   <input type="email" name="{{ alan.name }}" id="id_{{ alan.name }}" class="form-control input-lg" placeholder="Email Adress" tabindex="5">
-		  		{% endif %}
+		  		<input type="email" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Email Name" tabindex="5" 
+		  	    "{% if area.errors %}"
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		"{% else %}"
+		  		  value="{{ values.email }}"
+		  		"{% endif %}" >
 
 		     </div>
 
