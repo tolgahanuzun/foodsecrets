@@ -63,18 +63,15 @@ html,body{height:100%;}
 /* */
 
 
-.nav {
-    left:84%;
-    
+#newlogin {
+    float: right;
     position:absolute;
 }
-.dropdown {
-   
-   
+#newdrop {
     border-radius:4px;
     width:200px;    
 }
-.dropdown-menu>li>a {
+#newdropdownmenu>li>a {
     color:#428bca;
 }
 .dropdown ul.dropdown-menu {
