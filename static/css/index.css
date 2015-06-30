@@ -1,7 +1,7 @@
    .carousel .item {
-        padding-top: 10%;
+        padding-top: 100px;
         width: 100%; /*slider width*/
-        max-height: 550px; /*slider height*/
+      
     }
     .carousel .item img {
         width: 100%; /*img width*/
@@ -46,4 +46,13 @@ color:rgb(153,204,255);
 
 #hakkinda{
   margin-left: 3%;
+}
+
+#resim1{
+background:url("http://lorempixel.com/1024/750");
+background-attachment: scroll;
+background-position: center center;
+background-size:cover;
+height: 600px;
+
 }
