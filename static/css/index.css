@@ -1,10 +1,4 @@
-    body{
-     
-      background: url("/static/images/wallp.png");
-      background-attachment: fixed;
-    }
-
-    .carousel .item {
+   .carousel .item {
         padding-top: 10%;
         width: 100%; /*slider width*/
         max-height: 550px; /*slider height*/
