@@ -33,7 +33,7 @@
 		  		  {% if area.name == "first_name" %}
 		  		    
 		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="First Name" tabindex="1" "{% if area.errors %}" 
-		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		     "{% else %}"
 		  		       value="{{ values.first_name }}"
 		  		     "{% endif %}" >
@@ -41,7 +41,7 @@
 		  		  {% elif area.name == "last_name" %}
 
 		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2" "{% if area.errors %}" 
-		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		       data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		     "{% else %}"
 		  		       value="{{ values.last_name }}"
 		  		     "{% endif %}" >
@@ -49,7 +49,7 @@
 		  		  {% elif area.name == "username" %}
 
 		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="User Name" tabindex="3" "{% if area.errors %}" 
-		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		    "{% else %}"
 		  		      value="{{ values.username }}"
 		  		    "{% endif %}" >
@@ -58,7 +58,7 @@
 		  		    
 		  		    <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Telephone Number" tabindex="4" 
 		  		    "{% if area.errors %}" 
-		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		    "{% else %}"
 		  		      value="{{ values.phone }}"
 		  		    "{% endif %}" >
@@ -67,14 +67,14 @@
 		  		    
 		  		    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Password" tabindex="6" 
 		  		    "{% if area.errors %}" 
-		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		    "{% endif %}" >
 
 		  		  {% elif area.name == "password2" %}
 
 		  		    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Confirm Password" tabindex="7" 
 		  		    "{% if area.errors %}" 
-		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		      data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		    "{% endif %}" >
 		  		      
 		  		  {% endif %}
@@ -92,7 +92,7 @@
 			   
 		  		<input type="email" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder="Email Name" tabindex="5" 
 		  	    "{% if area.errors %}"
-		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|removetags:'ul li' }}"
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% else %}"
 		  		  value="{{ values.email }}"
 		  		"{% endif %}" >

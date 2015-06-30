@@ -11,7 +11,7 @@
   <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
   <script src="{% static "js/form.js" %}"></script>
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
- <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
   <link rel="stylesheet" href="{% static "css/form.css" %}">
   <link rel="stylesheet" href="{% static "css/index.css" %}">
   <link rel="stylesheet" href="{% static "css/home.css" %}">
@@ -37,7 +37,7 @@
 		  <ul class="nav navbar-nav navbar-right">
 		    <li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
 		    <li class="dropdown">
-			  <a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ form_login.errors|striptags}}">Login</b> <span class="caret"></span></a>
+			  <a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ form_login.non_field_errors|striptags}}">Login</b> <span class="caret"></span></a>
 			  <ul id="login-dp" class="dropdown-menu">
 			    <li>
 			      <div class="row">
