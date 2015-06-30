@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block andlogin %}
+{% block home%}
 <div class="row" id="Logincont">
 	<div class="col-sm-9 col-sm-push-3" id="content" >
 	<div class="profile-content">
@@ -20,7 +20,7 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						Marcus Doe
+						{{ request.user.get_full_name }}
 					</div>
 					<div class="profile-usertitle-job">
 						Developer
