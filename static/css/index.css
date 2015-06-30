@@ -1,24 +1,30 @@
-   .carousel .item {
+.carousel{
+  height: 100%;
+}
+
+.carousel .item {
+   width: 100%; /*slider width*/
+   height: 100%;
+}
+
+.carousel .item img {
+  width: 100%; /*img width*/
   
-        width: 100%; /*slider width*/
-      
-    }
-    .carousel .item img {
-        width: 100%; /*img width*/
-    }
-    /*add some makeup*/
-    .carousel .carousel-control {
-        background: none;
-        border: none;
-        
-    }
-    /*full width container*/
-    @media (max-width: 767px) {
-        .block {
-            margin-left: -20px;
-            margin-right: -20px;
-        }
-    }
+}
+
+/*add some makeup*/
+.carousel .carousel-control {
+  background: none;
+  border: none;
+}
+    
+/*full width container*/
+@media (max-width: 767px) {
+.block {
+  margin-left: -20px;
+  margin-right: -20px;
+  }
+}
 
 /********************************/
 /*         social    */
