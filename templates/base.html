@@ -32,85 +32,85 @@
 
 	  {% if request.user.is_authenticated == False %}
 
-	  <!-- Collect the nav links, forms, and other content for toggling -->
-	  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav navbar-right">
-		  <li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
-		  <li class="dropdown">
-			<a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="hatas">Login</b> <span class="caret"></span></a>
-			<ul id="login-dp" class="dropdown-menu">
-			  <li>
-			    <div class="row">
-				  <div class="col-md-12">
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
+		    <li class="dropdown">
+			  <a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ }}">Login</b> <span class="caret"></span></a>
+			  <ul id="login-dp" class="dropdown-menu">
+			    <li>
+			      <div class="row">
+				    <div class="col-md-12">
 						
-					<!--        Login Form      -->
+					  <!--        Login Form      -->
 
-					<form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav" >
-                    {% csrf_token %}
+					  <form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav" >
+                      {% csrf_token %}
 					  
-					  {% for area in form_login %}
+					    {% for area in form_login %}
 					    
-					    {% if area.name == "username"%}
+					      {% if area.name == "username"%}
 
-					      <div class="form-group">
-						    <label class="sr-only" for="id_{{ area.name }}">User Name</label>
-						    <input type="text" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="User Name" tabindex="1"  required>
-						  </div>
+					        <div class="form-group">
+						      <label class="sr-only" for="id_{{ area.name }}">User Name</label>
+						      <input type="text" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="User Name" tabindex="1"  required>
+						    </div>
 
-						{% endif%}
+						  {% endif%}
 
-						{% if area.name == "password" %}
+						  {% if area.name == "password" %}
 											
-						  <div class="form-group">
-						    <label class="sr-only" for="id_{{ area.name }}">Password</label>
-						    <input type="password" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="Password" tabindex="2" required>
-						    <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-						  </div>
+						    <div class="form-group">
+						      <label class="sr-only" for="id_{{ area.name }}">Password</label>
+						      <input type="password" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="Password" tabindex="2" required>
+						      <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+						    </div>
 
-						{% endif %}
+						  {% endif %}
 
-					  {% endfor %}
+					    {% endfor %}
 
-					  {% if area.errors %}
-					    <label> {{ area.errors }} </label>
-					  {% endif %}
+					    {% if area.errors %}
+					      <label> {{ area.errors }} </label>
+					    {% endif %}
 											
-					  <div class="form-group">
-						<button type="submit" value="Login" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
-					  </div>
+					    <div class="form-group">
+						  <button type="submit" value="Login" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
+					    </div>
 						
-					  <div class="checkbox">
-						<label>
-						  <input type="checkbox"> Keep me logged-in
-						</label>
-					  </div>
+					    <div class="checkbox">
+						  <label>
+						    <input type="checkbox"> Keep me logged-in
+						  </label>
+					    </div>
 
-					</form>
+					  </form>
 
-					<!--                        -->
+					  <!--                        -->
 
-			      </div>
-				</div> 
-		      </li>
-			</ul>
-		  </li>
-		</ul>
-	  </div>
+			        </div>
+				  </div> 
+		        </li>
+			  </ul>
+		    </li>
+		  </ul>
+	    </div>
 
-      {% else %}
+        {% else %}
 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav navbar-right">
-		  <li>
-		    <p class="navbar-text">Hello {{ request.user.first_name }}</p>
-		  </li>
-		  <li>
-		    <a href="/logout/" class="btn btn-info btn-lg">
-              <span class="glyphicon glyphicon-log-out"></span> Log out
-            </a>
-		  </li>
-		</ul>
-	  </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li>
+		      <p class="navbar-text">Hello {{ request.user.first_name }}</p>
+		    </li>
+		    <li>
+		      <a href="/logout/" class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+              </a>
+		    </li>
+		  </ul>
+	    </div>
 
 	  {% endif %}
 
