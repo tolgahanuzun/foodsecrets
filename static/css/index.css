@@ -1,5 +1,5 @@
    .carousel .item {
-        padding-top: 100px;
+  
         width: 100%; /*slider width*/
       
     }
@@ -53,6 +53,6 @@ background:url("http://lorempixel.com/1024/750");
 background-attachment: scroll;
 background-position: center center;
 background-size:cover;
-height: 600px;
+height: 100%;
 
 }
