@@ -69,9 +69,9 @@ class LoginForm(forms.Form):
     class Meta:
         fields = ("username", "password")
 
-    def is_valid(self):
+    def clean(self):
 
-        valid = super(LoginForm, self).is_valid()
+        valid = super(LoginForm, self).clean()
 
         if not valid:
             return valid

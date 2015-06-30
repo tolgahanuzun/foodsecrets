@@ -19,12 +19,16 @@ def login(request):
 
         if form_login.is_valid():  
             auth_login(request, form_login.user)
-            url = "/" + form_login.cleaned_data.get("username") + "/"
 
-            return HttpResponse("Merhaba "+ form_login.cleaned_data.get("username"))
+            return HttpResponseRedirect("/home/")
         else: 
-            return HttpResponse("Hata!")
-            #return render(request, "index.html", {'form_login':form_login})
+            ###############################################################
+            #                       Eklenecekler                          #
+            # Bilgilerin hatalı olduğuna dair hata mesajı yazdırılcak.    #
+            # Kayıt formundayken kayıt olmaya çalışırsa o ekranda kalarak #
+            # hata mesajı yazdırılacak.                                   #
+            ###############################################################
+            return render(request, "index.html", {'form_login':form_login})
     else:
         form_login = LoginForm()
         return render(request, "index.html", {'form_login':form_login})
@@ -34,7 +38,7 @@ def logout(request):
     form_login = LoginForm()
     auth_logout(request)
     
-    return render(request, "index.html", {'form_login':form_login})
+    return HttpResponseRedirect("/")
 
 # Kullanıcı kaydı yapan fonksiyon.
 def register(request):
@@ -42,26 +46,42 @@ def register(request):
     #  Kullanıcı kayıt sayfasında login formunu görüntüleyebilmek için tanımlandı.
     form_login = LoginForm()
 
-    if request.method == 'POST':
-        form_register = RegistrationForm(request.POST)
+    if not request.user.is_authenticated():
 
-        if  form_register.is_valid():
-            user = form_register.save()
-            auth_login(request, user)
+        if request.method == 'POST':
+            form_register = RegistrationForm(request.POST)
 
-            return HttpResponse("Merhaba "+ form_register.cleaned_data.get("username"))
+            if  form_register.is_valid():
+            
+                if not request.user.is_authenticated():
+                    user = form_register.save()
+                    auth_login(request, user)
 
-            return HttpResponseRedirect('/register/') # Parametre olarak verilen url'e geçer.
+                    return HttpResponseRedirect('/home/') # Parametre olarak verilen url'e geçer.
+                else:
+                    return HttpResponse("Şuan bir kullanıcı zaten aktif.")
         
-        else:
-            values = form_register.previous_values()
-            return render(request, "register.html",
-                            { 'form_register':form_register, 'form_login':form_login,
+            else:
+                values = form_register.previous_values()
+                return render(request, "register.html",
+                               { 'form_register':form_register, 'form_login':form_login,
                             'values':values})
+        else:
+            form_register = RegistrationForm()
+            return render(request, "register.html",
+                          { 'form_register':form_register, 'form_login':form_login})
+
     else:
-        form_register = RegistrationForm()
-        return render(request, "register.html",
-                      { 'form_register':form_register, 'form_login':form_login})
+        ##############################################
+        #     Güzel bir hata mesajı verdirilecek     #
+        ##############################################
+        return HttpResponseRedirect("/")
+
+def home(request):
+    if request.user.is_authenticated():
+        return render(request, "base.html")
+    else:
+        return HttpResponseRedirect("/")
 
 
 
