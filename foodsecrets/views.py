@@ -12,8 +12,3 @@ def index(request):
         return render(request, 'index.html', {'form_login':form_login})
     else:
     	return HttpResponseRedirect("/home/")
-
-
-def andlog(request):
-	#login olduktan sonra ana sayafaya yönlendirmeyi sağlar.
-    return render(request, 'andlogin.html',)
