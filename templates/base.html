@@ -100,18 +100,20 @@
         {% else %}
 
           {% if request.user.is_authenticated %}
-          <ul class="nav navbar-nav" id="newlogin">
-            <li class="dropdown" id="newdrop">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
-              <ul class="dropdown-menu" id="newdropdownmenu">
-                <li><a href="#">Account Settings <span class="fa fa-tasks pull-right"></span></a></li>
-                <li class="divider"></li>
-                <li><a href="#">Favourites Snippets <span class="fa fa-thumbs-o-up pull-right"></span></a></li>
-                <li class="divider"></li>
-                <li><a href="/logout/">Log Out <span class="fa fa-sign-out pull-right"></span></a></li>
-              </ul>
-            </li>
-          </ul>
+          
+            <ul class="nav navbar-nav" id="newlogin">
+              <li class="dropdown" id="newdrop">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
+                <ul class="dropdown-menu" id="newdropdownmenu">
+                  <li><a href="#">Account Settings <span class="fa fa-tasks pull-right"></span></a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Favourites Snippets <span class="fa fa-thumbs-o-up pull-right"></span></a></li>
+                  <li class="divider"></li>
+                  <li><a href="/logout/">Log Out <span class="fa fa-sign-out pull-right"></span></a></li>
+                </ul>
+              </li>
+            </ul>
+            
           {% endif %}
 
 	  {% endif %}
