@@ -68,7 +68,7 @@ html,body{height:100%;}
 }
 #newdrop {
     border-radius:4px;
-    width:200px;    
+    width:186px;    
 }
 #newdropdownmenu>li>a {
     color:#428bca;
@@ -77,7 +77,7 @@ html,body{height:100%;}
     
     box-shadow:none;
     margin-top:15px;
-    width:200px;
+    width:186px;
 }
 .dropdown ul.dropdown-menu:before {
     content: "";
