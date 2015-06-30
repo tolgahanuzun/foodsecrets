@@ -30,6 +30,8 @@
 		<a class="navbar-brand" href="/">Food Secrets</a>
 	  </div>
 
+	  {% if request.user.is_authenticated == False %}
+
 	  <!-- Collect the nav links, forms, and other content for toggling -->
 	  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav navbar-right">
@@ -94,6 +96,26 @@
 		  </li>
 		</ul>
 	  </div>
+
+      {% else %}
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav navbar-right">
+		  <li>
+		    <p class="navbar-text">Hello {{ request.user.first_name }}</p>
+		  </li>
+		  <li>
+		    <a href="/logout/" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-log-out"></span> Log out
+            </a>
+		  </li>
+		</ul>
+	  </div>
+
+	  {% endif %}
+
+
+
 	</div>
   </nav>
 
