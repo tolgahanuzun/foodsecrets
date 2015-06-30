@@ -10,3 +10,8 @@ def index(request):
     form_login = LoginForm()
 
     return render(request, 'index.html', {'form_login':form_login})
+
+
+def andlog(request):
+	#login olduktan sonra ana sayafaya yönlendirmeyi sağlar.
+    return render(request, 'andlogin.html',)
