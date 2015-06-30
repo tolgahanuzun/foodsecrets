@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^register/$', 'profiles.views.register'),
     url(r'^login/$', 'profiles.views.login'),
+    url(r'^logout/$', 'profiles.views.logout'),
+    url(r'^home/$', 'profiles.views.home'),
     url(r'^andlogin/$',views.andlog),
 ]
     
