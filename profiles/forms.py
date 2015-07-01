@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
+from django.http import *
 
 
 from profiles.models import Profile
@@ -61,6 +62,44 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
+class AccountFormPassword(forms.Form):
+    currentPassword = forms.CharField(label=u"Current Password", widget=forms.PasswordInput, required=True)
+    newPassword = forms.CharField(label=u"New Password", widget=forms.PasswordInput, required=True)
+    confirm_newPassword = forms.CharField(label=u"Confirm New Password", widget=forms.PasswordInput, required=True)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AccountFormPassword, self).__init__(*args, **kwargs)
+
+    def clean_currentPassword(self):
+        currentPassword = self.cleaned_data.get("currentPassword")
+
+        if not self.user.check_password(currentPassword):
+            raise forms.ValidationError(u"Şifre hatalı!")
+        else:
+            return self.cleaned_data.get("currentPassword")
+
+    def clean_confirm_newPassword(self):
+        newPassword = self.cleaned_data.get("newPassword")
+        confirm_newPassword = self.cleaned_data.get("confirm_newPassword")
+
+        if newPassword != confirm_newPassword:
+            raise forms.ValidationError(u"Yeni girilen şifreler uyuşmuyor.")
+        else:
+            return self.cleaned_data
+
+    def change(self):        
+        
+        self.user.set_password(self.cleaned_data.get("newPassword"))
+        self.user.save()
+
+        return self.user
+
+    class Meta:
+        fields = ("currentPassword", "newPassword", "confirm_newPassword")
+
+    
+
 # Kullanıcı giriş formu.
 class LoginForm(forms.Form):
     username = forms.CharField(label=u"User Name", required=True)
@@ -71,10 +110,10 @@ class LoginForm(forms.Form):
 
     def clean(self):
 
-        valid = super(LoginForm, self).clean()
+        clean = super(LoginForm, self).clean()
 
-        if not valid:
-            return valid
+        if not clean:
+            return clean
 
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")

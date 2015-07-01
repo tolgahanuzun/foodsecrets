@@ -22,12 +22,6 @@ def login(request):
 
             return HttpResponseRedirect("/home/")
         else: 
-            ###############################################################
-            #                       Eklenecekler                          #
-            # Bilgilerin hatalı olduğuna dair hata mesajı yazdırılcak.    #
-            # Kayıt formundayken kayıt olmaya çalışırsa o ekranda kalarak #
-            # hata mesajı yazdırılacak.                                   #
-            ###############################################################
             return render(request, "index.html", {'form_login':form_login})
     else:
         form_login = LoginForm()
@@ -75,6 +69,31 @@ def register(request):
         ##############################################
         #     Güzel bir hata mesajı verdirilecek     #
         ##############################################
+        return HttpResponseRedirect("/")
+
+
+def accountPassword(request):
+    if request.user.is_authenticated():
+        
+        if request.method == "POST":
+            form_accountPassword = AccountFormPassword(request.POST, user=request.user)
+
+            if form_accountPassword.is_valid():
+                
+                form_accountPassword.change()
+                #auth_login(request, request.user)
+
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword}) 
+  
+            else:
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword})  
+        
+        else:
+
+            form_accountPassword = AccountFormPassword()
+            return render(request, "account.html", { 'form_accountPassword':form_accountPassword })
+    
+    else:
         return HttpResponseRedirect("/")
 
 def home(request):
