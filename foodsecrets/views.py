@@ -2,7 +2,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Template, Context, RequestContext, loader
 from django.shortcuts import render
-from profiles.forms import LoginForm
+from profiles.forms import *
 
 # Ana Sayfa'yı görüntüleyen fonksiyon.
 def index(request):
@@ -12,7 +12,4 @@ def index(request):
         return render(request, 'index.html', {'form_login':form_login})
     else:
     	return HttpResponseRedirect("/home/")
-
-
-def test(request):
-	return render(request, 'text.html',)
+    	
