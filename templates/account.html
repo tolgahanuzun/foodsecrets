@@ -2,31 +2,40 @@
 
 {% block account %}
 
-  <form role="form" method="POST" action="/home/account/" id="ind">
+  <form role="form" method="POST" action="/home/account/user" id="ind">
 	{% csrf_token %}
-    {% for area in form_accountPassword %}
+    {% for area in form_accountUser %}
 
-      {% if area.name == "currentPassword" %}
+      {% if area.name == "first_name" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Current Password" tabindex="1"
+          <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" value="{{ request.user.first_name }}" class="form-control input-lg" placeholder="First Name" tabindex="1"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
 
       {% endif%}
 
-      {% if area.name == "newPassword" %}
+      {% if area.name == "last_name" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" New Password" tabindex="2"
+          <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" value="{{ request.user.last_name }}" class="form-control input-lg" placeholder="Last Name" tabindex="2"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
 
       {% endif%}
 
-      {% if area.name == "confirm_newPassword" %}
+      {% if area.name == "email" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Confirm New Password" tabindex="3"
+          <input type="email" name="{{ area.name }}" id="id_{{ area.name }}" value="{{ request.user.email }}" class="form-control input-lg" placeholder="Email Adress" tabindex="3"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+      {% if area.name == "phone" %}
+          
+          <input type="text" name="{{ area.name }}" id="id_{{ area.name }}" value="{{ request.user.profile.phone }}" class="form-control input-lg" placeholder="Telephone number" tabindex="4"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
@@ -34,17 +43,17 @@
       {% endif%}
 
     {% endfor %}
-    <input type="submit" value="Şifre" class="btn btn-primary btn-block btn-lg" tabindex="3">
+    <input type="submit" value="Hesap" class="btn btn-primary btn-block btn-lg" tabindex="5">
   </form>
   
-  <!--
-  <form role="form" method="POST" action="/home/account/" id="ind">
+  
+  <form role="form" method="POST" action="/home/account/password" id="ind">
 	{% csrf_token %}
     {% for area in form_accountPassword %}
 
       {% if area.name == "currentPassword" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Current Password" tabindex="1"
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Current Password" tabindex="6"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
@@ -53,7 +62,7 @@
 
       {% if area.name == "newPassword" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" New Password" tabindex="2"
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" New Password" tabindex="7"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
@@ -62,7 +71,7 @@
 
       {% if area.name == "confirm_newPassword" %}
           
-          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Confirm New Password" tabindex="3"
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Confirm New Password" tabindex="8"
 		  		"{% if area.errors %}" 
 		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		"{% endif %}" > 
@@ -70,8 +79,8 @@
       {% endif%}
 
     {% endfor %}
-    <input type="submit" value="Şifre" class="btn btn-primary btn-block btn-lg" tabindex="3">
+    <input type="submit" value="Şifre" class="btn btn-primary btn-block btn-lg" tabindex="9">
   </form>
-  -->
+  
 
 {% endblock %}
