@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
     def clean_email(self):
 
         data = self.cleaned_data
-        user = User.objects.filter(email=data.get('email'))
+        user = User.objects.exists(email=data.get('email'))
         if user:
             raise forms.ValidationError(u'Bu mail adresinde bir kullanıcı zaten mevcut.')
     
@@ -61,6 +61,34 @@ class RegistrationForm(UserCreationForm):
         
         return user
 
+class AccountFormUser(forms.Form):
+    first_name = forms.CharField(label=u"First Name", required=True)
+    last_name = forms.CharField(label=u"Last Name", required=True)
+    email = forms.EmailField(label=u"Email", required=True)
+    phone = forms.CharField(label=u"Phone:", required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AccountFormUser, self).__init__(*args, **kwargs)
+
+
+    def change(self):
+
+        user_profile = Profile.objects.get(profile=self.user)
+        data = self.cleaned_data
+
+        self.user.first_name = data.get("first_name")
+        self.user.last_name = data.get("last_name")
+        self.user.email = data.get("email")
+        self.user.save()
+
+        user_profile.profile = self.user
+        user_profile.phone = data.get("phone")
+        user_profile.save()
+
+        return self.user
+
+
 
 class AccountFormPassword(forms.Form):
     currentPassword = forms.CharField(label=u"Current Password", widget=forms.PasswordInput, required=True)
@@ -75,9 +103,10 @@ class AccountFormPassword(forms.Form):
         currentPassword = self.cleaned_data.get("currentPassword")
 
         if not self.user.check_password(currentPassword):
-            raise forms.ValidationError(u"Şifre hatalı!")
-        else:
-            return self.cleaned_data.get("currentPassword")
+            raise forms.ValidationError(u"Mevcut şifre hatalı!")
+
+        return True
+
 
     def clean_confirm_newPassword(self):
         newPassword = self.cleaned_data.get("newPassword")
@@ -85,8 +114,22 @@ class AccountFormPassword(forms.Form):
 
         if newPassword != confirm_newPassword:
             raise forms.ValidationError(u"Yeni girilen şifreler uyuşmuyor.")
-        else:
-            return self.cleaned_data
+        
+        return True
+
+    ##############################################
+    #   Aynı şifre girildiğinde hata verilecek   #
+    ##############################################
+
+    #def clean_newPassword(self):
+    #    currentPassword = self.cleaned_data.get("currentPassword")
+    #    newPassword = self.cleaned_data.get("newPassword")
+
+    #    if currentPassword == newPassword:
+    #        raise forms.ValidationError(u"Yeni girdiğiniz şifre mevcut şifrenizle aynı.") 
+    #       
+    #    return True
+
 
     def change(self):        
         
@@ -94,7 +137,7 @@ class AccountFormPassword(forms.Form):
         self.user.save()
 
         self.user = authenticate(username=self.user.username,
-                            password=self.cleaned_data.get("newPassword"))
+                                 password=self.cleaned_data.get("newPassword"))
 
         return self.cleaned_data
 
