@@ -70,7 +70,18 @@ class AccountFormUser(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(AccountFormUser, self).__init__(*args, **kwargs)
+    
+    def clean_email(self):
+        
+        try:
+            user = User.objects.get(email=self.cleaned_data.get('email'))   
+        except:
+            return self.cleaned_data.get("email")
 
+        if user != self.user:
+            raise forms.ValidationError(u'Bu mail adresinde bir kullanıcı zaten mevcut.')
+        else:
+            return self.cleaned_data.get("email")
 
     def change(self):
 
