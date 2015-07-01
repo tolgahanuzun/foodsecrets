@@ -51,7 +51,9 @@ color:rgb(153,204,255);
 }   
 
 .copyr{
-
+  position: absolute;
+  left: 50%;
+  margin-left: -79px;
 }
 
 #hakkinda{
