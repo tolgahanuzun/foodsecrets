@@ -8,13 +8,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="{% static "bootstrap/js/bootstrap.min.js"%}"></script>
-  <script src="{% static "js/form.js" %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/form.js' %}"></script>
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
-  <link rel="stylesheet" href="{% static "css/form.css" %}">
-  <link rel="stylesheet" href="{% static "css/index.css" %}">
-  <link rel="stylesheet" href="{% static "css/home.css" %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   
 </head>
@@ -105,7 +105,7 @@
               <li class="dropdown" id="newdrop">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
                 <ul class="dropdown-menu" id="newdropdownmenu">
-                  <li><a href="/home/account/">Account Settings <span class="fa fa-tasks pull-right"></span></a></li>
+                  <li><a href="/home/account/user/">Account Settings <span class="fa fa-tasks pull-right"></span></a></li>
                   <li class="divider"></li>
                   <!--
                   <li><a href="#">Favourites Snippets <span class="fa fa-thumbs-o-up pull-right"></span></a></li>
