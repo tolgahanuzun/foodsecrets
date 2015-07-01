@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block account %}
+
+  <form role="form" method="POST" action="/home/account/" id="ind">
+	{% csrf_token %}
+    {% for area in form_accountPassword %}
+
+      {% if area.name == "currentPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Current Password" tabindex="1"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+      {% if area.name == "newPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" New Password" tabindex="2"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+      {% if area.name == "confirm_newPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Confirm New Password" tabindex="3"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+    {% endfor %}
+    <input type="submit" value="Şifre" class="btn btn-primary btn-block btn-lg" tabindex="3">
+  </form>
+  
+  <!--
+  <form role="form" method="POST" action="/home/account/" id="ind">
+	{% csrf_token %}
+    {% for area in form_accountPassword %}
+
+      {% if area.name == "currentPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Current Password" tabindex="1"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+      {% if area.name == "newPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" New Password" tabindex="2"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+      {% if area.name == "confirm_newPassword" %}
+          
+          <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control input-lg" placeholder=" Confirm New Password" tabindex="3"
+		  		"{% if area.errors %}" 
+		  		  data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
+		  		"{% endif %}" > 
+
+      {% endif%}
+
+    {% endfor %}
+    <input type="submit" value="Şifre" class="btn btn-primary btn-block btn-lg" tabindex="3">
+  </form>
+  -->
+
+{% endblock %}
