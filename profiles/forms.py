@@ -93,7 +93,10 @@ class AccountFormPassword(forms.Form):
         self.user.set_password(self.cleaned_data.get("newPassword"))
         self.user.save()
 
-        return self.user
+        self.user = authenticate(username=self.user.username,
+                            password=self.cleaned_data.get("newPassword"))
+
+        return self.cleaned_data
 
     class Meta:
         fields = ("currentPassword", "newPassword", "confirm_newPassword")

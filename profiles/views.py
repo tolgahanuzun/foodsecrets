@@ -81,7 +81,7 @@ def accountPassword(request):
             if form_accountPassword.is_valid():
                 
                 form_accountPassword.change()
-                #auth_login(request, request.user)
+                auth_login(request, form_accountPassword.user)
 
                 return render(request, "account.html", {'form_accountPassword':form_accountPassword}) 
   
