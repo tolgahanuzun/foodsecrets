@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^logout/$', 'profiles.views.logout'),
     url(r'^home/$', 'profiles.views.home'),
     url(r'^home/account/$', 'profiles.views.accountPassword'),
+    url(r'^test/',views.test)
 ]
     

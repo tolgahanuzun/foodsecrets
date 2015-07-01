@@ -12,3 +12,7 @@ def index(request):
         return render(request, 'index.html', {'form_login':form_login})
     else:
     	return HttpResponseRedirect("/home/")
+
+
+def test(request):
+	return render(request, 'text.html',)
