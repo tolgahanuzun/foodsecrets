@@ -2,7 +2,7 @@
 
 {% block account %}
 
-  <form role="form" method="POST" action="/home/account/user" id="ind">
+  <form role="form" method="POST" action="/home/account/user/" id="ind">
 	{% csrf_token %}
     {% for area in form_accountUser %}
 
@@ -47,7 +47,7 @@
   </form>
   
   
-  <form role="form" method="POST" action="/home/account/password" id="ind">
+  <form role="form" method="POST" action="/home/account/password/" id="ind">
 	{% csrf_token %}
     {% for area in form_accountPassword %}
 
