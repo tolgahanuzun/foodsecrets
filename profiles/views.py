@@ -71,10 +71,37 @@ def register(request):
         ##############################################
         return HttpResponseRedirect("/")
 
+def accountUser(request):
+    if request.user.is_authenticated():
+        form_accountPassword = AccountFormPassword()
+
+        if request.method == "POST":
+            form_accountUser = AccountFormUser(request.POST, user=request.user)
+
+            if form_accountUser.is_valid():
+
+                form_accountUser.change()
+
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser}) 
+
+            else:
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser}) 
+        else:
+            form_accountUser = AccountFormUser()
+            return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser}) 
+    else:
+        return HttpResponseRedirect("/")
+
+
+
 
 def accountPassword(request):
     if request.user.is_authenticated():
-        
+        form_accountUser = AccountFormUser()
+
         if request.method == "POST":
             form_accountPassword = AccountFormPassword(request.POST, user=request.user)
 
@@ -83,15 +110,17 @@ def accountPassword(request):
                 form_accountPassword.change()
                 auth_login(request, form_accountPassword.user)
 
-                return render(request, "account.html", {'form_accountPassword':form_accountPassword}) 
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser}) 
   
             else:
-                return render(request, "account.html", {'form_accountPassword':form_accountPassword})  
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser})   
         
         else:
-
             form_accountPassword = AccountFormPassword()
-            return render(request, "account.html", { 'form_accountPassword':form_accountPassword })
+            return render(request, "account.html", {'form_accountPassword':form_accountPassword,
+                                                        'form_accountUser':form_accountUser}) 
     
     else:
         return HttpResponseRedirect("/")
