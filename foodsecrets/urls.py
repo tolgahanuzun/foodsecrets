@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^home/$', 'profiles.views.home'),
     url(r'^home/account/user/$', 'profiles.views.accountUser'),
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
+    url(r'^home/addfood/$', 'foods.views.addFood'),
 ]
     
