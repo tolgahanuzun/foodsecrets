@@ -4,11 +4,21 @@
 	margin-left: 0;
 
 }
+
+#formcont{
+  margin-top: 34px;
+  margin-right: 0;
+  margin-left: 0;
+
+
+}
+
 #userpanel{
 	position: fixed;
+
 }
 #userpanel1{
-  position: fixed;
+
 }
 
 #content{
@@ -18,10 +28,6 @@
 
 }
 #content1{
-    border-style: solid;
-    border-width: 1px;
-    padding: 20px;
-
 
 }
 /***
@@ -40,6 +46,11 @@ Licensed under MIT
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+.profilebar {
+  padding: 20px 0 10px 23px;
   background: #fff;
 }
 
