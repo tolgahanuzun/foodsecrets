@@ -100,7 +100,7 @@ $(document).ready(function() {
         
         var tr = $("<tr></tr>", {
             id: "addr"+newid,
-            "data-id": newid
+            "data-id":newid
         });
         
         // loop through each td and create new elements with name of newid
