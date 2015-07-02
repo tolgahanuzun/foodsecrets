@@ -14,10 +14,10 @@
 }
 
 #userpanel{
-	position: fixed;
+	position: fixed; 
 
 }
-#userpanel1{
+#userpanel2{
 
 }
 
@@ -27,9 +27,14 @@
     padding: 20px;
 
 }
-#content1{
-
+#content2{
 }
+
+.table-sortable tbody tr {
+    cursor: move;
+}
+
+
 /***
 User Profile Sidebar by @keenthemes
 A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
