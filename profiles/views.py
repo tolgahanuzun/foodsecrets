@@ -6,7 +6,6 @@ from django import template
 from django.template import Template, Context, RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
-from django.template.context_processors import csrf
 
 from .models import *
 from .forms import *
