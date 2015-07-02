@@ -12,3 +12,4 @@ class NewFood(admin.ModelAdmin):
     inlines = [MaterialListInline]
 
 admin.site.register(Food, NewFood)
+admin.site.register(FoodKind)
