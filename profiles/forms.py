@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
     def clean_email(self):
 
         data = self.cleaned_data
-        user = User.objects.exists(email=data.get('email'))
+        user = User.objects.filter(email=data.get('email'))
         if user:
             raise forms.ValidationError(u'Bu mail adresinde bir kullanıcı zaten mevcut.')
     
