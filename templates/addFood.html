@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block food %}
+  
+  <br><br><br><br>
+  <form role="form" action="/home/addfood/" method="POST">
+  {% csrf_token %}
+    <div>
+      {% for area in form_addMeal %}
+        <div>
+          <br> {{ area.label }} {{ area }} {{ area.error}}<br>
+        </div>
+      {% endfor %}
+
+
+      {{ materialList_formset.management_form }}
+      {% for area in materialList_formset %}
+        <div>
+          <br> {{ area.label }} {{ area }} {{ area.error}}<br>
+        </div>
+      {% endfor %}
+
+
+ 
+
+    
+      <br><br>
+      <input type="submit" value="Register" >
+    </div>
+  </form>
+
+{% endblock%}
