@@ -17,12 +17,10 @@ from materials.models import *
 
 
 class AddingToMeal(forms.ModelForm):
-    #name = forms.CharField(label=u"İsim", max_length=100, required=True)
-    #description = forms.CharField(label=u"Tarif", max_length=1000, 
-    #                            required=True, widget=forms.Textarea)
-    #food_kind = forms.ModelChoiceField(label=u"Kind", queryset=FoodKind.objects.all(), required=True)
-    #material = forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), required=True)
-    #amount = forms.IntegerField(label="Miktar",required=True, min_value=1, initial=1)
+    name = forms.CharField(label=u"İsim", max_length=100, required=True)
+    description = forms.CharField(label=u"Tarif", max_length=1000, 
+                                required=True, widget=forms.Textarea)
+    food_kind = forms.ModelChoiceField(label=u"Kind", queryset=FoodKind.objects.all(), required=True)
 
     class Meta:
         model = Food
@@ -48,8 +46,34 @@ class AddingToMeal(forms.ModelForm):
             #material_list.save()
 
         return meal
+
+#class AddingToMaterial(forms.ModelForm):
+#    material = forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), required=True)
+#    amount = forms.IntegerField(label="Miktar",required=True, min_value=1, initial=1)
+#
+#    class Meta:
+#        fields = ("amount",)
+
+def custom_field_callback(field):
+    #if field.name == 'name':
+    #    return forms.CharField(label=u"İsim", max_length=100, required=True)
+    #elif field.name == 'description':
+    #    return forms.CharField(label=u"Tarif", max_length=1000, 
+    #                            required=True, widget=forms.Textarea)
+    #elif field.name == 'food_kind':
+    #    return forms.ModelChoiceField(label=u"Kind", queryset=FoodKind.objects.all(), 
+    #                                  required=True)
+    #elif field.name == 'material':
+    #    return forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), 
+    #                                  required=True)
+    if field.name == 'amount':
+        return forms.IntegerField(label="Miktar",required=True, min_value=1, initial=1)
+    else:
+        return field.formfield()
         
-MaterialListFormSet = inlineformset_factory(Food, MaterialList , fields=("name","amount"), can_delete=False, extra=1)
+MaterialListFormSet = inlineformset_factory(Food, MaterialList, 
+                                            formfield_callback=custom_field_callback,
+                                            fields=("name","amount"), can_delete=False, extra=3)
 
 
 
