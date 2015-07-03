@@ -1,3 +1,4 @@
+
 $(function() {
 
     $('#login-form-link').click(function(e) {
@@ -99,7 +100,7 @@ $(document).ready(function() {
         newid++;
         
         var tr = $("<tr></tr>", {
-            id: "addr"+newid,
+            id: "id_materiallist-set-"+newid+"-name",
             "data-id":newid
         });
         
