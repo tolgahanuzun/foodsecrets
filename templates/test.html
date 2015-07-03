@@ -79,47 +79,33 @@
 					    	<tr >
 						    	<th class="text-center " > Option </th>
     					  	<th class="text-center"> Number </th>
-        					<th class="text-center"> </th>
 					    	</tr>
 				    	</thead>
 				    
 				    	<tbody>
 				    	
 				    	  {{ materialList_formset.management_form }}
+
+				    	  <!--{{ materialList_formset }}--> 
 				    	  {% for form in materialList_formset %}
 				    	    <tr id='addr0' data-id="0" class="hidden">
 				    	    
-				    	    {% for area in form %}
-						    	  	
-						    	  	{% if area.type == "number" %}
-						    	  	  <td data-name="name">
-						    	    		{{ area }} {{ area.error }}
-						      	  		<!--<input type="number" name='name0'  placeholder="Number" class="form-control" style="wight:50%" />-->
-						    	  	  </td>
-						    	  	{% else %}
-						    	  	  <td data-name="sel">
-						    	  	    {{ area }} {{ area.error }}
-						    	  	    <!--<select name="sel0">
-        				    	      <option value"">Select Option</option>
-    					      	      <option value"1">Option 1</option>
-						     		      </select>-->
-						    
-						    	  	  </td>
-						    	  	{% endif %}
+						    	  <td data-name="name">
+						    	    	{{ form.name }}	  
+						    	  </td>
+	
+						    	  <td data-name="sel">
+						    	  	  {{ form.amount }}  	
+						    	  </td>
 
-						    	{% endfor %}
-
-                	  	<td data-name="del">
-                  	  	<button nam"del0" type="button" class='btn btn-primary row-remove'>Delete</button>
-                	  	</td>
-
-					    	  </tr>
-					    	{% endfor %}
-
-				    	</tbody>
+						    	  <td data-name="del">
+                  		<button nam"del0" type="button" class='btn btn-primary row-remove'>Delete</button>
+                		</td>
+                {% endfor %}
+                
+   		    	  </tbody>
 
 			    	</table>
-			    	{{ materialList_formset.management_form }}
 			  
 			  		<a id="add_row" class="btn btn-default pull-right">Add Row</a>
 			  	</div>
