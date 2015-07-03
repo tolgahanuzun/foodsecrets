@@ -73,7 +73,7 @@ def custom_field_callback(field):
         
 MaterialListFormSet = inlineformset_factory(Food, MaterialList, 
                                             formfield_callback=custom_field_callback,
-                                            fields=("name","amount"), can_delete=False, extra=3)
+                                            fields=("name","amount"), can_delete=False, extra=1)
 
 
 

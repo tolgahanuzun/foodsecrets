@@ -88,21 +88,28 @@
 
 				    	  <!--{{ materialList_formset }}--> 
 				    	  {% for form in materialList_formset %}
-				    	    <tr id='addr0' data-id="0" class="hidden">
-				    	    
-						    	  <td data-name="name">
-						    	    	{{ form.name }}	  
-						    	  </td>
-	
-						    	  <td data-name="sel">
-						    	  	  {{ form.amount }}  	
-						    	  </td>
 
-						    	  <td data-name="del">
-                  		<button nam"del0" type="button" class='btn btn-primary row-remove'>Delete</button>
+				    	    <tr class="hidden">
+				 
+			  		    	  {% for area in form %}
+                      
+                      {% if area.name = "name" %}
+						    	      <td > {{ area }} </td>
+						    	    {% elif area.name == "amount" %}
+						    	      <td> {{ area }} </td>
+						    	    {% else %}
+						    	      <td> {{ area }} </td>
+						    	    {% endif %}
+
+						    	  {% endfor %}
+
+						    	  <td data-name="del0">
+                  		<button type="button" class='btn btn-primary row-remove'>Delete</button>
                 		</td>
+                	</tr>
+
                 {% endfor %}
-                
+
    		    	  </tbody>
 
 			    	</table>
