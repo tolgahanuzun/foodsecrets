@@ -4,99 +4,155 @@
 
 <div class="row" id="Logincont">
 	<div class="col-sm-9 col-sm-push-3" id="content" >
+		<form  accept-charset="UTF-8" action="/home/addfood/" method="POST">
+		{% csrf_token %}
+
 			<div class="col-sm-9">
 				<center> <h4>Content Add </h4></center>	
-	 			 <div class="panel panel-default">
-               		<div class="panel-body">                
-                    	<form accept-charset="UTF-8" action="" method="POST">
-                    	  <input  class="form-control"  placeholder="Sub" style="margin-bottom:10px;">	
-                      	  <textarea class="form-control counted" name="message" placeholder="Type in your post" rows="10" style="margin-bottom:10px;"></textarea>
-                    	 </form>
-               		 </div>
-           		 </div>
+	 			
+	 			<div class="panel panel-default">
+        	<div class="panel-body">
 
-	 		</div> 
-	 		<div class="col-sm-3" >
-	 			<div id="selecklab"> 
-	 		 <label  for="sel1">Select Category list:</label>
- 				 <select class="form-control" id="sel1">
-    				<option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-				    <option>Foood Category</option>
-  				</select>
-  				</div>
-	 		</div>
-<!-- Row  addbar -->
+        	  {% for area in form_addMeal %}
+
+        	    {% if area.name == "name" %}                 
+                <input  class="form-control"  name="{{area.name}}" id="id_{{ area.name }}"placeholder="Meal Name" style="margin-bottom:10px;">
+              {% endif %}
+
+              {% if area.name == "food_kind" %}
+            		<div class="col-sm-3" >
+	 	          		<div id="selecklab"> 
+	 		          		
+	 		          		<label for="sel1">Select Meal Category</label>
+ 				            <!--<select class="form-control" id="sel1">
+    				
+						    	  	<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+											<option>Foood Category</option>
+			
+  			        		</select>-->
+  			        		{{ area }}
+  		
+  		        		</div>
+	 	       			</div>
+	 	       		{% endif %}
+	
+              
+              {% if area.name == "description" %}
+            	  <textarea class="form-control counted" name="{{ area.name }}" id="id_{{ area.name }}" placeholder="Recipe" rows="10" style="margin-bottom:10px;"></textarea>
+              {% endif %}
+
+	 	      	{% endfor %}
+
+          </div>
+        </div>
+      </div> 
+
+      <!--{{ materialList_formset.management_form }}
+      {% for area in materialList_formset %}
+        <div>
+          {% for a in area %}
+            {% if a.type == "hidden" %}
+               <br> {{ a }}<br>
+            {% else %}
+               <br> {{ a }} {{ a.error }} {{ a.type }}
+            {% endif %}
+          {% endfor %}
+          
+        </div>
+      {% endfor %}-->
+    	<!-- Row  addbar -->
 	 		
     	<div class="col-sm-9 ">
-
-    		<div class="panel panel-default">
+      	<div class="panel panel-default">
     			<div class="panel-body">   
-			<table class="table table-bordered table-hover table-sortable" id="tab_logic">
-				<thead>
-					<tr >
-						<th class="text-center " >
-							Option
-						</th>
-    					<th class="text-center">
-							Number
-						</th>
-        				<th class="text-center">
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-    				<tr id='addr0' data-id="0" class="hidden">
-						<td data-name="sel">
-						    <select name="sel0">
-        				        <option value"">Select Option</option>
-    					        <option value"1">Option 1</option>
-        				        	
-						    </select>
-						</td>
-						<td data-name="name">
-						 
-						    <input type="number" name='name0'  placeholder="Number" class="form-control" style="wight:50%" />
-						 
-						</td>
-                        <td data-name="del">
-                            <button nam"del0" type="button" class='btn btn-primary row-remove'>Delete</button>
-                        </td>
-					</tr>
-				</tbody>
-			</table>
-			<a id="add_row" class="btn btn-default pull-right">Add Row</a>
-		</div></div></div>
-	
-	
-	 	
-	</div>
+			    	
+			    	<table class="table table-bordered table-hover table-sortable" id="tab_logic">
+				    
+				    	<thead>
+					    	<tr >
+						    	<th class="text-center " > Option </th>
+    					  	<th class="text-center"> Number </th>
+        					<th class="text-center"> </th>
+					    	</tr>
+				    	</thead>
+				    
+				    	<tbody>
+				    	
+				    	  {{ materialList_formset.management_form }}
+				    	  {% for form in materialList_formset %}
+				    	    <tr id='addr0' data-id="0" class="hidden">
+				    	    
+				    	    {% for area in form %}
+						    	  	
+						    	  	{% if area.type == "number" %}
+						    	  	  <td data-name="name">
+						    	    		{{ area }} {{ area.error }}
+						      	  		<!--<input type="number" name='name0'  placeholder="Number" class="form-control" style="wight:50%" />-->
+						    	  	  </td>
+						    	  	{% else %}
+						    	  	  <td data-name="sel">
+						    	  	    {{ area }} {{ area.error }}
+						    	  	    <!--<select name="sel0">
+        				    	      <option value"">Select Option</option>
+    					      	      <option value"1">Option 1</option>
+						     		      </select>-->
+						    
+						    	  	  </td>
+						    	  	{% endif %}
 
+						    	{% endfor %}
+
+                	  	<td data-name="del">
+                  	  	<button nam"del0" type="button" class='btn btn-primary row-remove'>Delete</button>
+                	  	</td>
+
+					    	  </tr>
+					    	{% endfor %}
+
+				    	</tbody>
+
+			    	</table>
+			    	{{ materialList_formset.management_form }}
+			  
+			  		<a id="add_row" class="btn btn-default pull-right">Add Row</a>
+			  	</div>
+			  </div>
+			</div>
+
+			<div class="row">
+			  <div class="col-md-4"></div>
+			  <div class="col-md-8">
+			    <div class="col-xs-12  col-md-6 " >
+			      <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9">
+			    </div>
+			  </div>
+		  </div>
+		
+		</form>
+	</div>
+    
   <div class="col-sm-3 col-sm-pull-9" id="userpanel2" >
     <div class="profile-sidebar">
-			
-			<!-- SIDEBAR USERPIC -->
-			<div class="profile-userpic ">
-				<img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png" class="img-responsive">
-			</div>
+			  
+		  <!-- SIDEBAR USERPIC -->
+		  <div class="profile-userpic ">
+			  <img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png" class="img-responsive">
+		  </div>
 		
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">
-					{{ request.user.get_full_name }}
-				</div>
-
-			</div>
-
-			
-		
-		
+		  <div class="profile-usertitle">
+			  <div class="profile-usertitle-name">
+				  {{ request.user.get_full_name }}
+			  </div>
+		  </div>
 	  </div>
+  </div>
 
 </div>
 
