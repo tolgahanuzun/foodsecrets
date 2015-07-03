@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.forms.models import inlineformset_factory
+from django.forms.models import BaseInlineFormSet
 from django.db.models import Q
 from django.http import *
 
@@ -48,6 +49,7 @@ class AddingToMeal(forms.ModelForm):
 
         return meal
         
-MaterialListFormSet = inlineformset_factory(Food, MaterialList, fields=("name","amount"), extra=3)
+MaterialListFormSet = inlineformset_factory(Food, MaterialList , fields=("name","amount"), can_delete=False, extra=1)
+
 
 
