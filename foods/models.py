@@ -25,6 +25,7 @@ class Food(models.Model):
     description = models.TextField(max_length=1000, verbose_name=u"Tarif")
     user = models.ForeignKey(User, verbose_name=u"Kullanıcı")
     food_kind = models.ForeignKey(FoodKind, verbose_name=u"Tür")
+    totalCalories = models.IntegerField(default=0, blank=True, verbose_name=u"Toplam Kalori")
 
     class Meta:
         verbose_name = u"Yemek"
