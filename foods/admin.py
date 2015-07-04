@@ -7,7 +7,6 @@ from .forms import *
 
 class MaterialListInline(admin.TabularInline):
     model = MaterialList
-    extra=3
 
 class NewFood(admin.ModelAdmin):
     inlines = [MaterialListInline]
