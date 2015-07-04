@@ -72,7 +72,7 @@
 							  {% if area.name == "confirm_newPassword"  %}
 
 							    <div class="form-group">
-								    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control" placeholder=" Confirm New Password" tabindex="1"
+								    <input type="password" name="{{ area.name }}" id="id_{{ area.name }}" class="form-control" placeholder=" Confirm New Password" tabindex="3"
 		  		          "{% if area.errors %}" 
 		  		            data-container="body" data-toggle="popover" data-placement="top" data-content="{{ area.errors|striptags }}"
 		  		          "{% endif %}" > 
@@ -87,10 +87,10 @@
 							  <div class="form-group">
 								  <div class="row">
 									  <div class="col-sm-4 col-sm-offset-2">
-										  <input type="submit" name="close" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Close">
+										  <input type="button" name="close" id="account-close" tabindex="4" class="form-control btn btn-login" value="Close">
 									  </div>
 								    <div class="col-sm-4">
-										  <input type="submit" name="change" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Change">
+										  <input type="submit" name="change" id="login-submit" tabindex="5" class="form-control btn btn-login" value="Change">
 									  </div>
 								  </div>
 							  </div>
@@ -157,10 +157,10 @@
 							  <div class="form-group">
 								  <div class="row">
 									  <div class="col-md-4 col-xs-5 col-xs-offset-1 col-md-offset-2">
-										  <input type="submit" name="close" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Close">
+										  <input type="button" name="close" id="account-close" tabindex="5" class="form-control btn btn-login" value="Close">
 									  </div>
 								    <div class="col-md-4 col-xs-5">
-										  <input type="submit" name="change" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Change">
+										  <input type="submit" name="change" id="login-submit" tabindex="6" class="form-control btn btn-login" value="Change">
 									  </div>
 								  </div>
 							  </div>

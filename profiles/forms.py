@@ -106,41 +106,52 @@ class AccountFormPassword(forms.Form):
     newPassword = forms.CharField(label=u"New Password", widget=forms.PasswordInput, required=True)
     confirm_newPassword = forms.CharField(label=u"Confirm New Password", widget=forms.PasswordInput, required=True)
 
+    class Meta:
+        fields = ("currentPassword", "newPassword", "confirm_newPassword")
+
     def __init__(self, *args, **kwargs):
+        self.currentPassword = 0
+        self.newPassword = 0
+        self.confirm_newPassword = 0
+        self.error = 0
+        
         self.user = kwargs.pop('user', None)
         super(AccountFormPassword, self).__init__(*args, **kwargs)
 
+    def setValue(self):
+
+        self.currentPassword = self.data.get("currentPassword", None)
+        self.newPassword = self.data.get("newPassword", None)
+        self.confirm_newPassword = self.data.get("confirm_newPassword", None)
+
+
     def clean_currentPassword(self):
-        currentPassword = self.cleaned_data.get("currentPassword")
 
-        if not self.user.check_password(currentPassword):
-            raise forms.ValidationError(u"Mevcut şifre hatalı!")
+        if not self.user.check_password(self.currentPassword):
+            self.error = 1
+            raise forms.ValidationError(u"Mevcut şifre hatalı !")
 
-        return True
+        return self.currentPassword
 
+    def clean_newPassword(self):
+
+        if self.error == 1:
+            return self.newPassword
+        else:
+            if self.currentPassword == self.newPassword:
+                raise forms.ValidationError(u"Yeni girdiğiniz şifre mevcut şifreniz ile aynı !")
+
+            return self.newPassword 
 
     def clean_confirm_newPassword(self):
-        newPassword = self.cleaned_data.get("newPassword")
-        confirm_newPassword = self.cleaned_data.get("confirm_newPassword")
 
-        if newPassword != confirm_newPassword:
-            raise forms.ValidationError(u"Yeni girilen şifreler uyuşmuyor.")
-        
-        return True
+        if self.error == 1:
+            return self.confirm_newPassword
+        else:
+            if self.newPassword != self.confirm_newPassword:
+                raise forms.ValidationError(u"Yeni girilen şifreler uyuşmuyor !")
 
-    ##############################################
-    #   Aynı şifre girildiğinde hata verilecek   #
-    ##############################################
-
-    #def clean_newPassword(self):
-    #    currentPassword = self.cleaned_data.get("currentPassword")
-    #    newPassword = self.cleaned_data.get("newPassword")
-
-    #    if currentPassword == newPassword:
-    #        raise forms.ValidationError(u"Yeni girdiğiniz şifre mevcut şifrenizle aynı.") 
-    #       
-    #    return True
-
+            return self.confirm_newPassword
 
     def change(self):        
         
@@ -151,11 +162,7 @@ class AccountFormPassword(forms.Form):
                                  password=self.cleaned_data.get("newPassword"))
 
         return self.cleaned_data
-
-    class Meta:
-        fields = ("currentPassword", "newPassword", "confirm_newPassword")
-
-    
+ 
 
 # Kullanıcı giriş formu.
 class LoginForm(forms.Form):

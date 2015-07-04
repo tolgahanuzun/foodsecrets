@@ -97,7 +97,8 @@ def accountPassword(request):
 
         if request.method == "POST":
             form_accountPassword = AccountFormPassword(request.POST, user=request.user)
-
+ 
+            form_accountPassword.setValue()
             if form_accountPassword.is_valid():
                 
                 form_accountPassword.change()
