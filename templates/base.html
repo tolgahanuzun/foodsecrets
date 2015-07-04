@@ -32,6 +32,18 @@
 		<a class="navbar-brand" href="/">Food Secrets</a>
 	  </div>
 	  
+	   <div class="	navbar-header" id="logsearch">
+		 <a class="navbar-brand " href="#search">Search</a>
+	  </div>
+
+	<div id="search">
+    <button type="button" class="close">×</button>
+    <form>
+        <input type="search" value="" placeholder="keyword" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+	</div>
+
 	  {% if request.user.is_authenticated == False %}
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
