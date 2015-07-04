@@ -2,55 +2,65 @@
 
 {% block home%}
 
-<div class="row" id="Logincont">
-	<div class="col-sm-9 col-sm-push-3" id="content" >
+	<div class="row" id="Logincont">
+		
+		<div class="col-sm-9 col-sm-push-3" id="content" >
 
-		<div class="page-header">
-        <h2>Homapage </h2>
-    </div>
+			<div class="page-header">
+				<h2> Home Page </h2>
+			</div>
 
-    <div class="timeline">
-        <div class="line text-muted"></div>
-        <article class="panel panel-primary">
-    			  <div class="panel-heading icon">
-        			<i class="glyphicon glyphicon-plus"></i>
-            </div>
-         
-            <div class="panel-heading">
-              <h2 class="panel-title">New content added</h2>
-            </div>
-            
-            <div class="panel-body">
-                Some new content has been added.
-            </div>
-            
-            <div class="panel-footer">
-              <small>Footer is also supported!</small>
-            </div>
-            
-        </article>
+       <div class="timeline">
+			{% for meal in AllMeal %}
 
-       	<article class="panel panel-info panel-outline">
-    			<div class="panel-heading icon">
-            <i class="glyphicon glyphicon-info-sign"></i>
-        	</div>
-           
-          <div class="panel-body">
-                That is all.
-          </div>
-        </article>
-  	</div>
+				
+					
+					<div class="line text-muted" id="transp"></div>
+					<article class="panel panel-primary">
+				
+						<div class="panel-heading icon">
+							<i class="fa fa-plus"></i>
+						</div>
+				 
+						<div class="panel-heading">
+							<h2 class="panel-title">{{ meal.name }}</h2>
+						</div>
+						
+						<div class="panel-body">
+							{{ meal.description }}
+						</div>
+						
+						<div class="panel-footer">
+							<small>{{ meal.calorie }}</small>
+						</div>
+						
+					</article>
+
+			{% endfor %}
 
 
-	  <div class="profile-content">
-       
-    </div>
-    <!--                          -->
+
+			<article class="panel panel-info panel-outline">
+					
+				<div class="panel-heading icon">
+					<i class="glyphicon glyphicon-info-sign"></i>
+				</div>
+					 
+				<div class="panel-body">
+					That is all.
+				</div>
+
+			</article>
+		
+		</div>
+
+	
+		       
 
 	</div>
 
-  <div class="col-sm-3 col-sm-pull-9" id="userpanel" >
-    <div class="profile-sidebar">
+	<div class="col-sm-3 col-sm-pull-9" id="userpanel" >
+		<div class="profile-sidebar">
 			
 			<!-- SIDEBAR USERPIC -->
 			<div class="profile-userpic ">
@@ -58,19 +68,15 @@
 			</div>
 			<!-- END SIDEBAR USERPIC -->
 
-      <!-- SIDEBAR USER TITLE -->
+			<!-- SIDEBAR USER TITLE -->
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">
 					{{ request.user.get_full_name }}
 				</div>
-         <a href="addfood/" class="btn btn-primary">Add Food</a>
+				 <a href="addfood/" class="btn btn-primary">Add Food</a>
 			</div>
-
-			
-		
-		
-	  </div>
-
+    
+    </div>
 </div>
 
 {% endblock %}
