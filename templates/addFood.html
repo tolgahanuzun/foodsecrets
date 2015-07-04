@@ -11,7 +11,7 @@
 				<center> <h4>Content Add </h4></center>	
 	 			
 	 			<div class="panel panel-default">
-        	<div class="panel-body">
+        	 		<div class="panel-body">
 
         	  {% for area in form_addMeal %}
 
@@ -19,17 +19,7 @@
                 <input  class="form-control"  name="{{area.name}}" id="id_{{ area.name }}"placeholder="Meal Name" style="margin-bottom:10px;">
               {% endif %}
 
-              {% if area.name == "food_kind" %}
-            		<div class="col-sm-3" >
-	 	          		<div id="selecklab"> 
-	 		          		
-	 		          		<label for="sel1">Select Meal Category</label>
-
-  			        		{{ area }}
-  		
-  		        		</div>
-	 	       			</div>
-	 	       		{% endif %}
+            
               
               {% if area.name == "description" %}
             	  <textarea class="form-control counted" name="{{ area.name }}" id="id_{{ area.name }}" placeholder="Recipe" rows="10" style="margin-bottom:10px;"></textarea>
@@ -37,10 +27,22 @@
 
 	 	      	{% endfor %}
 
-          </div>
-        </div>
-      </div> 
+         		 	</div>
+        		</div>
+     	</div> 
+				 
+				 	{% for area in form_addMeal %}
 
+					  {% if area.name == "food_kind" %}
+      	 	<div class="col-sm-3" id="selecklab"  >
+		        <center> <label for="sel1">Select Meal Category</label>
+
+		        		{{ area }}
+		    	  </center>
+		    	</div>    
+		 	     {% endif %}
+	      	{% endfor %}
+    	
     	<!-- Row  addbar -->
 	 		
     	<div class="col-sm-9 ">
