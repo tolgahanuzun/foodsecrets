@@ -26,9 +26,16 @@ class AddingToMeal(forms.ModelForm):
         model = Food
         fields = ("name", "description","food_kind")
 
-    #def __init__(self, *args, **kwargs):
-    #    self.user = kwargs.pop('user', None)
-    #    super(AddingToMeal, self).__init__(*args, **kwargs)
+    def totalCalories(self, meal):
+
+        totalCalories = 0
+        material_list = MaterialList.objects.filter(food=meal)
+
+        for material in material_list:
+            totalCalories += material.name.calorie * material.amount
+
+        return totalCalories
+
 
     def save(self, commit=True):
         meal = super(AddingToMeal, self).save(commit=False)
@@ -36,23 +43,10 @@ class AddingToMeal(forms.ModelForm):
         if commit:
             meal.name = data.get("name")
             meal.description = data.get("description")
-            #meal.user = self.user
             meal.food_kind = data.get("food_kind")
             meal.save()
-            
-            #material_list.food=food
-            #material_list.name=data.get("material")
-            #material_list.amount=data.get("amount")
-            #material_list.save()
-
+ 
         return meal
-
-#class AddingToMaterial(forms.ModelForm):
-#    material = forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), required=True)
-#    amount = forms.IntegerField(label="Miktar",required=True, min_value=1, initial=1)
-#
-#    class Meta:
-#        fields = ("amount",)
 
 def custom_field_callback(field):
     #if field.name == 'name':
