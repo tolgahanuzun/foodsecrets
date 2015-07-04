@@ -9,6 +9,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, auth
 
 from .models import *
 from .forms import *
+from foods.models import Food
 
 # Kullanıcı girişini yapan fonksiyon.
 def login(request):
@@ -117,8 +118,11 @@ def accountPassword(request):
         return HttpResponseRedirect("/")
 
 def home(request):
+    
+    AllMeal = Food.objects.all()
+
     if request.user.is_authenticated():
-        return render(request, "home.html")
+        return render(request, "home.html", {'AllMeal':AllMeal})
     else:
         return HttpResponseRedirect("/")
 
