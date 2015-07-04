@@ -144,58 +144,6 @@ $(function () {
         init();
     });
 });
-<<<<<<< HEAD
-
-
-/* Options */
-
-$(document).ready(function() {
-    
-    var i = 0;
-    var row = $("#tab_logic tr").eq(1);
-    row.removeClass('hidden').remove();
-
-
-    function setRow(row, i) {
-        
-        row.find("select, input, textarea").each(function(){
-        
-            var name = $(this).attr('name').replace(/-[0-9]+-/, '-'+i+'-');
-            var id = $(this).attr('id').replace(/-[0-9]+-/, '-'+i+'-');
-            $(this).attr('name', name);
-            $(this).attr('id', id);
-        
-        });
-
-        $('#id_materiallist_set-TOTAL_FORMS').val(i+1);
-    }
-
-    var startRow = row.clone();
-    setRow(startRow, i);
-    $("#tab_logic").append(startRow);
-    i++;
-
-    $("#add_row").on("click", function() {
-        // Dynamic Rows Code
-        
-        var _row = row.clone()
-        setRow(_row, i);
-        
-        _row.find('.row-remove').click(function(){
-           
-           _row.remove();
-           $("#tab_logic tr").each(function(i){
-              if(i>0)
-                setRow($(this), i-1);
-           });
-
-        });
-
-        $("#tab_logic").append(_row);
-        i++;
-
-  });
-});
 
 /* Saerch*/
 
@@ -219,5 +167,3 @@ $(function () {
         return false;
     })
 });
-=======
->>>>>>> 62873e97bedab1b71f6a8bcfa35a2c56cc7a97d7
