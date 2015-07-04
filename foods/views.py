@@ -28,8 +28,7 @@ def addFood(request):
                     meal.save()
                     materialList_formset.save()
 
-                return render(request, "test.html", {'form_addMeal':form_addMeal,
-                                                    'materialList_formset':materialList_formset})
+                return HttpResponseRedirect("/home/addfood/")
             else:
                 return HttpResponse("Hata")
         else:
