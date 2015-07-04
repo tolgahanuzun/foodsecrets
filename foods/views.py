@@ -28,6 +28,10 @@ def addFood(request):
                     meal.save()
                     materialList_formset.save()
 
+                    totalCalories = form_addMeal.totalCalories(meal)
+                    meal.totalCalories = totalCalories
+                    meal.save() 
+
                 return HttpResponseRedirect("/home/addfood/")
             else:
                 return HttpResponse("Hata")
