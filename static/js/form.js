@@ -104,6 +104,8 @@ $(document).ready(function() {
             $(this).attr('id', id);
         
         });
+
+        $('#id_materiallist_set-TOTAL_FORMS').val(i+1);
     }
 
     var startRow = row.clone();

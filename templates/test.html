@@ -24,25 +24,12 @@
 	 	          		<div id="selecklab"> 
 	 		          		
 	 		          		<label for="sel1">Select Meal Category</label>
- 				            <!--<select class="form-control" id="sel1">
-    				
-						    	  	<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-											<option>Foood Category</option>
-			
-  			        		</select>-->
+
   			        		{{ area }}
   		
   		        		</div>
 	 	       			</div>
 	 	       		{% endif %}
-	
               
               {% if area.name == "description" %}
             	  <textarea class="form-control counted" name="{{ area.name }}" id="id_{{ area.name }}" placeholder="Recipe" rows="10" style="margin-bottom:10px;"></textarea>
@@ -54,19 +41,6 @@
         </div>
       </div> 
 
-      <!--{{ materialList_formset.management_form }}
-      {% for area in materialList_formset %}
-        <div>
-          {% for a in area %}
-            {% if a.type == "hidden" %}
-               <br> {{ a }}<br>
-            {% else %}
-               <br> {{ a }} {{ a.error }} {{ a.type }}
-            {% endif %}
-          {% endfor %}
-          
-        </div>
-      {% endfor %}-->
     	<!-- Row  addbar -->
 	 		
     	<div class="col-sm-9 ">
@@ -77,8 +51,8 @@
 				    
 				    	<thead>
 					    	<tr >
-						    	<th class="text-center " > Option </th>
-    					  	<th class="text-center"> Number </th>
+						    	<th class="text-center " > Material </th>
+    					  	<th class="text-center"> Amount </th>
 					    	</tr>
 				    	</thead>
 				    
@@ -98,7 +72,7 @@
 						    	    {% elif area.name == "amount" %}
 						    	      <td> {{ area }} </td>
 						    	    {% else %}
-						    	      <td> {{ area }} </td>
+						    	      {{ area }}
 						    	    {% endif %}
 
 						    	  {% endfor %}
@@ -115,18 +89,21 @@
 			    	</table>
 			  
 			  		<a id="add_row" class="btn btn-default pull-right">Add Row</a>
+            
+
+			  		<div class="row">
+			  			<div class="col-md-4"></div>
+			  			<div class="col-md-6">
+			    			<div class="col-xs-10  col-md-9 " >
+			      			<input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9">
+			    			</div>
+			  			</div>
+		  			</div>
+
 			  	</div>
 			  </div>
 			</div>
 
-			<div class="row">
-			  <div class="col-md-4"></div>
-			  <div class="col-md-8">
-			    <div class="col-xs-12  col-md-6 " >
-			      <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9">
-			    </div>
-			  </div>
-		  </div>
 		
 		</form>
 	</div>
