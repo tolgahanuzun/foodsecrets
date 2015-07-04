@@ -1,81 +1,19 @@
-
-/* Options */
-
-$(document).ready(function() {
-    
-    var i = 0;
-    var row = $("#tab_logic tr").eq(1);
-    row.removeClass('hidden').remove();
-
-
-    function setRow(row, i) {
-        
-        row.find("select, input, textarea").each(function(){
-        
-            var name = $(this).attr('name').replace(/-[0-9]+-/, '-'+i+'-');
-            var id = $(this).attr('id').replace(/-[0-9]+-/, '-'+i+'-');
-            $(this).attr('name', name);
-            $(this).attr('id', id);
-        
-        });
-
-        $('#id_materiallist_set-TOTAL_FORMS').val(i+1);
-    }
-
-    var startRow = row.clone();
-    setRow(startRow, i);
-    $("#tab_logic").append(startRow);
-    i++;
-
-    $("#add_row").on("click", function() {
-        // Dynamic Rows Code
-        
-        var _row = row.clone()
-        setRow(_row, i);
-        
-        _row.find('.row-remove').click(function(){
-           
-           _row.remove();
-           $("#tab_logic tr").each(function(i){
-              if(i>0)
-                setRow($(this), i-1);
-           });
-
-        });
-
-        $("#tab_logic").append(_row);
-        i++;
-
-  });
-});
-
-
-
-$(document).ready(function() {
-   $('#account-close').on('click', function (){
-   
-        url = "/home/"
-        window.location = url
-   });
-});
-
-
 $(function() {
 
     $('#login-form-link').click(function(e) {
-		$("#login-form").delay(100).fadeIn(100);
- 		$("#register-form").fadeOut(100);
-		$('#register-form-link').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
-	$('#register-form-link').click(function(e) {
-		$("#register-form").delay(100).fadeIn(100);
- 		$("#login-form").fadeOut(100);
-		$('#login-form-link').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
+        $("#login-form").delay(100).fadeIn(100);
+        $("#register-form").fadeOut(100);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+    $('#register-form-link').click(function(e) {
+        $("#register-form").delay(100).fadeIn(100);
+        $("#login-form").fadeOut(100);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
 
 });
 
@@ -145,6 +83,67 @@ $(function () {
     });
 });
 
+
+/* Options */
+
+$(document).ready(function() {
+    
+    var i = 0;
+    var row = $("#tab_logic tr").eq(1);
+    row.removeClass('hidden').remove();
+
+
+    function setRow(row, i) {
+        
+        row.find("select, input, textarea").each(function(){
+        
+            var name = $(this).attr('name').replace(/-[0-9]+-/, '-'+i+'-');
+            var id = $(this).attr('id').replace(/-[0-9]+-/, '-'+i+'-');
+            $(this).attr('name', name);
+            $(this).attr('id', id);
+        
+        });
+
+        $('#id_materiallist_set-TOTAL_FORMS').val(i+1);
+    }
+
+    var startRow = row.clone();
+    setRow(startRow, i);
+    $("#tab_logic").append(startRow);
+    i++;
+
+    $("#add_row").on("click", function() {
+        // Dynamic Rows Code
+        
+        var _row = row.clone()
+        setRow(_row, i);
+        
+        _row.find('.row-remove').click(function(){
+           
+           _row.remove();
+           $("#tab_logic tr").each(function(i){
+              if(i>0)
+                setRow($(this), i-1);
+           });
+
+        });
+
+        $("#tab_logic").append(_row);
+        i++;
+
+  });
+});
+
+/* Close Button */
+
+$(document).ready(function() {
+   $('#account-close').on('click', function (){
+   
+        url = "/home/"
+        window.location = url
+   });
+});
+
 /* Saerch*/
 
 $(function () {
@@ -159,11 +158,5 @@ $(function () {
             $(this).removeClass('open');
         }
     });
-    
-    
-    //Do not include! This prevents the form from submitting for DEMO purposes only!
-    $('form').submit(function(event) {
-        event.preventDefault();
-        return false;
-    })
+
 });

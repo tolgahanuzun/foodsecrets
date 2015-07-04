@@ -4,6 +4,7 @@
 
 <div class="row" id="Logincont">
 	<div class="col-sm-9 col-sm-push-3" id="content" >
+		
 		<form  accept-charset="UTF-8" action="/home/addfood/" method="POST">
 		{% csrf_token %}
 
@@ -18,9 +19,7 @@
         	    {% if area.name == "name" %}                 
                 <input  class="form-control"  name="{{area.name}}" id="id_{{ area.name }}"placeholder="Meal Name" style="margin-bottom:10px;">
               {% endif %}
-
-            
-              
+         
               {% if area.name == "description" %}
             	  <textarea class="form-control counted" name="{{ area.name }}" id="id_{{ area.name }}" placeholder="Recipe" rows="10" style="margin-bottom:10px;"></textarea>
               {% endif %}
@@ -29,19 +28,19 @@
 
          		 	</div>
         		</div>
-     	</div> 
+     			</div> 
 				 
 				 	{% for area in form_addMeal %}
 
 					  {% if area.name == "food_kind" %}
-      	 	<div class="col-sm-3" id="selecklab"  >
-		        <center> <label for="sel1">Select Meal Category</label>
-
-		        		{{ area }}
-		    	  </center>
-		    	</div>    
-		 	     {% endif %}
-	      	{% endfor %}
+      	 			<div class="col-sm-3" id="selecklab"  >
+		        		<center> <label for="sel1">Select Meal Category</label>
+									{{ area }}
+		    	  		</center>
+		    			</div>    
+		 	     	{% endif %}
+	      
+	      {% endfor %}
     	
     	<!-- Row  addbar -->
 	 		
