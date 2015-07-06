@@ -17,6 +17,8 @@ def timeDifference(created, current=None):
 
     created = timezone.localtime(created)
 
+    print timezone.now()
+
     if current.year == created.year:
         if current.month == created.month:
             if current.day == created.day:
