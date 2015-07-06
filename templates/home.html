@@ -2,9 +2,12 @@
 
 {% block home%}
 
+  {% load profiles_extra %}
+
+
 	<div class="row" id="Logincont">
 		
-		<div class="col-sm-9 col-sm-push-3" id="content" >
+		<div class="col-sm-10 col-sm-push-2" id="content" >
 
 			<div class="page-header">
 				<h2> Home Page </h2>
@@ -34,7 +37,10 @@
 						
 						<div class="panel-footer">
 							<small>
-								{{ meal.addingDate }}
+					
+								<!--{{ meal.addingDate|timesince:currentTime }}-->
+								{{ meal.addingDate|timeDifference:currentTime}}
+
 							</small>
 						</div>
 						
@@ -63,7 +69,7 @@
 
 	</div>
 
-	<div class="col-sm-3 col-sm-pull-9" id="userpanel" >
+	<div class="col-sm-2 col-sm-pull-10" id="userpanel" >
 		<div class="profile-sidebar">
 			
 			<!-- SIDEBAR USERPIC -->
