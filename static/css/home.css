@@ -205,17 +205,7 @@ Licensed under MIT
     margin-top: 61px;
     margin-left: -45px;
 }
-#search .close {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    color: #fff;
-  background-color: #428bca;
-  border-color: #357ebd;
-  opacity: 1;
-  padding: 10px 17px;
-  font-size: 27px;
-}
+
 
 #transp{
 
