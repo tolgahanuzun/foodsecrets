@@ -68,7 +68,7 @@ html,body{height:100%;}
 #newlogin {
     position: absolute;
     right: 0;
-    top: 5px;
+    top: 1px;
 }
 #newdrop {
     border-radius:4px;

@@ -30,7 +30,7 @@
 
 @media (min-width: 768px){
     #newlogin>li>a {
-   padding-top: 10px;
+   /*padding-top: 10px;*/
 padding-bottom: 15px;
 }
 
