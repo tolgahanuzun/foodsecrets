@@ -27,7 +27,7 @@ class Food(models.Model):
     user = models.ForeignKey(User, verbose_name=u"Kullanıcı")
     food_kind = models.ForeignKey(FoodKind, verbose_name=u"Tür")
     totalCalories = models.IntegerField(default=0, blank=True, verbose_name=u"Toplam Kalori")
-    addingDate = models.DateTimeField(default=timezone.localtime(timezone.now()), verbose_name=u"Eklenme Tarihi")
+    addingDate = models.DateTimeField(auto_now_add=True, verbose_name=u"Eklenme Tarihi")
 
     class Meta:
         verbose_name = u"Yemek"
