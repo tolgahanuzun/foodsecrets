@@ -10,6 +10,7 @@ class MaterialListInline(admin.TabularInline):
 
 class NewFood(admin.ModelAdmin):
     inlines = [MaterialListInline]
+    list_display = ('name', 'addingDate')
 
 admin.site.register(Food, NewFood)
 admin.site.register(FoodKind)
