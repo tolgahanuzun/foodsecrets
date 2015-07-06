@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^home/account/user/$', 'profiles.views.accountUser'),
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
     url(r'^home/addfood/$', 'foods.views.addFood'),
-    url(r'^test/$',views.test)
-]
+    url(r'^test/$',views.test),
+    url(r'^page/$',views.page)
+]   
     

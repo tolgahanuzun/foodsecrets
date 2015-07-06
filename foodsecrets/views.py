@@ -15,4 +15,7 @@ def index(request):
 
 def test(request):
     	return render(request, 'test.html',)
+
+def page(request):
+    	return render(request, 'page.html',)
     	
