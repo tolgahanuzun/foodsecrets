@@ -27,8 +27,9 @@
 				 
 						<div class="panel-heading">
 							<h2 class="panel-title">
-							  {{ meal.user.get_full_name }}    bir   {{ meal.food_kind }}   ekledi.
-							</h2>
+							  {{ meal.user.get_full_name }}    bir   {{ meal.food_kind }}   ekledi. 
+							<i class="pull-right fa fa-star-o "></i> </h2> 
+								<!-- hover star-->
 						</div>
 						
 						<div class="panel-body">
@@ -36,12 +37,14 @@
 						</div>
 						
 						<div class="panel-footer">
+						 <button type="button" class="pull-right btn btn-primary btn-sm" style="margin-top: -5px;">Small button</button>
 							<small>
 					
 								<!--{{ meal.addingDate|timesince:currentTime }}-->
 								{{ meal.addingDate|timeDifference:currentTime}}
 
 							</small>
+
 						</div>
 						
 					</article>
