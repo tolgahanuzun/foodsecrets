@@ -3,12 +3,12 @@
 {% block test%}
 
 <div class="row" id="Logincont">
-	<div class="col-sm-9 col-sm-push-3" id="content" >
+	<div class="col-sm-12" id="content" >
 		
 		<form  accept-charset="UTF-8" action="/home/addfood/" method="POST">
 		{% csrf_token %}
 
-			<div class="col-sm-9 ">
+			<div class="col-sm-6">
 				<center> <h4>Content Add </h4></center>	
 	 			
 	 			<div class="panel panel-default">
@@ -28,12 +28,13 @@
 
          		 	</div>
         		</div>
-     			</div> 
-				 
+
+        		<div class="col-md-6">
+
 				 	{% for area in form_addMeal %}
 
 					  {% if area.name == "food_kind" %}
-      	 			<div class="col-sm-3" id="selecklab"  >
+      	 			<div class="" id="selecklab"  >
 		        		<center> <label for="sel1">Select Meal Category</label>
 									{{ area }}
 		    	  		</center>
@@ -41,10 +42,14 @@
 		 	     	{% endif %}
 	      
 	      {% endfor %}
-    	
-    	<!-- Row  addbar -->
-	 		
-    	<div class="col-sm-9 ">
+    				</div>
+
+						
+
+     			</div> 
+				 
+
+				 <div class="col-sm-6" style="margin-top: 39px;">
       	<div class="panel panel-default">
     			<div class="panel-body">   
 			    	
@@ -64,7 +69,7 @@
 				    	  <!--{{ materialList_formset }}--> 
 				    	  {% for form in materialList_formset %}
 
-				    	    <tr class="hidden">
+				    	    <tr class="hidden" >
 				 
 			  		    	  {% for area in form %}
                       
@@ -79,7 +84,7 @@
 						    	  {% endfor %}
 
 						    	  <td data-name="del0">
-                  		<button type="button" class='btn btn-primary row-remove'>Delete</button>
+                  		<button id="butondelete" type="button" class='btn btn-primary row-remove'> X </button>
                 		</td>
                 	</tr>
 
@@ -90,40 +95,22 @@
 			    	</table>
 			  
 			  		<a id="add_row" class="btn btn-default pull-right">Add Row</a>
-            
-
-			  		<div class="row">
-			  			<div class="col-md-4"></div>
-			  			<div class="col-md-6">
-			    			<div class="col-xs-10  col-md-9 " >
-			      			<input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9">
-			    			</div>
-			  			</div>
-		  			</div>
-
-			  	</div>
+            </div>
 			  </div>
 			</div>
-
-		
+			<div class="row">
+  			<div class="col-md-6"></div>
+  			<div class="col-md-6">
+    			<div class="col-xs-6  col-md-6 " >
+      			<input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9">
+    			</div>
+  			</div>
+			</div> 
+			<br> <br> <br><br> <br> <br><br> <br> <br>
 		</form>
 	</div>
     
-  <div class="col-sm-3 col-sm-pull-9" id="userpanel2" >
-    <div class="profile-sidebar msg">
-			  
-		  <!-- SIDEBAR USERPIC -->
-		  <div class="profile-userpic ">
-			  <img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png" class="img-responsive">
-		  </div>
-		
-		  <div class="profile-usertitle">
-			  <div class="profile-usertitle-name">
-				  {{ request.user.get_full_name }}
-			  </div>
-		  </div>
-	  </div>
-  </div>
+ 
 
 </div>
 

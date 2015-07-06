@@ -203,3 +203,30 @@ html,body{height:100%;}
   margin:12px 0px 20px 0px;
 
 }
+
+@media (min-width: 1024px){
+tbody select {
+  width: 230px;
+}
+}
+
+
+@media (max-width: 930px){
+#id_materiallist_set-0-name, #id_materiallist_set-1-name, #id_materiallist_set-2-name,
+#id_materiallist_set-3-name,#id_materiallist_set-4-name, #id_materiallist_set-5-name,
+#id_materiallist_set-6-name, #id_materiallist_set-7-name,#id_materiallist_set-8-name{
+width: 120px;
+
+}
+input[type=number]{ 
+   
+    width:50px;
+    
+}
+}
+
+input[type=number]{ 
+   
+    width:70px;
+    
+}
