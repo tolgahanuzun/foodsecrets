@@ -1,8 +1,8 @@
 #Logincont{
-	margin-top: 60px;
+	margin-top: 50px;
 	margin-right: 0;
 	margin-left: 0;
-
+  background: url('/static/images/ice_age.png');
 }
 
 
@@ -16,7 +16,9 @@
 }
 
 #userpanel{
-	position: fixed; 
+	position:fixed; 
+  background: url('/static/images/restaurant.png');
+  height: 100%;
 
 }
 #userpanel2{
@@ -49,7 +51,7 @@ Licensed under MIT
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
-  background: #fff;
+ 
 }
 
 .profilebar {
