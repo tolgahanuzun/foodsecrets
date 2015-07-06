@@ -119,7 +119,7 @@ def accountPassword(request):
 
 def home(request):
     
-    AllMeal = Food.objects.all()
+    AllMeal = Food.objects.order_by("-addingDate")
 
     if request.user.is_authenticated():
         return render(request, "home.html", {'AllMeal':AllMeal})
