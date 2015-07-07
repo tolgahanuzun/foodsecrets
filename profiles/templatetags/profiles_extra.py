@@ -27,10 +27,20 @@ def timeDifference(created, current=None):
                         return u"Az Önce"
                     else:
                         return str(current.minute - created.minute) + u"  dk. önce"
+                elif current.hour-1 == created.hour:
+                    different_minute = current.minute + ( 60 - created.minute )
+
+                    if different_minute < 60:
+                        return str(different_minute) + u"  dk önce."
+                    elif different_minute >= 119:
+                        return "2 saat önce"
+                    elif different_minute >= 60:
+                        return "1 saat önce"
+
                 else:
                     return str(current.hour - created.hour) + u"  saat önce"
             elif current.day - 1 == created.day:
-                return u"Dün  " + str(created.hour) + ":" + str(created.minute)
+                return u"Dün  ," + str(created.hour) + ":" + str(created.minute)
             
         return str(created.day) + " " + str(created.mount) + " , " + str(created.hour) + ":" + str(created.minute)
     else:
