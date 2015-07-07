@@ -154,7 +154,8 @@ $(document).ready(function() {
    });
 });
 
-/* Saerch*/
+
+/* Search*/
 
 $(function () {
     $('a[href="#search"]').on('click', function(event) {
