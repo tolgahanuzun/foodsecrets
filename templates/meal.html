@@ -9,7 +9,7 @@
 		<div class="col-sm-10 col-sm-push-2" id="content" >
 
 			<div class="page-header">
-				<h2 class="degis"> {{ meal.name }} </h2>
+				<h2 class="degis"> {{ meal.name }} ( {{ meal.meal_kind }} )</h2>
 			</div>
 
          <div class="row marketing">
@@ -62,7 +62,14 @@
 				</div>
 			</div>
 		<div class="col-md-8 col-sm-8 col-xs-5"></div>
-			<div class="col-md-4 col-sm-4 col-xs-7 degis3" > Total calories: {{ meal.totalCalories }}<br> <br><br> <br></div>	
+			<div class="col-md-4 col-sm-4 col-xs-7 degis3" > Total calories: {{ meal.totalCalories }}<br></div>
+			<div class="col-md-4 col-sm-4 col-xs-7 degis3" > 
+				{% if  meal.favourite  == 0 %}
+			   Nobody add own favourite's meals.
+				{% else %}
+			 		{{ meal.favourite }} {% if meal.favourites > 1 %} people {% else %} person {% endif %} add own favourite's meals. 
+				{% endif %}<br>
+			</div>
 
 	</div>
 
@@ -76,13 +83,13 @@
 				
 			</div>
 			<!-- END SIDEBAR USERPIC -->
-
-			<!-- SIDEBAR USER TITLE -->
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">
 					{{ request.user.get_full_name }}
 				</div>
-				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a>
+				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a> <br><br>
+				 <a href="/home/myfavourites/" class="btn btn-primary">My Favorites</a> <br><br>
+				 <a href="/home/mostfavourites/" class="btn btn-primary">Most Favorites</a>
 			</div>
     
     </div>
