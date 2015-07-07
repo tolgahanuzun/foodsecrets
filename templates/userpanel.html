@@ -16,7 +16,7 @@
 				<div class="profile-usertitle" style="background:none;">
 				
 					<div class="profile-usertitle-name" style="background:none;">
-					{{ request.user.get_full_name }}
+					{{ user.get_full_name }}
 					</div>
 				</div>
 		</div>
@@ -37,18 +37,18 @@
              
             	<div class="panel panel-default" id="paneluser">
   							<div class="panel-body" style="background:none;">
-  							 <label>Name</label>: Name..
+  							 <label>First Name</label> : {{ user.first_name }}
  								</div>
 							</div>
 				
       	   		<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								 <label>UserName</label>: UserName..
+  								 <label>User Name</label> : {{ user.username }}
  								</div>
 							</div>
 							<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								 <label>Email</label>: Email..
+  								 <label>Email</label> : {{ user.email }}
  								</div>
 							</div>
 							
@@ -59,17 +59,17 @@
             	
 							<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								 <label>SurName</label>: SurName..
+  								 <label>Last Name</label> : {{ user.last_name }}
  								</div>
 							</div>
       	   		<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								 <label>Number</label>: Number..
+  								 <label>Telephone Number</label> : {{ user.profile.phone }}
  								</div>
 							</div>
 							<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								 <label>Post</label>: Number..
+  								 <label>Post</label>: {{ send }} send{{ send|pluralize }}
  								</div>
 							</div>
           </div>
@@ -77,7 +77,7 @@
 						<div class="form-group">
 						  <div class="row">
 							  <div class="col-sm-6 col-sm-offset-3">
-								  <input type="button" name="close" id="account-close" tabindex="4" class="form-control btn btn-login" value="Close">
+								  <input type="button" name="close" id="account-close" tabindex="1" class="form-control btn btn-login" value="Close">
 							  </div>
 						    
 						  </div>
