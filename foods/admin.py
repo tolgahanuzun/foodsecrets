@@ -8,9 +8,9 @@ from .forms import *
 class MaterialListInline(admin.TabularInline):
     model = MaterialList
 
-class NewFood(admin.ModelAdmin):
+class MealAdmin(admin.ModelAdmin):
     inlines = [MaterialListInline]
     list_display = ('name', 'addingDate')
 
-admin.site.register(Food, NewFood)
-admin.site.register(FoodKind)
+admin.site.register(Meal, MealAdmin)
+admin.site.register(MealKind)
