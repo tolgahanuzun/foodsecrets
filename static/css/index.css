@@ -230,3 +230,12 @@ input[type=number]{
     width:70px;
     
 }
+#radios{
+height: 45px;
+width: 100%;
+border:1px solid #ddd;
+font-size:16px;
+background-color: #fff;
+border-radius: 4px;
+transition:all 0.1s linear; 
+padding: 9px 12px;}
