@@ -119,15 +119,30 @@ def accountPassword(request):
         return HttpResponseRedirect("/")
 
 def home(request):
-    
-    AllMeal = Meal.objects.order_by("-addingDate")
-    currentTime = timezone.localtime(timezone.now())
-
     if request.user.is_authenticated():
+        AllMeal = Meal.objects.order_by("-addingDate")
+        currentTime = timezone.localtime(timezone.now())
+
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime})
     else:
         return HttpResponseRedirect("/")
+
+def showProfile(request, username):
+    if request.user.is_authenticated():
+        print username
+        try:
+            user = User.objects.get(username=username)
+            send = Meal.objects.filter(user=user).count()
+            
+        except Exception,e:
+            print e
+            return HttpResponseRedirect("/home/")
+
+        return render(request, "userPanel.html", {'user':user, 'send':send})
+    else:
+        return HttpResponseRedirect("/")
+
 
 
 
