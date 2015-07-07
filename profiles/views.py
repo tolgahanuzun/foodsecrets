@@ -118,13 +118,73 @@ def accountPassword(request):
     else:
         return HttpResponseRedirect("/")
 
-def home(request):
+def favouriteAdd(request, key):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.order_by("-addingDate")
+        meal = Meal.objects.get(id=key)
+        user = User.objects.get(username=request.user.username)
+        
+        meal.favourite += 1
+        meal.save()
+
+        user.profile.favourites.add(meal)
+        user.save()
+
+        return HttpResponseRedirect("/home/")
+    else:
+        return HttpResponseRedirect("/")
+
+def favouriteRemove(request, key):
+    if request.user.is_authenticated():
+        meal = Meal.objects.get(id=key)
+        user = User.objects.get(username=request.user.username)
+        
+        meal.favourite -= 1 
+        meal.save()
+
+        user.profile.favourites.remove(meal)
+        user.save()
+
+        return HttpResponseRedirect("/home/")
+    else:
+        return HttpResponseRedirect("/")
+
+def mostFavourites(request):
+    if request.user.is_authenticated():
+        AllMeal = Meal.objects.order_by("-favourite")
+        user = User.objects.get(username=request.user.username)
+        allFavouriteMeals = user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
         return render(request, "home.html", 
-                      {'AllMeal':AllMeal, 'currentTime':currentTime})
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                       'allFavouriteMeals': allFavouriteMeals,
+                       'mostFavouritesPage':True})
+    else:
+        return HttpResponseRedirect("/")
+
+def myFavourites(request):
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        AllMeal = user.profile.favourites.all()
+        currentTime = timezone.localtime(timezone.now())
+
+        return render(request, "home.html", 
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                       'myFavouritesPage':True})
+    else:
+        return HttpResponseRedirect("/")
+
+def home(request):
+    if request.user.is_authenticated():
+        AllMeal = Meal.objects.order_by("-addingDate")
+        user = User.objects.get(username=request.user.username)
+        allFavouriteMeals = user.profile.favourites.all()
+        currentTime = timezone.localtime(timezone.now())
+
+        return render(request, "home.html", 
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                       'allFavouriteMeals': allFavouriteMeals,
+                       'homePage':True})
     else:
         return HttpResponseRedirect("/")
 
