@@ -144,6 +144,16 @@ $(document).ready(function() {
    });
 });
 
+/* Small Button */
+
+$(document).ready(function() {
+   $('.meal').on('click', function (){
+   
+        url = "/home/meal/"+$(this).attr('id')
+        window.location = url
+   });
+});
+
 /* Saerch*/
 
 $(function () {
