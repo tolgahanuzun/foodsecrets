@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .models import *
 from .forms import *
-from foods.models import Food
+from foods.models import Meal
 
 # Kullanıcı girişini yapan fonksiyon.
 def login(request):
@@ -120,12 +120,8 @@ def accountPassword(request):
 
 def home(request):
     
-    AllMeal = Food.objects.order_by("-addingDate")
+    AllMeal = Meal.objects.order_by("-addingDate")
     currentTime = timezone.localtime(timezone.now())
-    
-    print "*************"
-    print currentTime.hour
-    print "*************"
 
     if request.user.is_authenticated():
         return render(request, "home.html", 
