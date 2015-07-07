@@ -44,5 +44,20 @@ def addFood(request):
     else:
         return HttpResponseRedirect("/")
 
+def showMeal(request, key=None):
+    if key != None:
+        try:
+            meal = Meal.objects.get(id=key)
+            materialList = MaterialList.objects.filter(meal=meal)
+        except:
+            return  HttpResponse("Hata")
+
+
+        return render(request, 'meal.html', {'meal':meal, 'materialList':materialList})
+    else:
+        return HttpResponse(u"İd yok.")
+
+
+
 
 
