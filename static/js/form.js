@@ -154,6 +154,24 @@ $(document).ready(function() {
    });
 });
 
+/*favorite*/
+$(document).ready(function() {
+   $('.star').on('click', function (){
+        if($(this).attr('class')=='fa-star-o'){
+              $(this).removeClass('fa-star-o')
+              $(this).addClass('fa-star')
+         }else
+         {
+            $(this).removeClass('fa-star')
+              $(this).addClass('fa-star-o')
+         }
+      
+        //url = "/home/meal/"+$(this).attr('id')
+        //window.location = url
+   });
+});
+
+
 
 /* Search*/
 
@@ -171,3 +189,4 @@ $(function () {
     });
 
 });
+

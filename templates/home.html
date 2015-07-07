@@ -26,8 +26,16 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 							  <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u></a>  bir   {{ meal.meal_kind }}   ekledi. 
-							<i class="pull-right fa fa-star-o "></i> </h2> 
-								<!-- hover star-->
+						     	
+						     	<!-- favori butonu-->
+							<div class="pull-right stars active">
+								<button id="{{meal.id}}" class="fa fa-star-o star"> </button>
+								<div class="ring"></div>
+								<div class="ring2"></div>
+							</div>
+							
+							</h2> 
+								<!-- favori butonu-->
 						</div>
 						
 						<div class="panel-body">
@@ -86,7 +94,8 @@
 				<div class="profile-usertitle-name">
 					{{ request.user.get_full_name }}
 				</div>
-				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a>
+				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a> <br><br>
+				 <a href="/home/addfood/" class="btn btn-primary">My Favorite</a>
 			</div>
     
     </div>
