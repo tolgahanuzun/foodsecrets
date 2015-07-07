@@ -22,7 +22,7 @@ class Material(models.Model):
     material_kind = models.ForeignKey(MaterialKind, verbose_name=u"Tür")
     amount = models.IntegerField(validators=[MinValueValidator(1),
                                       MaxValueValidator(2000)], verbose_name="Miktar")
-    calorie = models.IntegerField(validators=[MinValueValidator(1),
+    calorie = models.FloatField(validators=[MinValueValidator(1),
                                       MaxValueValidator(2000)], verbose_name="Kalori")
 
 
