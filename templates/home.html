@@ -25,7 +25,7 @@
 				 
 						<div class="panel-heading">
 							<h2 class="panel-title">
-							  {{ meal.user.get_full_name }}    bir   {{ meal.meal_kind }}   ekledi. 
+							  <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u></a>  bir   {{ meal.meal_kind }}   ekledi. 
 							<i class="pull-right fa fa-star-o "></i> </h2> 
 								<!-- hover star-->
 						</div>
