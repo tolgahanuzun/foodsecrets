@@ -5,16 +5,16 @@ from django.core.validators import RegexValidator
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class MaterialKind(models.Model):
-    name = models.CharField(primary_key=True, max_length=10, verbose_name=u"Adı")
+    kind = models.CharField(primary_key=True, max_length=10, verbose_name=u"Adı")
 
     class Meta:
         verbose_name = u"Malzeme Türü"
         verbose_name_plural = u"Malzeme Türleri"
 
-        ordering = ["name"] 
+        ordering = ["kind"] 
 
     def __unicode__(self):
-        return self.name
+        return self.kind
 
 
 class Material(models.Model):
@@ -33,4 +33,4 @@ class Material(models.Model):
         ordering = ["name"] 
 
     def __unicode__(self):
-        return self.name + " ( " + str(self.amount) + " " + self.material_kind.name + " = " + str(self.calorie) + " kalori ) "
+        return self.name + " ( " + str(self.amount) + " " + self.material_kind.kind + " = " + str(self.calorie) + " kalori ) "
