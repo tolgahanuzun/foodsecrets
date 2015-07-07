@@ -2,7 +2,6 @@
   background:none; 
   margin-bottom:15px;
   border-radius: 15px;
-  
 }
 
 #login-dp{
@@ -205,3 +204,20 @@ padding-bottom: 15px;
 }
 
 
+.degis{
+
+    font-family: 'Tangerine', serif;
+    font-size: 48px;
+
+}
+
+.degis2{
+    font-family: 'Tangerine', serif;
+    font-size:40px;
+}
+
+.degis3{
+    font-family: 'Tangerine', serif;
+    font-size:40px;
+    font-weight: 600;
+}
