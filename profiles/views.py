@@ -130,16 +130,20 @@ def home(request):
 
 def showProfile(request, username):
     if request.user.is_authenticated():
-        print username
-        try:
-            user = User.objects.get(username=username)
-            send = Meal.objects.filter(user=user).count()
-            
-        except Exception,e:
-            print e
-            return HttpResponseRedirect("/home/")
+        if request.user.username != username:
+            try:
+                user = User.objects.get(username=username)
+                send = Meal.objects.filter(user=user).count()
+            except Exception,e:
+                return HttpResponseRedirect("/home/")
 
-        return render(request, "userPanel.html", {'user':user, 'send':send})
+            if not user.profile.secret_profile:
+                return render(request, "userPanel.html", {'user':user, 'send':send})
+            else:
+                return HttpResponse(u"Gizli")
+        else:
+            send = Meal.objects.filter(user=request.user).count()
+            return render(request, "userPanel.html", {'user':request.user, 'send':send})
     else:
         return HttpResponseRedirect("/")
 

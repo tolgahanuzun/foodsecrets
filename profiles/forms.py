@@ -42,7 +42,8 @@ class RegistrationForm(UserCreationForm):
            "phone":data.get("phone"),
            "email":data.get("email"),
            "password1":data.get("password1"),
-           "password2":data.get("password2")
+           "password2":data.get("password2"),
+           "vehicle":data.get("vehicle")
         }
 
         return values
@@ -66,6 +67,7 @@ class AccountFormUser(forms.Form):
     last_name = forms.CharField(label=u"Last Name", required=True)
     email = forms.EmailField(label=u"Email", required=True)
     phone = forms.CharField(label=u"Phone:", required=False)
+    secret_profile = forms.BooleanField(label=u"Secret Profile", required=False)
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -95,6 +97,7 @@ class AccountFormUser(forms.Form):
 
         user_profile.profile = self.user
         user_profile.phone = data.get("phone")
+        user_profile.secret_profile = data.get("secret_profile")
         user_profile.save()
 
         return self.user
