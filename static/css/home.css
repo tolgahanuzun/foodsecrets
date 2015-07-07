@@ -16,6 +16,7 @@
   margin-top: 34px;
   margin-right: 0;
   margin-left: 0;
+    background: url('/static/images/restaurant.png');
 }
 
 #userpanel{
@@ -58,8 +59,8 @@ Licensed under MIT
 }
 
 .profilebar {
-  padding: 20px 0 10px 23px;
-  background: #fff;
+  padding: 10px 0 10px 23px;
+  
 }
 
 .profile-userpic img {
