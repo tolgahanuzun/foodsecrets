@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^login/$', 'profiles.views.login'),
     url(r'^logout/$', 'profiles.views.logout'),
     url(r'^home/$', 'profiles.views.home'),
+    url(r'^home/(?P<username>[\w]+)$', 'profiles.views.showProfile', name='user_profile'),
     url(r'^home/account/user/$', 'profiles.views.accountUser'),
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
     url(r'^home/addfood/$', 'foods.views.addFood'),
