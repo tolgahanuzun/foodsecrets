@@ -6,6 +6,7 @@ from django import template
 from django.template import Template, Context, RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -44,18 +45,18 @@ def addFood(request):
     else:
         return HttpResponseRedirect("/")
 
+
 def showMeal(request, key=None):
-    if key != None:
+    if request.user.is_authenticated():
         try:
             meal = Meal.objects.get(id=key)
             materialList = MaterialList.objects.filter(meal=meal)
         except:
-            return  HttpResponse("Hata")
-
+            return  HttpResponseRedirect("/home/")
 
         return render(request, 'meal.html', {'meal':meal, 'materialList':materialList})
     else:
-        return HttpResponse(u"İd yok.")
+        return HttpResponseRedirect("/")
 
 
 
