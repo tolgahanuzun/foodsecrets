@@ -33,7 +33,7 @@
 
 				 	{% for area in form_addMeal %}
 
-					  {% if area.name == "food_kind" %}
+					  {% if area.name == "meal_kind" %}
       	 			<div class="" id="selecklab"  >
 		        		<center> <label for="sel1">Select Meal Category</label>
 									{{ area }}
@@ -73,7 +73,7 @@
 				 
 			  		    	  {% for area in form %}
                       
-                      {% if area.name = "name" %}
+                      {% if area.name = "material" %}
 						    	      <td > {{ area }} </td>
 						    	    {% elif area.name == "amount" %}
 						    	      <td> {{ area }} </td>
