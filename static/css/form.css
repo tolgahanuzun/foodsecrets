@@ -1,3 +1,10 @@
+#paneluser{
+  background:none; 
+  margin-bottom:15px;
+  border-radius: 15px;
+  
+}
+
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
