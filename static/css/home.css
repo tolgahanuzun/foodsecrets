@@ -4,15 +4,18 @@
 	margin-left: 0;
   background: url('/static/images/ice_age.png');
 }
-
+#userpanl{
+  margin-top: 36px;
+  margin-right: 0;
+  margin-left: 0;
+  background: url('/static/images/restaurant.png');
+}
 
 
 #formcont{
   margin-top: 34px;
   margin-right: 0;
   margin-left: 0;
-
-
 }
 
 #userpanel{
