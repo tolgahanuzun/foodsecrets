@@ -18,4 +18,7 @@ def test(request):
 
 def page(request):
     	return render(request, 'page.html',)
+
+def userpanel(request):
+		return render(request, 'userpanel.html',)
     	

@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
     url(r'^home/addfood/$', 'foods.views.addFood'),
     url(r'^test/$',views.test),
-    url(r'^page/$',views.page)
+    url(r'^page/$',views.page),
+    url(r'^userpanel/$',views.userpanel)
 ]   
     
