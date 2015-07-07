@@ -15,8 +15,6 @@
 
        <div class="timeline">
 			{% for meal in AllMeal %}
-
-				
 					
 					<div class="line text-muted" id="transp"></div>
 					<article class="panel panel-primary">
@@ -27,7 +25,7 @@
 				 
 						<div class="panel-heading">
 							<h2 class="panel-title">
-							  {{ meal.user.get_full_name }}    bir   {{ meal.food_kind }}   ekledi. 
+							  {{ meal.user.get_full_name }}    bir   {{ meal.meal_kind }}   ekledi. 
 							<i class="pull-right fa fa-star-o "></i> </h2> 
 								<!-- hover star-->
 						</div>
@@ -37,7 +35,7 @@
 						</div>
 						
 						<div class="panel-footer">
-						 <button type="button" class="pull-right btn btn-primary btn-sm" style="margin-top: -5px;">Small button</button>
+						 <button type="button" id="{{ meal.id }}" class="pull-right btn btn-primary btn-sm meal" style="margin-top: -5px;">Show Meal</button>
 							<small>
 					
 								<!--{{ meal.addingDate|timesince:currentTime }}-->
@@ -88,7 +86,7 @@
 				<div class="profile-usertitle-name">
 					{{ request.user.get_full_name }}
 				</div>
-				 <a href="addfood/" class="btn btn-primary">Add Food</a>
+				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a>
 			</div>
     
     </div>
