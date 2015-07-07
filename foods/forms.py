@@ -20,19 +20,22 @@ class AddingToMeal(forms.ModelForm):
     name = forms.CharField(label=u"İsim", max_length=100, required=True)
     description = forms.CharField(label=u"Tarif", max_length=1000, 
                                 required=True, widget=forms.Textarea)
-    food_kind = forms.ModelChoiceField(label=u"Kind", queryset=FoodKind.objects.all(), required=True)
+    meal_kind = forms.ModelChoiceField(label=u"Kind", queryset=MealKind.objects.all(), required=True)
 
     class Meta:
-        model = Food
-        fields = ("name", "description","food_kind")
+        model = Meal
+        fields = ("name", "description","meal_kind")
 
     def totalCalories(self, meal):
 
         totalCalories = 0
-        material_list = MaterialList.objects.filter(food=meal)
+        material_list = MaterialList.objects.filter(meal=meal)
 
         for material in material_list:
-            totalCalories += material.name.calorie * material.amount
+            value = material.amount / float(material.material.amount)
+            value *= material.material.calorie 
+
+            totalCalories += value
 
         return totalCalories
 
@@ -43,7 +46,7 @@ class AddingToMeal(forms.ModelForm):
         if commit:
             meal.name = data.get("name")
             meal.description = data.get("description")
-            meal.food_kind = data.get("food_kind")
+            meal.meal_kind = data.get("food_kind")
             meal.save()
  
         return meal
@@ -65,9 +68,9 @@ def custom_field_callback(field):
     else:
         return field.formfield()
         
-MaterialListFormSet = inlineformset_factory(Food, MaterialList, 
+MaterialListFormSet = inlineformset_factory(Meal, MaterialList, 
                                             formfield_callback=custom_field_callback,
-                                            fields=("name","amount"), can_delete=False, extra=1)
+                                            fields=("material","amount"), can_delete=False, extra=1)
 
 
 
