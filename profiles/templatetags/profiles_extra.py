@@ -11,6 +11,13 @@ def subtract(value, arg):
 
 
 @register.filter
+def hasMeal(mealList, meal):
+    if meal in mealList:
+        return True
+    else:
+        return False
+
+@register.filter
 def timeDifference(created, current=None):
     if current == None:
         current = timezone.localtime(timezone.now())
