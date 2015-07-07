@@ -28,6 +28,7 @@ class Meal(models.Model):
     meal_kind = models.ForeignKey(MealKind, verbose_name=u"Tür")
     totalCalories = models.FloatField(default=0, blank=True, verbose_name=u"Toplam Kalori")
     addingDate = models.DateTimeField(auto_now_add=True, verbose_name=u"Eklenme Tarihi")
+    favourite = models.IntegerField(default=0, blank=True, verbose_name=u"Popülerliği")
 
     class Meta:
         verbose_name = u"Yemek"
