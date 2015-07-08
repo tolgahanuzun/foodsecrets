@@ -118,33 +118,31 @@ def accountPassword(request):
     else:
         return HttpResponseRedirect("/")
 
-def favouriteAdd(request, key):
+def favouriteToggle(request, key):
     if request.user.is_authenticated():
-        meal = Meal.objects.get(id=key)
+        try:
+            meal = Meal.objects.get(id=key)
+        except:
+            return HttpResponseRedirect("/home/")
+
         user = User.objects.get(username=request.user.username)
-        
-        meal.favourite += 1
-        meal.save()
 
-        user.profile.favourites.add(meal)
-        user.save()
+        if meal in user.profile.favourites.all():
+            meal.favourite -= 1 
+            meal.save()
 
-        return HttpResponseRedirect("/home/")
-    else:
-        return HttpResponseRedirect("/")
+            user.profile.favourites.remove(meal)
+            user.save()
 
-def favouriteRemove(request, key):
-    if request.user.is_authenticated():
-        meal = Meal.objects.get(id=key)
-        user = User.objects.get(username=request.user.username)
-        
-        meal.favourite -= 1 
-        meal.save()
+            return HttpResponse("Sub")
+        else:
+            meal.favourite += 1 
+            meal.save()
 
-        user.profile.favourites.remove(meal)
-        user.save()
+            user.profile.favourites.add(meal)
+            user.save()
 
-        return HttpResponseRedirect("/home/")
+            return HttpResponse("Add")
     else:
         return HttpResponseRedirect("/")
 
