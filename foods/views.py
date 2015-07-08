@@ -14,7 +14,7 @@ from .forms import *
 # Create your views here.
 
 
-def addFood(request):
+def addMeal(request):
 
     if request.user.is_authenticated():
         if request.method == "POST":
@@ -33,7 +33,7 @@ def addFood(request):
                     meal.totalCalories = totalCalories
                     meal.save() 
 
-                return HttpResponseRedirect("/home/addfood/")
+                return HttpResponseRedirect("/home/addmeal/")
             else:
                 return HttpResponse("Hata")
         else:
