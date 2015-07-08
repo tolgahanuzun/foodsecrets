@@ -218,5 +218,20 @@ Licensed under MIT
 
 #transp{
 
-color:rgba(119, 119, 119, 0.01);
+  color:rgba(119, 119, 119, 0.01);
+}
+
+#backhomepage {
+  position: fixed;
+  bottom: 79%;
+  right: 35px;
+  background: rgba(100, 100, 100, 0.4);
+  font-size: 40px; 
+  text-align: center;
+  line-height: 40px;
+  width: 40px;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 999;
+  transition:background-color 0.3s linear;
 }
