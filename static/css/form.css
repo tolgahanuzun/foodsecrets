@@ -262,8 +262,8 @@ span:active {
       cursor: pointer;
 }
 
-.active span,
-.active-2 span {
+.active ,
+.active-2  {
       color: #F5CC27 !important;
 }
 
