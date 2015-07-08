@@ -11,15 +11,28 @@
 
 			<div class="page-header">
       	{% if homePage %}
-				  <h2> Home Page </h2>
-				{% elif myFavourites %}
-				  <h2> Your Favourites </h2>
+				  <h2 class="degis" > Home Page </h2>
+				{% elif myFavouritesPage %}
+				  <h2 class="degis"> Your Favourite Meals </h2>
+				{% elif mostFavouritesPage %}
+				  <h2 class="degis"> Most Favourite Meals </h2>
 				{% else %}
-				  <h2> Most Favourites </h2>
+				  <h2 class="degis"> Your Meals </h2>
 				{% endif %}	
 			</div>
 
-       <div class="timeline">
+			{% if myFavouritesPage or myMealsPage %}
+				<div >
+					Select All<input  type="checkbox" id="selectall" name="selectall"> 
+				</div>
+			{% endif %}
+
+      <div class="timeline">
+      
+      {% if myFavouritesPage or myMealsPage %}
+      	<form accept-charset="UTF-8" method="GET">
+      {% endif %}
+			
 			{% for meal in AllMeal %}
 					
 					<div class="line text-muted" id="transp"></div>
@@ -32,28 +45,46 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 							  {% if homePage %}
-							  	<a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u></a>  bir   {{ meal.meal_kind }}   ekledi.
+
+							    {% if meal.user.profile.secret_profile %}
+							  		<a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}" class="btn disabled" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi.
+							    {% else %}
+							      <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi.
+							    {% endif %}
+
+							  {% elif myMealsPage %}
+                  {{ meal.name }} ( {{ meal.meal_kind }} )
 							  {% else %}
-							    {{ meal.name }} ( <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u></a> )
+							    {% if meal.user.profile.secret_profile %}
+							  		 {{ meal.name }} ( <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}" class="btn disabled" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u></a> )
+							    {% else %}
+							       {{ meal.name }} ( <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}" > <u>{{ meal.user.get_full_name }}</u></a> )
+							    {% endif %}
+							    
 							  {% endif %} 
 						     	
 						  
 						  <!-- favori butonu-->
 						  {% if homePage or mostFavouritesPage %}
 						    {% if request.user != meal.user %}
-							    <div class="pull-right stars active" style="background: transparent;
-      border: transparent;">
+							    <div class="pull-right stars active" style="background: transparent;border: transparent;">
 
 								  	{% if allFavouriteMeals|hasMeal:meal %}
 									  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
-      border: transparent;"></button>
+									  	 border: transparent;"></button>
 										{% else %}
 								  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
-      border: transparent;"></button>
+								  		border: transparent;"></button>
 										{% endif %}
 										
 									</div>
 								{% endif%}
+							{% endif %}
+
+							{% if myFavouritesPage or myMealsPage %}
+							  <div class="pull-right stars active" style="background: transparent;border: transparent;">
+							  	<input type="checkbox" id="{{ meal.id }}" name="meal" value="{{ meal.id }}" class="checkbox_container">
+							  </div>
 							{% endif %}
 							
 							</h2> 
@@ -77,8 +108,11 @@
 					</article>
 
 			{% endfor %}
-
-
+    
+      {% if myFavouritesPage or myMealsPage %}
+        	<button type="Submit" class="btn btn-default pull-right" value="Delete"> Seçili Öğeleri Kaldır </button>
+      	<form>
+      {% endif %}
 
 			<article class="panel panel-info panel-outline">
 					
@@ -93,10 +127,7 @@
 			</article>
 		
 		</div>
-
-	
-		       
-
+	       
 	</div>
 
 	<div class="col-sm-2 col-sm-pull-10" id="userpanel" >
@@ -115,12 +146,17 @@
 				<div class="profile-usertitle-name">
 					{{ request.user.get_full_name }}
 				</div>
-				 <a href="/home/addfood/" class="btn btn-primary">Add Food</a> <br><br>
+				 <a href="/home/addmeal/" class="btn btn-primary">Add Meal</a> <br><br>
 				 <a href="/home/myfavourites/" class="btn btn-primary">My Favorites</a> <br><br>
-				 <a href="/home/mostfavourites/" class="btn btn-primary">Most Favorites</a>
+				 <a href="/home/mostfavourites/" class="btn btn-primary">Most Favorites</a> <br><br>
+				 <a href="/home/mymeals/" class="btn btn-primary">My Meals</a>
 			</div>
     
     </div>
+    
+    {% if myFavouritesPage or mostFavouritesPage or myMealsPage %}
+      <a id="backhomepage" href="/home/" class="fa fa-home"></a>
+    {% endif %}
 </div>
 
 {% endblock %}
