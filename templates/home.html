@@ -41,15 +41,17 @@
 						  <!-- favori butonu-->
 						  {% if homePage or mostFavouritesPage %}
 						    {% if request.user != meal.user %}
-							    <div class="pull-right stars active">
+							    <div class="pull-right stars active" style="background: transparent;
+      border: transparent;">
 
 								  	{% if allFavouriteMeals|hasMeal:meal %}
-									  	<button id="{{meal.id}}" class="fa fa-star star"></button>
+									  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
+      border: transparent;"></button>
 										{% else %}
-								  		<button id="{{meal.id}}" class="fa fa-star-o star"></button>
+								  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
+      border: transparent;"></button>
 										{% endif %}
-										<div class="ring"></div>
-										<div class="ring2"></div>
+										
 									</div>
 								{% endif%}
 							{% endif %}
