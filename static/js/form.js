@@ -164,7 +164,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             }).done(function(res, status) {
-                console.log(res);
+            
                 if(res == "Sub")
                 {
                     $(self).removeClass('fa-star').addClass('fa-star-o');
@@ -173,18 +173,23 @@ $(document).ready(function() {
                 {
                     $(self).removeClass('fa-star-o').addClass('fa-star');
                 }
-            });
+        });
 
     });
 });
 
- //$(this).removeClass('fa-star-o');
-            //$(this).addClass('fa-star');
-    
-            //$(this).removeClass('fa-star');
-            //$(this).addClass('fa-star-o');
+/* Select All */
 
-/* Search*/
+$(document).ready(function() {
+   $('#selectall').change(function(event) {  //on click
+       if(this.checked) { // check select status
+           $(".checkbox_container").prop("checked", true);
+       }else{
+           $(".checkbox_container").prop("checked", false);
+       }
+   });
+ 
+});
 
 $(function () {
     $('a[href="#search"]').on('click', function(event) {
