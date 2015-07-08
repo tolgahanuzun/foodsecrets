@@ -22,15 +22,19 @@
 			</div>
 
 			{% if myFavouritesPage or myMealsPage %}
-				<div >
-					Select All<input  type="checkbox" id="selectall" name="selectall"> 
-				</div>
+			  {% if meals_available %}
+					<div >
+						Select All<input  type="checkbox" id="selectall" name="selectall"> 
+					</div>
+				{% endif %}
 			{% endif %}
 
       <div class="timeline">
       
       {% if myFavouritesPage or myMealsPage %}
-      	<form accept-charset="UTF-8" method="GET">
+        {% if meals_available %}
+      	  <form accept-charset="UTF-8" method="GET">
+        {% endif %}
       {% endif %}
 			
 			{% for meal in AllMeal %}
@@ -82,9 +86,11 @@
 							{% endif %}
 
 							{% if myFavouritesPage or myMealsPage %}
-							  <div class="pull-right stars active" style="background: transparent;border: transparent;">
-							  	<input type="checkbox" id="{{ meal.id }}" name="meal" value="{{ meal.id }}" class="checkbox_container">
-							  </div>
+								{% if meals_available %}
+							  	<div class="pull-right stars active" style="background: transparent;border: transparent;">
+							  		<input type="checkbox" id="{{ meal.id }}" name="meal" value="{{ meal.id }}" class="checkbox_container">
+							  	</div>
+							  {% endif %}
 							{% endif %}
 							
 							</h2> 
@@ -110,8 +116,10 @@
 			{% endfor %}
     
       {% if myFavouritesPage or myMealsPage %}
-        	<button type="Submit" class="btn btn-default pull-right" value="Delete"> Seçili Öğeleri Kaldır </button>
-      	<form>
+        {% if meals_available %}
+        		<button type="Submit" class="btn btn-default pull-right" value="Delete"> Seçili Öğeleri Kaldır </button>
+      		<form>
+      	{% endif %}
       {% endif %}
 
 			<article class="panel panel-info panel-outline">
@@ -119,9 +127,14 @@
 				<div class="panel-heading icon">
 					<i class="glyphicon glyphicon-info-sign"></i>
 				</div>
-					 
+				
+				
 				<div class="panel-body">
-					That is all.
+				  {% if meals_available %}
+						That is all.
+					{% else %}
+					  Meal not available
+					{% endif %}
 				</div>
 
 			</article>
