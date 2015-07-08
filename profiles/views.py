@@ -139,16 +139,24 @@ def favouriteToggle(request, key):
     else:
         return HttpResponseRedirect("/")
 
+def mealsAvailable(all_meal):
+    if all_meal.count() == 0:
+        return False
+
+    return True
+
 def mostFavourites(request):
     if request.user.is_authenticated():
         AllMeal = Meal.objects.order_by("-favourite")
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
+        meals_available = mealsAvailable(AllMeal)
+
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                        'allFavouriteMeals': allFavouriteMeals,
-                       'mostFavouritesPage':True})
+                       'mostFavouritesPage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
@@ -162,20 +170,30 @@ def myFavourites(request):
                 try:
                     meal = Meal.objects.get(id=int(meal_id))
                 except:
-                    return HttpResponseRedirect("/home/myfavourites/")
+                    ############################
+                    # Güzel hata mesajı verdir #
+                    ############################   
+                    return HttpResponse(u"Buna Yetkiniz Yok!")
 
                 if meal in request.user.profile.favourites.all():
                     request.user.profile.favourites.remove(meal)
                     request.user.save()
                     meal.favourite -= 1 
                     meal.save()
+                else:
+                    ############################
+                    # Güzel hata mesajı verdir #
+                    ############################   
+                    return HttpResponse(u"Buna Yetkiniz Yok!")
 
         AllMeal = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
+        meals_available = mealsAvailable(AllMeal)
+
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
-                       'myFavouritesPage':True})
+                       'myFavouritesPage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
@@ -190,7 +208,10 @@ def myMeals(request):
                 try:
                     meal = Meal.objects.get(id=int(meal_id))
                 except:
-                    return HttpResponseRedirect("/home/myfavourites/")
+                    ############################
+                    # Güzel hata mesajı verdir #
+                    ############################   
+                    return HttpResponse(u"Buna Yetkiniz Yok!")
 
                 if meal in user_mealList:
                     material_list = MaterialList.objects.filter(meal=meal)
@@ -207,9 +228,11 @@ def myMeals(request):
         AllMeal = Meal.objects.filter(user=request.user)
         currentTime = timezone.localtime(timezone.now())
 
+        meals_available = mealsAvailable(AllMeal)
+
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
-                       'myMealsPage':True})
+                       'myMealsPage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
@@ -219,10 +242,12 @@ def home(request):
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
+        meals_available = mealsAvailable(AllMeal)
+
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                        'allFavouriteMeals': allFavouriteMeals,
-                       'homePage':True})
+                       'homePage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
