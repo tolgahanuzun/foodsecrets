@@ -160,17 +160,17 @@ $(document).ready(function() {
 
         if($(this).hasClass('fa-star-o'))
         {
-            $(this).removeClass('fa-star-o');
-            $(this).addClass('fa-star');
+            //$(this).removeClass('fa-star-o');
+            //$(this).addClass('fa-star');
             url = "/home/favourite/add/"+$(this).attr('id')
         }
         else
         {
-            $(this).removeClass('fa-star');
-            $(this).addClass('fa-star-o');
+            //$(this).removeClass('fa-star');
+            //$(this).addClass('fa-star-o');
             url = "/home/favourite/remove/"+$(this).attr('id')
         }
-
+        
     window.location = url
     location.reload();
     });
