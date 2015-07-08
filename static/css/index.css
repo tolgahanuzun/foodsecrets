@@ -239,3 +239,6 @@ background-color: #fff;
 border-radius: 4px;
 transition:all 0.1s linear; 
 padding: 9px 12px;}
+
+#radios span {
+  opacity: 0.4;}
