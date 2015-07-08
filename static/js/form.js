@@ -157,26 +157,32 @@ $(document).ready(function() {
 /*favorite*/
 $(document).ready(function() {
     $('.star').on('click', function (){
+            
+        var url = "/home/favourite/toggle/"+$(this).attr('id')    
+        var self = this;
 
-        if($(this).hasClass('fa-star-o'))
-        {
-            //$(this).removeClass('fa-star-o');
-            //$(this).addClass('fa-star');
-            url = "/home/favourite/add/"+$(this).attr('id')
-        }
-        else
-        {
-            //$(this).removeClass('fa-star');
-            //$(this).addClass('fa-star-o');
-            url = "/home/favourite/remove/"+$(this).attr('id')
-        }
-        
-    window.location = url
-    location.reload();
+        $.ajax({
+            url: url,
+            }).done(function(res, status) {
+                console.log(res);
+                if(res == "Sub")
+                {
+                    $(self).removeClass('fa-star').addClass('fa-star-o');
+                }
+                else
+                {
+                    $(self).removeClass('fa-star-o').addClass('fa-star');
+                }
+            });
+
     });
 });
 
-
+ //$(this).removeClass('fa-star-o');
+            //$(this).addClass('fa-star');
+    
+            //$(this).removeClass('fa-star');
+            //$(this).addClass('fa-star-o');
 
 /* Search*/
 
