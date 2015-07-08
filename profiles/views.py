@@ -7,6 +7,7 @@ from django.template import Template, Context, RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -48,13 +49,10 @@ def register(request):
 
             if  form_register.is_valid():
             
-                if not request.user.is_authenticated():
-                    user = form_register.save()
-                    auth_login(request, user)
+                user = form_register.save()
+                auth_login(request, user)
 
-                    return HttpResponseRedirect('/home/') # Parametre olarak verilen url'e geçer.
-                else:
-                    return HttpResponse("Şuan bir kullanıcı zaten aktif.")
+                return HttpResponseRedirect('/home/') # Parametre olarak verilen url'e geçer.
         
             else:
                 values = form_register.previous_values()
@@ -67,10 +65,7 @@ def register(request):
                           { 'form_register':form_register, 'form_login':form_login})
 
     else:
-        ##############################################
-        #     Güzel bir hata mesajı verdirilecek     #
-        ##############################################
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/home/")
 
 def accountUser(request):
     if request.user.is_authenticated():
@@ -125,22 +120,20 @@ def favouriteToggle(request, key):
         except:
             return HttpResponseRedirect("/home/")
 
-        user = User.objects.get(username=request.user.username)
-
-        if meal in user.profile.favourites.all():
+        if meal in request.user.profile.favourites.all():
             meal.favourite -= 1 
             meal.save()
 
-            user.profile.favourites.remove(meal)
-            user.save()
+            request.user.profile.favourites.remove(meal)
+            request.user.save()
 
             return HttpResponse("Sub")
         else:
             meal.favourite += 1 
             meal.save()
 
-            user.profile.favourites.add(meal)
-            user.save()
+            request.user.profile.favourites.add(meal)
+            request.user.save()
 
             return HttpResponse("Add")
     else:
@@ -149,8 +142,7 @@ def favouriteToggle(request, key):
 def mostFavourites(request):
     if request.user.is_authenticated():
         AllMeal = Meal.objects.order_by("-favourite")
-        user = User.objects.get(username=request.user.username)
-        allFavouriteMeals = user.profile.favourites.all()
+        allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
         return render(request, "home.html", 
@@ -162,8 +154,23 @@ def mostFavourites(request):
 
 def myFavourites(request):
     if request.user.is_authenticated():
-        user = User.objects.get(username=request.user.username)
-        AllMeal = user.profile.favourites.all()
+        
+        if request.method == "GET":
+            remove_mealList =request.GET.getlist('meal')
+
+            for meal_id in remove_mealList:
+                try:
+                    meal = Meal.objects.get(id=int(meal_id))
+                except:
+                    return HttpResponseRedirect("/home/myfavourites/")
+
+                if meal in request.user.profile.favourites.all():
+                    request.user.profile.favourites.remove(meal)
+                    request.user.save()
+                    meal.favourite -= 1 
+                    meal.save()
+
+        AllMeal = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
         return render(request, "home.html", 
@@ -172,11 +179,44 @@ def myFavourites(request):
     else:
         return HttpResponseRedirect("/")
 
+def myMeals(request):
+    if request.user.is_authenticated():
+
+        if request.method == "GET":
+            remove_mealList =request.GET.getlist('meal')
+            user_mealList = Meal.objects.filter(user=request.user)
+
+            for meal_id in remove_mealList:
+                try:
+                    meal = Meal.objects.get(id=int(meal_id))
+                except:
+                    return HttpResponseRedirect("/home/myfavourites/")
+
+                if meal in user_mealList:
+                    material_list = MaterialList.objects.filter(meal=meal)
+                    for material in material_list:
+                        material.delete()
+
+                    meal.delete()
+                else:
+                    ############################
+                    # Güzel hata mesajı verdir #
+                    ############################   
+                    return HttpResponse(u"Buna Yetkiniz Yok!")
+
+        AllMeal = Meal.objects.filter(user=request.user)
+        currentTime = timezone.localtime(timezone.now())
+
+        return render(request, "home.html", 
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                       'myMealsPage':True})
+    else:
+        return HttpResponseRedirect("/")
+
 def home(request):
     if request.user.is_authenticated():
         AllMeal = Meal.objects.order_by("-addingDate")
-        user = User.objects.get(username=request.user.username)
-        allFavouriteMeals = user.profile.favourites.all()
+        allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
         return render(request, "home.html", 
