@@ -205,20 +205,19 @@ padding-bottom: 15px;
 
 
 .degis{
-
-    font-family: 'Tangerine', serif;
-    font-size: 48px;
+font-family: 'Allura', cursive;
+    font-size: 55px;
 
 }
 
 .degis2{
-    font-family: 'Tangerine', serif;
-    font-size:40px;
+font-family: 'Allura', cursive;
+    font-size:38px;
 }
 
 .degis3{
-    font-family: 'Tangerine', serif;
-    font-size:40px;
+font-family: 'Allura', cursive;
+    font-size:30px;
     font-weight: 600;
 }
 
@@ -254,5 +253,9 @@ button .stars{
       color: #F5CC27 !important;
 }
 
-
+#contenttext{
+    font-family: 'Dosis', sans-serif;
+    font-size:14px;
+    
+}
 
