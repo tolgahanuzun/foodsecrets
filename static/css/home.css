@@ -23,8 +23,27 @@
 	position:fixed; 
   background: url('/static/images/restaurant.png');
   height: 100%;
-
 }
+
+.buttonmin{
+  min-width: 101px;
+  margin: 1px;
+}
+
+@media (max-width: 767px) {
+#userpanel {
+  position:static; 
+  }
+#imgprofil
+{
+  width: 20%;
+  height: 25%;
+}
+}
+
+
+
+
 #userpanel2{
 
 }
@@ -76,7 +95,7 @@ Licensed under MIT
 
 .profile-usertitle {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .profile-usertitle-name {

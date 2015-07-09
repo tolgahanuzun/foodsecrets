@@ -6,8 +6,28 @@
 
 
 	<div class="row" id="Logincont">
-		
-		<div class="col-sm-10 col-sm-push-2" id="content" >
+		<div class="col-sm-2 " id="userpanel" >
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+					<div class="profile-userpic ">
+						<img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png" class="img-responsive imagefix" id="imgprofil" > 
+					</div>
+
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						{{ request.user.get_full_name }}
+					</div>
+					<div class="col-"></div>
+					 <a href="/home/addmeal/" class="btn btn-primary btn-sm buttonmin">Add Meal</a> 
+					 <a href="/home/myfavourites/" class="btn btn-primary btn-sm buttonmin">My Favorites</a> 
+					 <a href="/home/mymeals/" class="btn btn-primary btn-sm buttonmin">My Meals</a>
+					 <a href="/home/mostfavourites/" class="btn btn-primary btn-sm buttonmin">Most Favorites</a> 
+					 
+				</div>
+	    </div>
+	   </div>
+
+		<div class="col-sm-10 col-sm-offset-2 " id="content" >
 
 			<div class="page-header">
       	{% if homePage %}
@@ -21,16 +41,18 @@
 				{% endif %}	
 			</div>
 
+			
+
+      <div class="timeline">
+      
 			{% if myFavouritesPage or myMealsPage %}
 			  {% if meals_available %}
-					<div >
-						Select All<input  type="checkbox" id="selectall" name="selectall"> 
+					<div class="checkbox pull-right">
+					<label><input  type="checkbox" id="selectall" name="selectall"> Select All</label>
 					</div>
 				{% endif %}
 			{% endif %}
 
-      <div class="timeline">
-      
       {% if myFavouritesPage or myMealsPage %}
         {% if meals_available %}
       	  <form accept-charset="UTF-8" method="GET">
@@ -96,7 +118,7 @@
 							</h2> 
 						</div>
 						
-						<div class="panel-body">
+						<div class="panel-body" id="contenttext">
 							{{ meal.description }}
 						</div>
 						
@@ -117,7 +139,7 @@
     
       {% if myFavouritesPage or myMealsPage %}
         {% if meals_available %}
-        		<button type="Submit" class="btn btn-default pull-right" value="Delete"> Seçili Öğeleri Kaldır </button>
+        		<button type="Submit" class="pull-right btn btn-primary btn-sm meal" value="Delete"> Seçili Öğeleri Kaldır </button>
       		<form>
       	{% endif %}
       {% endif %}
@@ -143,30 +165,7 @@
 	       
 	</div>
 
-	<div class="col-sm-2 col-sm-pull-10" id="userpanel" >
-		<div class="profile-sidebar">
-			
-			<!-- SIDEBAR USERPIC -->
-			<div class="profile-userpic ">
-				<img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png" class="img-responsive" id="imgprofil" > 
-
-				
-			</div>
-			<!-- END SIDEBAR USERPIC -->
-
-			<!-- SIDEBAR USER TITLE -->
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">
-					{{ request.user.get_full_name }}
-				</div>
-				 <a href="/home/addmeal/" class="btn btn-primary">Add Meal</a> <br><br>
-				 <a href="/home/myfavourites/" class="btn btn-primary">My Favorites</a> <br><br>
-				 <a href="/home/mostfavourites/" class="btn btn-primary">Most Favorites</a> <br><br>
-				 <a href="/home/mymeals/" class="btn btn-primary">My Meals</a>
-			</div>
-    
-    </div>
-    
+	
     {% if myFavouritesPage or mostFavouritesPage or myMealsPage %}
       <a id="backhomepage" href="/home/" class="fa fa-home"></a>
     {% endif %}
