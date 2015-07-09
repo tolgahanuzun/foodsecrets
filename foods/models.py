@@ -29,6 +29,7 @@ class Meal(models.Model):
     totalCalories = models.FloatField(default=0, blank=True, verbose_name=u"Toplam Kalori")
     addingDate = models.DateTimeField(auto_now_add=True, verbose_name=u"Eklenme Tarihi")
     favourite = models.IntegerField(default=0, blank=True, verbose_name=u"Popülerliği")
+    image = models.ImageField(default=None, blank=True, upload_to="meal", verbose_name="Yemek Resmi")
 
     class Meta:
         verbose_name = u"Yemek"
