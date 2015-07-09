@@ -2,7 +2,8 @@
 
 {% block Userpanel %}
 
-
+ {% load static %}
+ {% load thumbnail %}
 
 <div class="row " id="userpanl" >
   <div class="col-sm-6 col-sm-push-3" id="content1" style="background:none;" >
@@ -11,7 +12,15 @@
   	<div class="col-xs-7 col-xs-offet-2" style="background:none; width: 61.333333%;">
    		<div class="profilebar" style="background:none;">
 				<div class="profile-userpic " style="background:none;">
-					<img src="http://tr1.cbsistatic.com/fly/180-fly/bundles/techrepubliccore/images/icons/standard/icon-user-default.png"  border="0"   class="img-responsive" id="imgprofil" style="background:none;">	
+					
+					{% if user.profile.image %}
+					  {% thumbnail user.profile.image "462x462" crop="center" as im %}
+            	<img src="{{ im.url }}"  class="img-responsive imagefix" id="imgprofil" >
+						{% endthumbnail %}
+					{% else %}
+					  <img src="{% static 'images/user/default_user_image.png' %}"  border="0"   class="img-responsive" id="imgprofil" style="background:none;">	
+					{% endif %}
+
 				</div>
 				<div class="profile-usertitle" style="background:none;">
 					<div class="profile-usertitle-name" style="background:none;">
@@ -56,11 +65,8 @@
 							</div>
       	   		<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
-  								<label>Telephone Number</label> : {% if user.profile.phone == ""%} 
-  								                                     Is not available.
-  								                                  {% else %} 
-  								                                     {{ user.profile.phone }} 
-  								                                  {% endif %}
+  								<label>Telephone Number</label> :{{ user.profile.phone }} 
+  								                                  
  								</div>
 							</div>
 							<div class="panel panel-default" id="paneluser">
