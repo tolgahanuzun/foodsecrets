@@ -3,6 +3,7 @@
 	margin-right: 0;
 	margin-left: 0;
   background: url('/static/images/ice_age.png');
+  height: 100%;
 }
 #userpanl{
   margin-right: 0;
@@ -257,4 +258,11 @@ Licensed under MIT
 
 .gecko .spanup{
   margin-top: -16px;
+}
+
+.btn.disabled{
+    font-size: 16px;
+  margin-top: -3px;
+  cursor:no-drop;
+  pointer-events:inherit;
 }
