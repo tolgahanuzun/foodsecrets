@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'profiles',
     'materials',
     'foods',
+    'sorl.thumbnail',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,7 +116,7 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_URL = "/static/uploads/"
+MEDIA_URL = "/static/images/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "/static/uploads")
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images/")
 
