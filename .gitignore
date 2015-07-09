@@ -6,3 +6,7 @@ bin/
 local/
 lib/
 include/
+
+/static/images/user/
+/static/images/meal/
+/static/images/cache/
