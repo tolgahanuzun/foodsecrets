@@ -254,3 +254,7 @@ Licensed under MIT
   z-index: 999;
   transition:background-color 0.3s linear;
 }
+
+.gecko .spanup{
+  margin-top: -16px;
+}
