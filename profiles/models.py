@@ -15,3 +15,4 @@ class Profile(models.Model):
                              verbose_name=u"Telefon Numarası") # validators should be a list
     secret_profile = models.BooleanField(default=False, blank=True, verbose_name=u"Profili Gizle")
     favourites = models.ManyToManyField(Meal, blank=True, verbose_name=u"Favoriler")
+    image = models.ImageField(default=None, blank=True, upload_to="user")
