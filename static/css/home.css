@@ -5,6 +5,14 @@
   background: url('/static/images/ice_age.png');
   height: 100%;
 }
+#Logincont_add{
+  margin-top: 0px;
+  margin-right: 0;
+  margin-left: 0;
+  background: url('/static/images/restaurant.png');
+  height: 100%;
+}
+
 #userpanl{
   margin-right: 0;
   margin-left: 0;
@@ -12,6 +20,10 @@
   height: 100%;
 }
 
+#acontent{
+margin-top:70px;
+margin-left: 0px;
+}
 
 #formcont{
 
