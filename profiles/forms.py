@@ -62,6 +62,11 @@ class RegistrationForm(UserCreationForm):
         
         return user
 
+
+class AccountFormImage(forms.Form):
+    change_image = forms.ImageField(label=u"Change Profile Image", required=False)
+
+
 class AccountFormUser(forms.Form):
     first_name = forms.CharField(label=u"First Name", required=True)
     last_name = forms.CharField(label=u"Last Name", required=True)
