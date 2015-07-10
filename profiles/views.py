@@ -70,6 +70,7 @@ def register(request):
 def accountUser(request):
     if request.user.is_authenticated():
 
+        form_accountImage = AccountFormImage()
         if request.method == "POST":
             form_accountUser = AccountFormUser(request.POST, user=request.user)
 
@@ -77,13 +78,16 @@ def accountUser(request):
 
                 form_accountUser.change()
 
-                return render(request, "account.html", {'form_accountUser':form_accountUser}) 
+                return render(request, "account.html", {'form_accountUser':form_accountUser, 
+                                                        'form_accountImage':form_accountImage}) 
 
             else:
-                return render(request, "account.html", {'form_accountUser':form_accountUser}) 
+                return render(request, "account.html", {'form_accountUser':form_accountUser, 
+                                                        'form_accountImage':form_accountImage}) 
         else:
             form_accountUser = AccountFormUser()
-            return render(request, "account.html", {'form_accountUser':form_accountUser})
+            return render(request, "account.html", {'form_accountUser':form_accountUser, 
+                                                        'form_accountImage':form_accountImage}) 
 
     else:
         return HttpResponseRedirect("/")
@@ -92,6 +96,7 @@ def accountUser(request):
 def accountPassword(request):
     if request.user.is_authenticated():
 
+        form_accountImage = AccountFormImage()
         if request.method == "POST":
             form_accountPassword = AccountFormPassword(request.POST, user=request.user)
  
@@ -101,14 +106,15 @@ def accountPassword(request):
                 form_accountPassword.change()
                 auth_login(request, form_accountPassword.user)
 
-                return render(request, "account.html", {'form_accountPassword':form_accountPassword}) 
-  
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword, 
+                                                        'form_accountImage':form_accountImage}) 
             else:
-                return render(request, "account.html", {'form_accountPassword':form_accountPassword}) 
-        
+                return render(request, "account.html", {'form_accountPassword':form_accountPassword, 
+                                                        'form_accountImage':form_accountImage}) 
         else:
             form_accountPassword = AccountFormPassword()
-            return render(request, "account.html", {'form_accountPassword':form_accountPassword})
+            return render(request, "account.html", {'form_accountPassword':form_accountPassword, 
+                                                        'form_accountImage':form_accountImage}) 
     
     else:
         return HttpResponseRedirect("/")
@@ -147,7 +153,7 @@ def mealsAvailable(all_meal):
 
 def mostFavourites(request):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.order_by("-favourite")
+        AllMeal = Meal.objects.order_by("-favourite", "-addingDate")
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
@@ -186,7 +192,7 @@ def myFavourites(request):
                     ############################   
                     return HttpResponse(u"Buna Yetkiniz Yok!")
 
-        AllMeal = request.user.profile.favourites.all()
+        AllMeal = request.user.profile.favourites.all().order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
 
         meals_available = mealsAvailable(AllMeal)
@@ -225,7 +231,7 @@ def myMeals(request):
                     ############################   
                     return HttpResponse(u"Buna Yetkiniz Yok!")
 
-        AllMeal = Meal.objects.filter(user=request.user)
+        AllMeal = Meal.objects.filter(user=request.user).order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
 
         meals_available = mealsAvailable(AllMeal)
