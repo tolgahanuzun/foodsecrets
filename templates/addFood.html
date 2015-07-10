@@ -2,8 +2,8 @@
 
 {% block test%}
 
-<div class="row" id="Logincont">
-	<div class="col-sm-12" id="content" >
+<div class="row" id="Logincont_add">
+	<div class="col-sm-12" id="acontent" >
 		
 		<form  accept-charset="UTF-8" action="/home/addmeal/" method="POST">
 		{% csrf_token %}
@@ -37,8 +37,9 @@
          		 	</div>
         		</div>
 
-        		<div class="col-md-6">
-
+        		<div class="col-md-6" >
+        			<div class="panel panel-default">
+    			<div class="panel-body">   
 				 	{% for area in form_addMeal %}
 
 					  {% if area.name == "meal_kind" %}
@@ -49,9 +50,10 @@
 		    			</div>    
 		 	     	{% endif %}
 	      
-	      {% endfor %}
+	  			    {% endfor %}
     				</div>
-
+    			</div>
+    			</div>
 						
 
      			</div> 
