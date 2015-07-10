@@ -20,11 +20,22 @@ class AddingToMeal(forms.ModelForm):
     name = forms.CharField(label=u"İsim", max_length=100, required=True)
     description = forms.CharField(label=u"Tarif", max_length=1000, 
                                 required=True, widget=forms.Textarea)
-    meal_kind = forms.ModelChoiceField(label=u"Kind", queryset=MealKind.objects.all(), required=True)
+    meal_kind = forms.ModelChoiceField(label=u"Kind", queryset=MealKind.objects.all(), 
+                                       required=True)
 
     class Meta:
         model = Meal
         fields = ("name", "description","meal_kind")
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AddingToMeal, self).__init__(*args, **kwargs)
+
+    def organize(self, word):
+        if u"I" in word:
+            word = word.replace(u"I",u"ı")
+    
+        return word.lower()
 
     def totalCalories(self, meal):
 
@@ -39,6 +50,13 @@ class AddingToMeal(forms.ModelForm):
 
         return totalCalories
 
+    def clean_name(self):
+        user_Allmeals = Meal.objects.filter(user=self.user)
+        for user_meal in user_Allmeals:
+            if self.organize(self.data.get("name")) == self.organize(user_meal.name):
+                raise forms.ValidationError(u'Daha önce bu isimde bir yemek kaydettiniz!')
+        
+        return self.data.get("name")
 
     def save(self, commit=True):
         meal = super(AddingToMeal, self).save(commit=False)
@@ -60,10 +78,10 @@ def custom_field_callback(field):
     #elif field.name == 'food_kind':
     #    return forms.ModelChoiceField(label=u"Kind", queryset=FoodKind.objects.all(), 
     #                                  required=True)
-    #elif field.name == 'material':
-    #    return forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), 
-    #                                  required=True)
-    if field.name == 'amount':
+    if field.name == 'material':
+        return forms.ModelChoiceField(label=u"Malzeme", queryset=Material.objects.all(), 
+                                      required=True)
+    elif field.name == 'amount':
         return forms.IntegerField(label="Miktar",required=True, min_value=1, initial=1)
     else:
         return field.formfield()
