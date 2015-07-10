@@ -13,14 +13,15 @@ from .forms import *
 
 # Create your views here.
 
-
 def addMeal(request):
 
     if request.user.is_authenticated():
         if request.method == "POST":
-            form_addMeal = AddingToMeal(request.POST)
-
-            if form_addMeal.is_valid():
+            form_addMeal = AddingToMeal(request.POST, user=request.user)
+            materialList_formset = MaterialListFormSet(request.POST)
+            
+        
+            if form_addMeal.is_valid() and materialList_formset.is_valid():
                 meal = form_addMeal.save(commit=False)
                 meal.user = request.user
                 materialList_formset = MaterialListFormSet(request.POST, instance=meal)
@@ -35,7 +36,8 @@ def addMeal(request):
 
                 return HttpResponseRedirect("/home/addmeal/")
             else:
-                return HttpResponse("Hata")
+                return render(request, "addFood.html", {'form_addMeal':form_addMeal,
+                                                        'materialList_formset':materialList_formset})
         else:
             form_addMeal = AddingToMeal()
             materialList_formset = MaterialListFormSet()
