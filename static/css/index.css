@@ -241,3 +241,11 @@ margin-left: 15%;
 
 #radios span {
   opacity: 0.6;}
+
+
+
+input[type=file] {
+  -webkit-appearance: none;
+ opacity: 1;
+position: fixed;
+}
