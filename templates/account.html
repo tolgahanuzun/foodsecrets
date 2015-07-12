@@ -13,23 +13,23 @@
   		<div class="col-xs-7 col-xs-offet-2" >
    			<div class="profilebar" >
 					
-					<form >
+					<form action="home/account/image" method="POST" role="form">
 						
 							<div class="profile-userpic">
 
 								{% if request.user.profile.image %}
 								
 									{% thumbnail  request.user.profile.image "462x462" crop="center" as im %}
-<!--
-            				<input type="image"  src="{{ im.url }}" border="0" onMouseMove="this.src='{% static 'images/icon-camera.png'%}'" onMouseOut="this.src='{{ im.url }}'"  class="img-responsive" id="imgprofil" name="{{ form_accountImage.change_image.name }}" style="background:none;" >          			
--->
-								<input type="file" > 
-            						<img src="{% static 'images/user/default_user_image.png' %}"/>
+            				<img src="{{ im.url }}"/>          
 									{% endthumbnail %}
-
+									<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 
 								{% else %}
-					 				<img src="{% static 'images/user/default_user_image.png' %}"/>
-					 				<input type="file" > 	
+									{% with path=MEDIA_URL|add:"user/default_user_image.png" %}
+						  			{% thumbnail path "462x462" crop="center" as im %}
+				  						<img src="{{ im.url }}"  class="img-responsive img-rounded center-block">
+						  			{% endthumbnail %}
+									{% endwith %}
+					 				<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 	
 								{% endif %}
 
 							</div>
@@ -110,7 +110,7 @@
 								  	<div class="row">
 									  
 								    	<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-										  	<input type="submit" name="change" id="login-submit" tabindex="5" class="form-control btn btn-login" value="Change">
+										  	<input type="submit" name="password" id="login-submit" tabindex="5" class="form-control btn btn-login" value="Change">
 									  	</div>
 								  
 								  	</div>
@@ -197,7 +197,7 @@
 								  	<div class="row">
 									 
 								    	<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3" >
-										  	<input type="submit" name="change" id="login-submit" tabindex="6" class="form-control btn btn-login" value="Change">
+										  	<input type="submit" name="user" id="login-submit" tabindex="6" class="form-control btn btn-login" value="Change">
 									  	</div>
 								  	
 								  	</div>
