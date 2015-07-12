@@ -49,7 +49,7 @@ def timeDifference(created, current=None):
             elif current.day - 1 == created.day:
                 return u"Dün  ," + str(created.hour) + ":" + str(created.minute)
             
-        return str(created.day) + " " + str(created.mount) + " , " + str(created.hour) + ":" + str(created.minute)
+        return str(created.day) + " " + str(created.month) + " , " + str(created.hour) + ":" + str(created.minute)
     else:
         return created
         
