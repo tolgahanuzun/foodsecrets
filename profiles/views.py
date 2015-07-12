@@ -13,6 +13,8 @@ from .models import *
 from .forms import *
 from foods.models import Meal
 
+import re
+
 # Kullanıcı girişini yapan fonksiyon.
 def login(request):
 
@@ -119,6 +121,20 @@ def accountPassword(request):
     else:
         return HttpResponseRedirect("/")
 
+def organize(word):
+        if u"I" in word:
+            word = word.replace(u"I",u"ı")
+    
+        return word.lower()
+
+
+def mealsAvailable(all_meal):
+    if all_meal.count() == 0:
+        return False
+
+    return True
+
+
 def favouriteToggle(request, key):
     if request.user.is_authenticated():
         try:
@@ -145,15 +161,10 @@ def favouriteToggle(request, key):
     else:
         return HttpResponseRedirect("/")
 
-def mealsAvailable(all_meal):
-    if all_meal.count() == 0:
-        return False
-
-    return True
 
 def mostFavourites(request):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.order_by("-favourite", "-addingDate")
+        AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:3]
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
@@ -242,13 +253,70 @@ def myMeals(request):
     else:
         return HttpResponseRedirect("/")
 
-def home(request):
+def search(request):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.order_by("-addingDate")
+
+        AllMeal = []
+        meals_available = True
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
+        
+        if request.method == "POST":
+            search_method = request.POST.get("search_method")
+            search_word = request.POST.get("search_word")
 
+            if search_word != "":
+                if search_method == "1" or search_method == "2":
+                    
+                    AllMeals = Meal.objects.order_by("-addingDate")
+            
+                    if AllMeals.count() != 0:
+                        if search_method == "1":
+                            for meal in AllMeals:
+                                if organize(meal.name) == organize(search_word):
+                                    AllMeal.append(meal)
+                        else:
+                            for meal in AllMeals:
+                                if re.search( organize(search_word), organize(meal.name)):
+                                    AllMeal.append(meal)
+
+                elif search_method == "3" or search_method == "4":
+                    material_list = MaterialList.objects.all()
+
+                    if material_list.count() != 0:
+                        if search_method == "3":
+                            for material_object in material_list:
+                                if organize(material_object.material.name) == organize(search_word):
+                                    AllMeal.append(material_object.meal)
+                        else:
+                            for material_object in material_list:
+                                if re.search(organize(search_word), organize(material_object.material.name)):
+                                    AllMeal.append(material_object.meal)                                     
+                else:
+                    pass
+                    
+
+        
+        if len(AllMeal) == 0:
+            meals_available = False
+
+        
+        return render(request, "home.html", 
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                      'allFavouriteMeals': allFavouriteMeals,
+                      'searchPage':True, 'meals_available':meals_available})
+
+    else:
+        return HttpResponseRedirect("/")
+
+def home(request):
+    if request.user.is_authenticated():
+
+        AllMeal = Meal.objects.order_by("-addingDate")
         meals_available = mealsAvailable(AllMeal)
+    
+        allFavouriteMeals = request.user.profile.favourites.all()
+        currentTime = timezone.localtime(timezone.now())
 
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
