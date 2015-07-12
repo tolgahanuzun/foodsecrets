@@ -2,146 +2,176 @@
 <html>
 <head>
 
-  {% load static %}
-  
-  <title>Food Secrets</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/form.js' %}"></script>
-  <script src="{% static 'js/css_browser_selector.js' %}"></script>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-  <link rel="stylesheet" href="{% static 'css/home.css' %}">
-  <link rel="stylesheet" href="{% static 'css/form.css' %}">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+	{% load static %}
+	
+	<title>Food Secrets</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/form.js' %}"></script>
+	<script src="{% static 'js/css_browser_selector.js' %}"></script>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+	<link rel="stylesheet" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'css/form.css' %}">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
 
 </head>
 
 <body>
 	
-  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 		
-    <div class="container-fluid">
+		<div class="container-fluid">
 			
-	  <!-- Brand and toggle get grouped for better mobile display -->
-	  <div class="navbar-header">
-		<a class="navbar-brand" href="/">Food Secrets</a>
-	  </div>
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Food Secrets</a>
+			</div>
 
-	  <div class="row">
-	  	<div class="col-lg-8 col-md-7 col-sm-6 col-xs-5"></div>
-  			<div class="col-lg-1 navbar-header" id="logsearch">
-				 <a class="navbar-brand " href="#search">Search</a>
-		 	 </div>
-	  </div>
+			{% if request.user.is_authenticated == False %}
 
-	<div id="search">
-   
-    <form>
-        <input type="search" value="" placeholder="keyword" />
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-	</div>
-
-	  {% if request.user.is_authenticated == False %}
-
-	    <!-- Collect the nav links, forms, and other content for toggling -->
-	   
-		  <ul class="nav navbar-nav navbar-right" 	id="newlogin" style="right:25px;">
-		    <li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
-		    <li class="dropdown">
-			  <a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ form_login.non_field_errors|striptags}}">Login</b> <span class="caret"></span></a>
-			  <ul id="login-dp" class="dropdown-menu">
-			    <li>
-			      <div class="row">
-				    <div class="col-md-12">
+				<!-- Collect the nav links, forms, and other content for toggling -->
+		 
+				<ul class="nav navbar-nav navbar-right" 	id="newlogin" style="right:25px;">
+					<li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
+					<li class="dropdown">
+						<a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ form_login.non_field_errors|striptags}}">Login</b> <span class="caret"></span></a>
+						<ul id="login-dp" class="dropdown-menu">
+							<li>
+								<div class="row">
+									<div class="col-md-12">
 						
-					  <!--        Login Form      -->
+										<!--        Login Form      -->
 
-					  <form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav" >
-                      {% csrf_token %}
-					  
-					    {% for area in form_login %}
-					    
-					      {% if area.name == "username"%}
-
-					        <div class="form-group">
-						      <label class="sr-only" for="id_{{ area.name }}">User Name</label>
-						      <input type="text" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="User Name" tabindex="1"  required>
-						    </div>
-
-						  {% endif%}
-
-						  {% if area.name == "password" %}
-											
-						    <div class="form-group">
-						      <label class="sr-only" for="id_{{ area.name }}">Password</label>
-						      <input type="password" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="Password" tabindex="2" required>
-						      <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-						    </div>
-
-						  {% endif %}
-
-					    {% endfor %}
-
-					    {% if area.errors %}
-					      <label> {{ area.errors }} </label>
-					    {% endif %}
-											
-					    <div class="form-group">
-						  <button type="submit" value="Login" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
-					    </div>
+										<form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8" id="login-nav" >
+										{% csrf_token %}
 						
-					    <div class="checkbox">
-						  <label>
-						    <input type="checkbox"> Keep me logged-in
-						  </label>
-					    </div>
+											{% for area in form_login %}
+							
+												{% if area.name == "username"%}
 
-					  </form>
+													<div class="form-group">
+														<label class="sr-only" for="id_{{ area.name }}">User Name</label>
+														<input type="text" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="User Name" tabindex="1"  required>
+													</div>
 
-					  <!--                        -->
+												{% endif%}
 
-			        </div>
-				  </div> 
-		        </li>
-			  </ul>
-		    </li>
-		  </ul>
-	  
+												{% if area.name == "password" %}
+											
+													<div class="form-group">
+														<label class="sr-only" for="id_{{ area.name }}">Password</label>
+														<input type="password" name="{{ area.name }}" class="form-control" id="id_{{ area.name }}" placeholder="Password" tabindex="2" required>
+														<div class="help-block text-right"><a href="">Forget the password ?</a></div>
+													</div>
 
-        {% else %}
+												{% endif %}
 
-          {% if request.user.is_authenticated %}
-          
-            <ul class="nav navbar-nav" id="newlogin">
-              <li class="dropdown" id="newdrop">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
-                <ul class="dropdown-menu" id="newdropdownmenu">
-                  <li><a href="/home/account/user/">Account Settings <span class="fa fa-tasks pull-right spanup"></span></a></li>
-                  <li class="divider"></li>
-                  <!--
-                  <li><a href="#">Favourites Snippets <span class="fa fa-thumbs-o-up pull-right"></span></a></li>
-                  <li class="divider"></li>
-                  -->
-                  <li><a href="/logout/">Log Out <span class="fa fa-sign-out pull-right spanup"></span></a></li>
-                </ul>
-              </li>
-            </ul>
-            
-          {% endif %}
+											{% endfor %}
 
-	  {% endif %}
+											{% if area.errors %}
+												<label> {{ area.errors }} </label>
+											{% endif %}
+											
+											<div class="form-group">
+												<button type="submit" value="Login" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
+											</div>
+						
+											<div class="checkbox">
+												<label>
+													<input type="checkbox"> Keep me logged-in
+												</label>
+											</div>
+
+										</form>
+
+									</div>
+								</div> 
+							</li>
+						</ul>
+					</li>
+				</ul>
+		
+
+			{% else %}
+
+				{% if request.user.is_authenticated %}
+
+					<!--<div class="row">
+						<div class="col-lg-8 col-md-7 col-sm-6 col-xs-5"></div>
+							<div class="col-lg-1 navbar-header" id="logsearch">
+								<a class="navbar-brand " href="#search">Search</a>
+							</div>
+						</div>
+
+						<div id="search">
+							<input type="search" id="search_word" name="search" value="" placeholder="keyword" />
+							<button type="button" id="search_button" class="btn btn-primary">Search</button>
+						</div>-->
+
+          <form method="POST" action="/home/search/">
+          {% csrf_token %}
+						<div class="container">
+							<div class="row">    
+								<div class="col-xs-6 col-xs-offset-3">
+									<div class="input-group">
+										<div class="input-group-btn search-panel">
+											
+                      <!--<span id="search_concept">Arama Türü</span> <span class="caret"></span>-->
+											<select name="search_method" id="search_method"  data-toggle="dropdown"
+											class="btn btn-default dropdown-toggle">
+    										<option value="1" selected="selected">Exact math by meal</option>
+    										<option value="2">IExact math by meal</option>
+    										<option value="3">Exact math by material</option>
+    										<option value="4">Iexact math by material</option>
+    										<option value="5">Exact math by user</option>
+    										<option value="6">Iexact math by USer</option>
+											</select>
+
+										</div>
+								
+										<!--<input type="hidden" name="search_param" value="all" id="search_param"> -->        
+										<input type="text" class="form-control" name="search_word" id="search_word" value="" placeholder="Search term...">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="submit">
+												<span class="glyphicon glyphicon-search"></span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+				  </form>
+
+						
+					<ul class="nav navbar-nav" id="newlogin">
+						<li class="dropdown" id="newdrop">
+							<a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
+							<ul class="dropdown-menu" id="newdropdownmenu">
+								<li><a href="/home/account/user/">Account Settings <span class="fa fa-tasks pull-right spanup"></span></a></li>
+								<li class="divider"></li>
+								<!--
+								<li><a href="#">Favourites Snippets <span class="fa fa-thumbs-o-up pull-right"></span></a></li>
+								<li class="divider"></li>
+								-->
+								<li><a href="/logout/">Log Out <span class="fa fa-sign-out pull-right spanup"></span></a></li>
+							</ul>
+						</li>
+					</ul>
+						
+				{% endif %}
+
+			{% endif %}
 
 
 
-	</div>
-  </nav>
+		</div>
+	</nav>
 
 	{% block body %}{% endblock %}
 	{% block slider %}{% endblock %}
@@ -149,35 +179,33 @@
 	{% block account%}{% endblock %}
 	{% block test%}{% endblock %}
 	{% block food %}{% endblock %}
-    {% block page %}{% endblock %}
-    {% block Userpanel%}{% endblock %}
-<footer> 
-  
-  <div class="navbar navbar-default navbar-fixed-bottom " style="bottom:1;">
-  	<div class="pull-left " id="hakkinda">
-  		<p class="navbar-text ">
-  			<a href="https://github.com/kenansubasi/foodsecrets.git" target="_blank" >Github</a>
-     	</p>
-    </div>
+	{% block page %}{% endblock %}
+	{% block Userpanel%}{% endblock %}
 
-   	<div class="copyr">
-      <p class="navbar-text " >© Copyright
-        <a href="http://www.unicrow.com/" target="_blank" >Unicrow</a>
-      </p>
+	<footer> 
+	
+		<div class="navbar navbar-default navbar-fixed-bottom " style="bottom:1;">
+			
+			<div class="pull-left " id="hakkinda">
+				<p class="navbar-text ">
+					<a href="https://github.com/kenansubasi/foodsecrets.git" target="_blank" >Github</a>
+				</p>
+			</div>
 
-    </div>
-	<div class="pull-right" id="social">
-      <i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
-      <i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+			<div class="copyr">
+				<p class="navbar-text " >© Copyright
+					<a href="http://www.unicrow.com/" target="_blank" >Unicrow</a>
+				</p>
+			</div>
+			
+			<div class="pull-right" id="social">
+				<i class="fa fa-facebook-square fa-2x"></i> <!-- range from fa-1x for small icon to 5x for larger icon -->
+				<i class="fa fa-pinterest-square fa-2x"></i>  <!-- range from fa-1x for small icon to 5x for larger icon -->
+			</div>
+		
+		</div>
 
-    </div>
-    
-	 
-    </div>
-  </div>
-
-
-</footer>
+	</footer>
 
 </body>
 </html>
