@@ -6,6 +6,7 @@
   {% load static %}
   {% load thumbnail %}
 
+
 	<div class="row" id="Logincont">
 		<div class="col-sm-2 " id="userpanel" >
 			<div class="profile-sidebar">
@@ -16,7 +17,11 @@
             	<img src="{{ im.url }}"  class="img-responsive imagefix" id="imgprofil" >
 						{% endthumbnail %}
 					{% else %}
-					  <img src="{% static 'images/user/default_user_image.png' %}" class="img-responsive imagefix" id="imgprofil" >
+						{% with path=MEDIA_URL|add:"user/default_user_image.png" %}
+						  {% thumbnail path "462x462" crop="center" as im %}
+				  			<img src="{{ im.url }}"  class="img-responsive img-rounded center-block" id="imgprofil">
+						  {% endthumbnail %}
+						{% endwith %}
 					{% endif %}
 					</div>
 
