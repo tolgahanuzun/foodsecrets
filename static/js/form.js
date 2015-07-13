@@ -209,3 +209,4 @@ $(function () {
 
 
 
+$('.selectpicker').selectpicker();
