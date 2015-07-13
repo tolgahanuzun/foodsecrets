@@ -96,6 +96,15 @@ Licensed under MIT
 	padding: 10px 0 10px 23px;
 	
 }
+
+.home_userpic {
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+	max-width: 156px;
+	max-height: 156px;
+}
+
 .profile-userpic {
 	position: relative;
 	overflow: hidden;
