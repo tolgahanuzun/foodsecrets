@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^home/$', 'profiles.views.home'),
     url(r'^home/search/$', 'profiles.views.search'),
     url(r'^home/(?P<username>[\w]+)$', 'profiles.views.showProfile', name='user_profile'),
+    url(r'^home/filter/$', 'profiles.views.filter'),
     url(r'^home/account/user/$', 'profiles.views.accountUser'),
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
     url(r'^home/favourite/toggle/(?P<key>[\d]+)$', 'profiles.views.favouriteToggle'),
