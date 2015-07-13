@@ -333,3 +333,29 @@ Licensed under MIT
 	pointer-events:inherit;
 }
 
+  
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding:2px 4px;
+
+    line-height: 1;
+    border-radius:3px;
+    max-width: 50px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .btn-responsive {
+    padding:4px 9px;
+ 
+    line-height: 1.2;
+    max-width: 50px;
+  }
+}
+
+@media (max-width: 768px)  {
+  #search_fullpage {
+ width: 100%;
+  margin-left: -2px;
+  }
+}

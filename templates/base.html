@@ -19,8 +19,7 @@
 	<link rel="stylesheet" href="{% static 'css/form.css' %}">
 	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.5/css/bootstrap-select.min.css">
-	
-		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.5/js/bootstrap-select.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.5/js/bootstrap-select.min.js"></script>
 
 	<script>
 
@@ -139,15 +138,14 @@
 
           <form method="POST" action="/home/search/">
           {% csrf_token %}
-						<div class="container">
-							<div class="row">    
-								<div class="col-xs-6 col-xs-offset-3">
-									<div class="input-group">
+						   
+								<div class="col-xs-5 col-xs-offset-3" id="search_fullpage">
+									<div class="input-group" style="margin:7px;">
 										<div class="input-group-btn search-panel">
 											
                       <!--<span id="search_concept">Arama Türü</span> <span class="caret"></span>-->
 											<select name="search_method" id="search_method"  data-toggle="dropdown"
-											class="btn btn-default dropdown-toggle">
+											class="btn btn-default dropdown-toggle btn-responsive" style="height: 34px;">
     										<option value="1" selected="selected">Exact math by meal</option>
     										<option value="2">IExact math by meal</option>
     										<option value="3">Exact math by material</option>
@@ -167,8 +165,7 @@
 										</span>
 									</div>
 								</div>
-							</div>
-						</div>
+							
 				  </form>
 
 						
