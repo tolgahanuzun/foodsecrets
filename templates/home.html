@@ -94,9 +94,9 @@
 							  {% if homePage %}
 
 							    {% if meal.user.profile.secret_profile and meal.user != request.user %}
-							  		<a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}" class="btn disabled" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi.
+							  		<a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}" class="btn disabled" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
 							    {% else %}
-							      <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi.
+							      <a href="{% url 'user_profile' meal.user.username %}" id="{{ meal.user.username }}"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
 							    {% endif %}
 
 							  {% elif myMealsPage %}
@@ -118,10 +118,10 @@
 							    <div class="pull-right stars active" style="background: transparent;border: transparent;">
 
 								  	{% if allFavouriteMeals|hasMeal:meal %}
-									  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
+									  	{{ meal.favourite }} <button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
 									  	 border: transparent;"></button>
 										{% else %}
-								  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
+								  		{{ meal.favourite }} <button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
 								  		border: transparent;"></button>
 										{% endif %}
 										
