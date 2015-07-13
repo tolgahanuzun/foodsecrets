@@ -103,13 +103,16 @@ Licensed under MIT
 	overflow: hidden;
 	max-width: 156px;
 	max-height: 156px;
+	-webkit-border-radius: 50% !important;
+	-moz-border-radius: 50% !important;
+	border-radius: 50% !important;
 }
 
 .profile-userpic {
 	position: relative;
 	overflow: hidden;
-	max-width: 156px;
-	max-height: 156px;
+	max-width: 176px;
+	max-height: 176px;
 	-webkit-border-radius: 50% !important;
 	-moz-border-radius: 50% !important;
 	border-radius: 50% !important;
