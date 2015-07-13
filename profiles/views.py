@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import *
 from .forms import *
@@ -253,6 +254,31 @@ def myMeals(request):
     else:
         return HttpResponseRedirect("/")
 
+def filter(request):
+    if request.user.is_authenticated():
+        if request.method == "POST":
+            amount = request.POST.get("amount")
+            min_amount = amount.split("-")[0]
+            max_amount = amount.split("-")[1]
+            
+            AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & Q(totalCalories__lte=max_amount)).order_by("-addingDate")
+            
+            meals_available = True
+            if len(AllMeal) == 0:
+                meals_available = False
+            allFavouriteMeals = request.user.profile.favourites.all()
+            currentTime = timezone.localtime(timezone.now())
+
+            return render(request, "home.html", 
+                          {'AllMeal':AllMeal, 'currentTime':currentTime,
+                            'allFavouriteMeals': allFavouriteMeals,
+                            'meals_available':meals_available, 'filterPage':True})
+
+        return HttpResponseRedirect("/home/")
+
+    else:
+        return HttpResponseRedirect("/")
+
 def search(request):
     if request.user.is_authenticated():
 
@@ -315,8 +341,7 @@ def search(request):
         
         if len(AllMeal) == 0:
             meals_available = False
-
-        
+    
         return render(request, "home.html", 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                       'allFavouriteMeals': allFavouriteMeals,
