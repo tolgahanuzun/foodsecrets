@@ -250,3 +250,13 @@ input[type=file] {
  cursor: pointer;
 }
 
+#optionsID{
+  max-width: 150px;
+}
+
+.icon_fav{
+margin-left: -2px;
+font-size: 15px;
+color: #fff;
+}
+

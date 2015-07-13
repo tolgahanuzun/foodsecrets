@@ -40,21 +40,23 @@
 				<!-- Sliderbar -->
 				<form method="POST" action="/home/filter/" accept-charset="UTF-8">
 				{% csrf_token %}
-					<div>
-						<p>
+					 <div style="  margin-top: 35px;"> 
+						
+						<div class="col-xs-12" id="slider-range"></div>
+							<p>
 							<label for="amount">Price range:</label>
 							<input type="text" id="amount" name="amount" readonly style="border:0; font-weight:bold; background: none;">
 						</p>
-						<div id="slider-range"></div>
-
-						<select class="selectpicker dish" name="kind_select" multiple>
-							<option>Ana Yemek</option>
-							<option>Başlangıç</option>
-							<option>Ara Sıcak</option>
-						</select>
-						
-						<button type="submit" id="filter_button" name="filter_button">Filter</button>
-					</div>
+							<div class="width_btn">
+									<select class="selectpicker dish" name="kind_select" multiple>
+										<option class="optionsID">Ana Yemek</option>
+										<option class="optionsID" >Başlangıç</option>
+										<option class="optionsID">Ara Sıcak</option>
+									</select>
+								<button type="submit" id="filter_button" name="filter_button">Filter</button>
+							</div>
+					
+				</div>
 				</form>
 				<!-- Sliderbar -->
 
@@ -133,11 +135,13 @@
 							    <div class="pull-right stars active" style="background: transparent;border: transparent;">
 
 								  	{% if allFavouriteMeals|hasMeal:meal %}
-									  	{{ meal.favourite }} <button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
-									  	 border: transparent;"></button>
+									  
+									  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
+									  	 border: transparent;"><span class="icon_fav"> {{ meal.favourite }} </span></button>	
 										{% else %}
-								  		{{ meal.favourite }} <button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
-								  		border: transparent;"></button>
+								  		
+								  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
+								  		border: transparent;"><span class="icon_fav"> {{ meal.favourite }} </span></button> 	
 										{% endif %}
 										
 									</div>
