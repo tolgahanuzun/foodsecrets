@@ -257,11 +257,18 @@ def myMeals(request):
 def filter(request):
     if request.user.is_authenticated():
         if request.method == "POST":
+            meal_kind = request.POST.getlist("kind_select")
             amount = request.POST.get("amount")
             min_amount = amount.split("-")[0]
             max_amount = amount.split("-")[1]
-            
-            AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & Q(totalCalories__lte=max_amount)).order_by("-addingDate")
+
+            if meal_kind != None:
+                AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & 
+                                              Q(totalCalories__lte=max_amount) & 
+                                              Q(meal_kind__kind__in=meal_kind)).order_by("-addingDate")
+            else:
+                AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & 
+                                              Q(totalCalories__lte=max_amount)).order_by("-addingDate")
             
             meals_available = True
             if len(AllMeal) == 0:
