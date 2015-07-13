@@ -18,25 +18,27 @@
 	<link rel="stylesheet" href="{% static 'css/home.css' %}">
 	<link rel="stylesheet" href="{% static 'css/form.css' %}">
 	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
- 	 
- 	 
 
+	<script>
 
-<script>
-  $(function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
-    });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-  });
-  </script>
+  		$(function() {
+    		
+    		$( "#slider-range" ).slider({
+      			range: true,
+      			min: 0,
+      			max: 10000,
+      			step: 5,
+      			values: [ 3000, 8000 ],
+      			slide: function( event, ui ) {
+        			$( "#amount" ).val(ui.values[ 0 ] + "-" + ui.values[ 1 ] );
+     			 }
+    		});
+    		
+    		$( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
+      		" - " + $( "#slider-range" ).slider( "values", 1 ) );
+  		});
+
+  	</script>
   
 </head>
 
