@@ -35,14 +35,23 @@
 					 <a href="/home/mymeals/" class="btn btn-primary btn-sm buttonmin">My Meals</a>
 					 <a href="/home/mostfavourites/" class="btn btn-primary btn-sm buttonmin">Most Favorites</a> 
 				</div>
-<!-- Sliderbar -->
-							<p>
-							  <label for="amount">Price range:</label>
-							  <input type="text" id="amount" readonly style="border:0; font-weight:bold; background: none;">
-							</p>
+				<!--           -->
+
+				<!-- Sliderbar -->
+				<form method="POST" action="/home/filter/" accept-charset="UTF-8">
+				{% csrf_token %}
+					<div>
+						<p>
+							<label for="amount">Price range:</label>
+							<input type="text" id="amount" name="amount" readonly style="border:0; font-weight:bold; background: none;">
+						</p>
 							 
-							<div id="slider-range"></div>
-<!-- Sliderbar -->
+						<div id="slider-range"></div>
+						<button type="submit" id="filter_button" name="filter_button">Filter</button>
+					</div>
+				</form>
+				<!-- Sliderbar -->
+
 	    </div>
 	   </div>
 
@@ -55,14 +64,14 @@
 				  <h2 class="degis"> Your Favourite Meals </h2>
 				{% elif searchPage %}
 				  <h2 class="degis"> Your Search </h2>
+				{% elif filterPage %}
+				  <h2 class="degis"> Your Filter Search</h2>
 				{% elif mostFavouritesPage %}
 				  <h2 class="degis"> Most Favourite Meals </h2>
 				{% else %}
 				  <h2 class="degis"> Your Meals </h2>
 				{% endif %}	
 			</div>
-
-			
 
       <div class="timeline">
       
