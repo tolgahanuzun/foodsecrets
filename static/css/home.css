@@ -111,8 +111,8 @@ Licensed under MIT
 .profile-userpic {
 	position: relative;
 	overflow: hidden;
-	max-width: 176px;
-	max-height: 176px;
+	max-width: 196px;
+	max-height: 196px;
 	-webkit-border-radius: 50% !important;
 	-moz-border-radius: 50% !important;
 	border-radius: 50% !important;
