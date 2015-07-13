@@ -281,7 +281,7 @@ def search(request):
                                     AllMeal.append(meal)
 
                 elif search_method == "3" or search_method == "4":
-                    material_list = MaterialList.objects.all()
+                    material_list = MaterialList.objects.all().order_by("-meal__addingDate")
 
                     if material_list.count() != 0:
                         if search_method == "3":
@@ -293,9 +293,25 @@ def search(request):
                                 if re.search(organize(search_word), organize(material_object.material.name)):
                                     AllMeal.append(material_object.meal)                                     
                 else:
-                    pass
-                    
+                    user_list = User.objects.all()
 
+                    if user_list.count() != 0:
+                        if search_method == "5":
+                            for user_objects in user_list:
+                                if organize(user_objects.get_full_name()) == organize(search_word):
+                                    user_meals = Meal.objects.filter(user=user_objects).order_by("-addingDate")
+
+                                    if user_meals.count() != 0:
+                                        for meal in user_meals:
+                                            AllMeal.append(meal)
+                        else:
+                            for user_objects in user_list:
+                                if re.search(organize(search_word), organize(user_objects.get_full_name())):
+                                    user_meals = Meal.objects.filter(user=user_objects).order_by("-addingDate")
+                                    
+                                    if user_meals.count() != 0:
+                                        for meal in user_meals:
+                                            AllMeal.append(meal)
         
         if len(AllMeal) == 0:
             meals_available = False
