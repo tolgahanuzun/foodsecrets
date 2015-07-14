@@ -104,17 +104,8 @@
 			</div>
 		<div class="col-md-8 col-sm-8 col-xs-4"></div>
 			<div class="col-md-4 col-sm-4 col-xs-7 degis3" > Total calories: {{ meal.totalCalories }}<br></div>
-			<div class="col-md-4 col-sm-4 col-xs-7 degis3" style="	margin-bottom: 25px;" > 
-				{% if  meal.favourite  == 0 %}
-			   Nobody add own favourite's meals.
-				{% else %}
-			 		{{ meal.favourite }} {% if meal.favourites > 1 %} people {% else %} person {% endif %} add own favourite's meals. 
-				{% endif %}<br>
-			</div>
-
-	</div>
-
 	
+	</div>
 			<!-- Comeback -->
 			<a id="backhomepage" href="/home/" class="fa fa-home"></a>
 </div>
