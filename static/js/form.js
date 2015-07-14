@@ -213,6 +213,26 @@ $(function () {
 
 });
 
-/* Change Image */
+function readURL(input) {
+     if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-$('.selectpicker').selectpicker();
+        console.log("burdayım");
+
+        reader.onload = function (e) {
+            $('.change').attr('src', e.target.result);
+        }
+
+        console.log($(".chnage").attr('src'));
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(document).ready(function(){
+    $("#change_image").change(function () {
+        readURL(this);
+    });
+});
+
+//$('.selectpicker').selectpicker();
