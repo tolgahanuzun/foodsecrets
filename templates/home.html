@@ -38,6 +38,7 @@
 				<!--           -->
 
 				<!-- Sliderbar -->
+				<center><h3><u>Meal Filter<u></h3>
 				<form method="POST" action="/home/filter/" accept-charset="UTF-8">
 				{% csrf_token %}
 					 <div style="  margin-top: 35px;"> 
@@ -53,11 +54,12 @@
 										<option class="optionsID" >Başlangıç</option>
 										<option class="optionsID">Ara Sıcak</option>
 									</select>
+									<br><br>
 								<button type="submit" id="filter_button" name="filter_button">Filter</button>
 							</div>
 					
 				</div>
-				</form>
+				</form></center>
 				<!-- Sliderbar -->
 
 	    </div>
