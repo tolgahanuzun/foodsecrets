@@ -137,15 +137,19 @@
 								  	{% if allFavouriteMeals|hasMeal:meal %}
 									  
 									  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
-									  	 border: transparent;"><span class="icon_fav"> {{ meal.favourite }} </span></button>	
+									  	 border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button>	
 										{% else %}
 								  		
 								  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
-								  		border: transparent;"><span class="icon_fav"> {{ meal.favourite }} </span></button> 	
+								  		border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button> 	
 										{% endif %}
 										
 									</div>
-								{% endif%}
+								{% else %}
+								 	<div class="pull-right" style="background: transparent;border: transparent;">
+										<span class="icon_fav"> {{ meal.favourite }} fav. </span>
+									</div>
+								{% endif %}
 							{% endif %}
 
 							{% if myFavouritesPage or myMealsPage %}
