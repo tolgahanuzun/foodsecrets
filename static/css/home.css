@@ -363,7 +363,7 @@ Licensed under MIT
 @media (min-width: 640px) and (max-width: 1024px) {
   .profile-userpic {
    width: 186px;
-   height: 186px;
+   height: 186px;	
   }
 }
 @media (min-width: 501px) and (max-width: 639px) {
