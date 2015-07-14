@@ -111,8 +111,8 @@ Licensed under MIT
 .profile-userpic {
 	position: relative;
 	overflow: hidden;
-	max-width: 196px;
-	max-height: 19	6px;
+	width: 196px;
+	height: 196px;
 	-webkit-border-radius: 50% !important;
 	-moz-border-radius: 50% !important;
 	border-radius: 50% !important;
@@ -360,3 +360,28 @@ Licensed under MIT
   }
 }
 
+@media (min-width: 640px) and (max-width: 1024px) {
+  .profile-userpic {
+   width: 186px;
+   height: 186px;
+  }
+}
+@media (min-width: 501px) and (max-width: 639px) {
+  .profile-userpic {
+   width: 170px;
+   height: 170px;
+  }
+}
+@media (min-width: 360px) and (max-width: 500px) {
+  .profile-userpic {
+   width: 110px;
+   height: 110px;
+  }
+}
+
+@media (max-width:359px)  {
+.profile-userpic {
+   width: 75px;
+   height: 75px;
+  }
+}
