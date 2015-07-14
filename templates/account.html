@@ -20,6 +20,7 @@
 								{% if request.user.profile.image %}
 								
 									{% thumbnail  request.user.profile.image "462x462" crop="center" as im %}
+            				
             				<img src="{{ im.url }}" class="img-responsive img-rounded center-block change"/>          
 									{% endthumbnail %}
 									<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 
@@ -29,7 +30,49 @@
 				  						<img src="{{ im.url }}"  class="img-responsive img-rounded center-block change">
 						  			{% endthumbnail %}
 									{% endwith %}
-					 				<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 	
+					 				<input type="file" data-toggle="modal" data-target=".bs-example-modal-lg"  name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 	
+
+										<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+											      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+											      <h4 class="modal-title" id="myLargeModalLabel">İmages Crop</h4>
+
+											      <div class="modal-body">
+
+											      	<!-- This wraps the whole cropper -->
+															<div class="image-editor">
+															      <input type="file" class="cropit-image-input">
+															      <div class="cropit-image-preview"></div>
+															      <div class="image-size-label">
+															        Resize image
+															      </div>
+															      <input type="range" class="cropit-image-zoom-input" style="position: static;">
+															      <button class="export">Export</button>
+															    </div>
+
+														    <script>
+														      $(function() {
+														        $('.image-editor').cropit({
+														          imageState: {
+														            src: 'http://lorempixel.com/500/400/',
+														          },
+														        });
+
+														        $('.export').click(function() {
+														          var imageData = $('.image-editor').cropit('export');
+														          window.open(imageData);
+														        });
+														      });
+														    </script>
+
+																</div>
+
+											    </div>
+												</div>
+											</div>
+										</div>
 								{% endif %}
 
 							</div>
