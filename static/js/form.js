@@ -158,20 +158,27 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.star').on('click', function (){
             
-        var url = "/home/favourite/toggle/"+$(this).attr('id')    
+        var meal_id = $(this).attr('id');  
+        var url = "/home/favourite/toggle/"+meal_id;  
         var self = this;
 
         $.ajax({
             url: url,
             }).done(function(res, status) {
             
+                var value = parseInt($(self).find("span").text());
+
                 if(res == "Sub")
                 {
                     $(self).removeClass('fa-star').addClass('fa-star-o');
+                    console.log(value);
+                    console.log( (value-1).toString())
+                    $(self).find("span").text((value-1).toString());
                 }
                 else
                 {
                     $(self).removeClass('fa-star-o').addClass('fa-star');
+                    $(self).find("span").text((value+1).toString());
                 }
         });
 
@@ -206,7 +213,6 @@ $(function () {
 
 });
 
-
-
+/* Change Image */
 
 $('.selectpicker').selectpicker();
