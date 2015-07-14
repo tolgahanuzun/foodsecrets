@@ -7,7 +7,6 @@
 
 <div class="row " id="userpanl" >
   <div class="col-sm-6 col-sm-push-3" id="content1" style="background:none;" >
-
   	<div class="col-xs-2" style="background:none;"> </div>
   	<div class="col-xs-7 col-xs-offet-2" style="background:none; width: 61.333333%;">
    		<div class="profilebar" style="background:none;">
@@ -15,10 +14,10 @@
 					
 					{% if user.profile.image %}
 					  {% thumbnail user.profile.image "462x462" crop="center" as im %}
-            	<img src="{{ im.url }}"  class="img-responsive imagefix" id="imgprofil" >
+            	<img src="{{ im.url }}"  class="img-responsive imagefix" id="imgprofill" >
 						{% endthumbnail %}
 					{% else %}
-					  <img src="{% static 'images/user/default_user_image.png' %}"  border="0"   class="img-responsive" id="imgprofil" style="background:none;">	
+					  <img src="{% static 'images/user/default_user_image.png' %}"  border="0"   class="img-responsive" id="imgprofill" style="background:none;">	
 					{% endif %}
 
 				</div>
@@ -31,9 +30,8 @@
 		</div>
 
 	  <div class=" panel-login" style="background:none; margin-bottom:15px;">
-		 	<div class="panel-heading" style="background:none;">
-		  </div>
-
+		 	<div class="panel-heading" style="background:none;"></div>
+	
 			<div class="panel-body" style="background:none;">
 				<div class="row">
 					<div class="col-lg-12">
@@ -77,7 +75,7 @@
           	</div>
           </div>
 				</div>
-			</div>
+			</div> 
 		</div>
 	</div>
 		<!-- Comeback -->
