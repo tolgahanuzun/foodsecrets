@@ -263,3 +263,7 @@ color: #fff;
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
   width:100%;
 }
+
+.alert{
+    padding: 0px 3px 47px 3px;
+}
