@@ -24,8 +24,11 @@ def timeDifference(created, current=None):
 
     created = timezone.localtime(created)
 
-    print timezone.now()
+    month_information = {"1":u"Ocak", "2":u"Şubat", "3":u"Mart", "4":"Nisan", 
+                         "5":u"Mayıs", "6":u"Haziran", "7":u"Temmuz", "8":u"Ağustos", 
+                         "9":"Eylül", "10":u"Ekim","11":u"Kasım", "12":u"Aralık"} 
 
+    print created
     if current.year == created.year:
         if current.month == created.month:
             if current.day == created.day:
@@ -47,10 +50,21 @@ def timeDifference(created, current=None):
                 else:
                     return str(current.hour - created.hour) + u"  saat önce"
             elif current.day - 1 == created.day:
-                return u"Dün  ," + str(created.hour) + ":" + str(created.minute)
-            
-        return str(created.day) + " " + str(created.month) + " , " + str(created.hour) + ":" + str(created.minute)
+                if str(created.minute) == "0":
+                    return u"Dün  ," + str(created.hour) + ":" + str(created.minute) + "0"
+                else:
+                    return u"Dün  ," + str(created.hour) + ":" + str(created.minute)
+
+        month = month_information[str(created.month)]
+        if str(created.minute) == "0":    
+            return str(created.day) + " " + month + " , " + str(created.hour) + ":" + str(created.minute) + "0"
+        else:
+            return str(created.day) + " " + month + " , " + str(created.hour) + ":" + str(created.minute)
     else:
-        return created
+        month = month_information[str(created.month)]
+        if str(created.minute) == "0":    
+            return str(created.day) + " " + month + " " +str(created.year) +" , " + str(created.hour) + ":" + str(created.minute) + "0"
+        else:
+            return str(created.day) + " " + month + " " +str(created.year) +" , " + str(created.hour) + ":" + str(created.minute) 
         
 
