@@ -10,3 +10,5 @@ include/
 /static/images/user/
 /static/images/meal/
 /static/images/cache/
+
+node_modules/
