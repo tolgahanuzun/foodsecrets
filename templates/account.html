@@ -205,13 +205,12 @@
                   	<div class="col-lg-6 col-lg-offset-3 form-group">
 							    		<div id="radios" >
 
-												<span>Do not show profile! &nbsp;&nbsp;&nbsp;</span>
+												<span>Do not show profile!</span>
 												<input type="checkbox" id="id_{{ area.name }}" name="{{ area.name }}" 
 												{% if request.user.profile.secret_profile %}
 											  	checked
-												{% endif %} 
-											  >
-											 <br>
+												{% endif %} >
+											 
 
 											</div>	
 										</div>
