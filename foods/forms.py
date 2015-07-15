@@ -22,10 +22,13 @@ class AddingToMeal(forms.ModelForm):
                                 required=True, widget=forms.Textarea)
     meal_kind = forms.ModelChoiceField(label=u"Kind", queryset=MealKind.objects.all(), 
                                        required=True)
+    meal_image = forms.ImageField(label=u"Upload Image", required=False)
+    meal_hidden = forms.CharField(label=u"Meal Image Src", required=False, 
+                                   widget=forms.HiddenInput())
 
     class Meta:
         model = Meal
-        fields = ("name", "description","meal_kind")
+        fields = ("name", "description","meal_kind", "meal_image", "meal_hidden")
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
