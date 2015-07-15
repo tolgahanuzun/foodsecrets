@@ -15,6 +15,7 @@
 }
 
 #userpanl{
+
 	margin-right: 0;
 	margin-left: 0;
 	background: url('/static/images/restaurant.png');
@@ -55,16 +56,9 @@ margin-left: 0px;
 }
 }
 
+#userpanel2{}
 
-
-
-#userpanel2{
-
-}
-
-#content1{
-	margin-top: 70px;
-}
+#content1{padding-top: 90px;}
 #content2{
 }
 
