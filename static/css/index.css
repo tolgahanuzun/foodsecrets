@@ -293,3 +293,19 @@ color: #fff;
   .export {
     margin-top: 10px;
   }
+  .nonecol{
+  padding-right: 0;
+  padding-left: 0;
+  padding: 0px;
+  }
+
+  .cropit-image-meal {
+    background-color: #f8f8f8;
+    background-size: cover;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: 7px;
+    width: 520px;
+    height: 420px;
+    cursor: move;
+  }

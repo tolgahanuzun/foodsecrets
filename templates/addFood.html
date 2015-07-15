@@ -37,26 +37,75 @@
          		 	</div>
         		</div>
 
-        		<div class="col-md-6" >
-        			<div class="panel panel-default">
-    			<div class="panel-body">   
-				 	{% for area in form_addMeal %}
+						        	<div class="col-md-6 nonecol" >
+						        		<div class="col-md-12 nonecol">
+						        			<div class="panel panel-default">
+						    						<div class="panel-body">   
+													 	{% for area in form_addMeal %}
 
-					  {% if area.name == "meal_kind" %}
-      	 			<div class="" id="selecklab"  >
-		        		<center> <label for="sel1">Select Meal Category</label>
-									{{ area }}{% if area.errors %} * {% endif %}
-		    	  		</center>
-		    			</div>    
-		 	     	{% endif %}
-	      
-	  			    {% endfor %}
-    				</div>
-    			</div>
-    			</div>
-						
+													  {% if area.name == "meal_kind" %}
+						      	 					<div class="" id="selecklab"  >
+								        				<center> <label for="sel1">Select Meal Category</label>
+														{{ area }}{% if area.errors %} * {% endif %}
+								    	  				</center>
+							    						</div>    
+						 	    				 	{% endif %}
+							      
+						  			   		  {% endfor %}
+						    						</div>
+						    					</div>
+						    				</div>	
+						    					<div class="col-md-12 nonecol">
+						    						<div class="panel panel-default">
+						    						<div class="panel-body">   
 
-     			</div> 
+						    						<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">İmages Upload</button>
+
+						    						</div>
+						    					</div>	
+
+						    					</div>
+						    				</div>
+						    			
+						    					<div class="col-md-6 nonecol">
+						    					<div class="panel panel-default">
+						    						<div class="panel-body">   
+						    		<div style="width:225px;"	>	
+										<img src="http://www.havsaportal.net/havsa/yemek.jpg"  class="img-responsive img-rounded center-block profileImage">
+						  			</div>	
+					       	<center>
+										<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+											      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+											      <h4 class="modal-title" id="myLargeModalLabel">Images Crop</h4>
+
+											      <div class="modal-body">
+
+											      	<!-- This wraps the whole cropper -->
+															<div class="image-editor">
+															  <input type="file" class="cropit-image-input">
+															  <div class="cropit-image-meal" id="Cropit_meal_image"></div>
+															  <div class="image-size-label">
+															    Resize image
+															  </div>
+															  <input type="range" class="cropit-image-zoom-input" style="position: static;">
+															  <a href="#" class="btn btn-default export">Export</a>
+															  <input type="submit" class="export" name="image" value="Save Image">
+															</div>
+														</div>
+											    </div>
+												</div>
+											</div>
+										</div>
+									</center>
+								
+						    						</div>
+						    					</div>
+						    				</div>
+
+						</div> 
 				 
 
 				 <div class="col-sm-6" style="margin-top: 39px;">
