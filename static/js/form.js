@@ -212,9 +212,9 @@ $(function () {
     });
 });
 
-/* Crop Image */
+/* Crop User Image */
 
-function cropImage(image) {
+function cropUserImage(image) {
     $('.image-editor').cropit({
         imageState: { src: image }
     });
@@ -227,7 +227,7 @@ function cropImage(image) {
     });
 }
 
-function choiceImage(input) {
+function choiceUserImage(input) {
      if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -235,7 +235,7 @@ function choiceImage(input) {
         $('#change_image').attr('data-target', ".bs-example-modal-lg");
 
         reader.onload = function (e) {
-            cropImage(e.target.result)
+            cropUserImage(e.target.result)
         }
 
         reader.readAsDataURL(input.files[0]);
@@ -244,7 +244,43 @@ function choiceImage(input) {
 
 $(document).ready(function(){
     $("#change_image").change(function () {
-        choiceImage(this);
+        choiceUserImage(this);
+    });
+});
+
+/* Crop Meal Image */
+
+function cropMealImage(image) {
+    $('.image-editor').cropit({
+        imageState: { src: image }
+    });
+
+    $('.export').click(function(e) {
+        //e.preventDefault();
+        var imageData = $('.image-editor').cropit('export');
+
+        $('#meal_hidden').val(imageData);
+    });
+}
+
+function choiceMealImage(input) {
+     if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        $('#meal_image').attr('data-toggle', "modal");
+        $('#meal_image').attr('data-target', ".bs-example-modal-lg");
+
+        reader.onload = function (e) {
+            cropMealImage(e.target.result)
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(document).ready(function(){
+    $("#meal_image").change(function () {
+        choiceMealImage(this);
     });
 });
 //$('.selectpicker').selectpicker();
