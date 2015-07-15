@@ -423,3 +423,19 @@ Licensed under MIT
   width: 87%;
 }
 }
+
+.gecko select{
+-webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+
+}
+
+#Cropit_image{
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+max-width: 200px;
+max-height: 200px;
+}
