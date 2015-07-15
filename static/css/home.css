@@ -424,13 +424,13 @@ Licensed under MIT
 }
 }
 
-.gecko select{
+/*.gecko select{
 -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
 
-}
+}*/
 
 #Cropit_image{
   -webkit-border-radius: 50% !important;
