@@ -13,24 +13,27 @@
   		<div class="col-xs-7 col-xs-offet-2" >
    			<div class="profilebar" >
 					
-					<form action="home/account/image" method="POST" role="form">
-						
+					<form action="/home/account/image/" method="POST" role="form" enctype="multipart/form-data">	
+				  {% csrf_token %}
+
 							<div class="profile-userpic">
 
 								{% if request.user.profile.image %}
 								
 									{% thumbnail  request.user.profile.image "462x462" crop="center" as im %}
             				
-            				<img src="{{ im.url }}" class="img-responsive img-rounded center-block"/>          
+            				<img src="{{ im.url }}" class="img-responsive img-rounded center-block profileImage"/>          
 									{% endthumbnail %}
 									<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 
+									<input type="hidden" name="{{ form_accountImage.hidden_field.name}}" id="{{ form_accountImage.hidden_field.name}}">
 								{% else %}
 									{% with path=MEDIA_URL|add:"user/default_user_image.png" %}
 						  			{% thumbnail path "462x462" crop="center" as im %}
-				  						<img src="{{ im.url }}"  class="img-responsive img-rounded center-block">
+				  						<img src="{{ im.url }}"  class="img-responsive img-rounded center-block profileImage">
 						  			{% endthumbnail %}
 									{% endwith %}
-					 				<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}"> 	
+					 				<input type="file" name="{{ form_accountImage.change_image.name }}" id="{{form_accountImage.change_image.name }}">
+					 				<input type="hidden" name="{{ form_accountImage.hidden_field.name}}" id="{{ form_accountImage.hidden_field.name}}"> 	
                 {% endif %}
 
 								<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -38,7 +41,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 									      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-									      <h4 class="modal-title" id="myLargeModalLabel">İmages Crop</h4>
+									      <h4 class="modal-title" id="myLargeModalLabel">Images Crop</h4>
 
 									      <div class="modal-body">
 
@@ -50,17 +53,16 @@
 													    Resize image
 													  </div>
 													  <input type="range" class="cropit-image-zoom-input" style="position: static;">
-													  <button class="export">Export</button>
+													  <a href="#" class="btn btn-default export">Export</a>
+													  <input type="submit" class="export" name="image" value="Save Image">
 													</div>
-
 												</div>
-
 									    </div>
 										</div>
 									</div>
 								</div>
-							</div>
 
+							</div>
 					</form>
 
 					<div class="profile-usertitle" >
