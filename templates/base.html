@@ -23,9 +23,8 @@
 	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
 	<link rel="stylesheet" href="{% static 'css/index.css' %}">
 	<script>
-
   		$(function() {
-    		
+
     		$( "#slider-range" ).slider({
       			range: true,
       			min: 0,
@@ -42,9 +41,8 @@
   		});
 
   	</script>
-  
-</head>
 
+</head>
 <body>
 	
 	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -60,7 +58,7 @@
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 		 
-				<ul class="nav navbar-nav navbar-right" 	id="newlogin" style="right:25px;">
+				<ul class="nav navbar-nav navbar-right" id="newlogin" style="right:25px;">
 					<li><p class="navbar-text"><a href="/register">Sing up</a></p></li>
 					<li class="dropdown">
 						<a href="login/" class="dropdown-toggle" data-toggle="dropdown"><b data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ form_login.non_field_errors|striptags}}">Login</b> <span class="caret"></span></a>
