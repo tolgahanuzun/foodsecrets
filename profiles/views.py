@@ -90,16 +90,31 @@ def accountUser(request):
         else:
             form_accountUser = AccountFormUser()
             return render(request, "account.html", {'form_accountUser':form_accountUser, 
-                                                        'form_accountImage':form_accountImage}) 
+                                                    'form_accountImage':form_accountImage}) 
 
     else:
         return HttpResponseRedirect("/")
 
+def accountImage(request):
+    if request.user.is_authenticated():
+        if request.method == "POST":
+            form_accountImage = AccountFormImage(request.POST, user=request.user)
+
+            #form_accountImage.yaz()
+            if form_accountImage.is_valid():
+                form_accountImage.change();
+                pass
+
+            return HttpResponseRedirect("/home/account/user/");
+    else:
+        return HttpResponseRedirect("/");
+
+
 
 def accountPassword(request):
     if request.user.is_authenticated():
-
         form_accountImage = AccountFormImage()
+
         if request.method == "POST":
             form_accountPassword = AccountFormPassword(request.POST, user=request.user)
  

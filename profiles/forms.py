@@ -6,11 +6,14 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
+from django.core.files.base import ContentFile
 from django.db.models import Q
 from django.http import *
 
 
 from profiles.models import Profile
+
+import base64
 
 # Kullanıcı kayıt formu.
 class RegistrationForm(UserCreationForm):
@@ -65,6 +68,30 @@ class RegistrationForm(UserCreationForm):
 
 class AccountFormImage(forms.Form):
     change_image = forms.ImageField(label=u"Change Profile Image", required=False)
+    hidden_field = forms.CharField(label=u"Profile Src", required=False, 
+                                   widget=forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AccountFormImage, self).__init__(*args, **kwargs)
+
+    def yaz(self):
+        value = self.data.get("hidden_field").split(",")
+        print base64.b64decode(value[1])
+
+    def change(self):
+        data = self.cleaned_data
+
+        if data.get("hidden_field"):
+            value = self.data.get("hidden_field").split(",")
+            
+            image_data = base64.b64decode(value[1])
+
+            user_profile = Profile.objects.get(profile=self.user) 
+            user_profile.image = ContentFile(image_data, str(self.user.id) + '.png')
+            user_profile.save()
+
+        return self.user
 
 
 class AccountFormUser(forms.Form):
