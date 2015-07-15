@@ -210,20 +210,33 @@ $(function () {
             $(this).removeClass('open');
         }
     });
-
 });
 
-function readURL(input) {
+/* Crop Image */
+
+function cropImage(image) {
+    $('.image-editor').cropit({
+        imageState: { src: image }
+    });
+
+    $('.export').click(function(e) {
+        //e.preventDefault();
+        var imageData = $('.image-editor').cropit('export');
+
+        $('#hidden_field').val(imageData);
+    });
+}
+
+function choiceImage(input) {
      if (input.files && input.files[0]) {
         var reader = new FileReader();
 
-        console.log("burdayım");
+        $('#change_image').attr('data-toggle', "modal");
+        $('#change_image').attr('data-target', ".bs-example-modal-lg");
 
         reader.onload = function (e) {
-            $('.change').attr('src', e.target.result);
+            cropImage(e.target.result)
         }
-
-        console.log($(".chnage").attr('src'));
 
         reader.readAsDataURL(input.files[0]);
     }
@@ -231,8 +244,8 @@ function readURL(input) {
 
 $(document).ready(function(){
     $("#change_image").change(function () {
-        readURL(this);
+        choiceImage(this);
     });
 });
-
 //$('.selectpicker').selectpicker();
+
