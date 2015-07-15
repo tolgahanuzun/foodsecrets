@@ -140,7 +140,7 @@ Licensed under MIT
 	height: 100%;
 }
 
-.profile-userpic input {
+.profile-userpic #change_image {
 	position: absolute;
 	top:0;
 	left: 0;
