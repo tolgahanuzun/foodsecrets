@@ -100,16 +100,12 @@ def accountImage(request):
         if request.method == "POST":
             form_accountImage = AccountFormImage(request.POST, user=request.user)
 
-            #form_accountImage.yaz()
             if form_accountImage.is_valid():
                 form_accountImage.change();
-                pass
 
             return HttpResponseRedirect("/home/account/user/");
     else:
         return HttpResponseRedirect("/");
-
-
 
 def accountPassword(request):
     if request.user.is_authenticated():
@@ -276,8 +272,9 @@ def filter(request):
             amount = request.POST.get("amount")
             min_amount = amount.split("-")[0]
             max_amount = amount.split("-")[1]
+            print meal_kind
 
-            if meal_kind != None:
+            if len(meal_kind) != 0:
                 AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & 
                                               Q(totalCalories__lte=max_amount) & 
                                               Q(meal_kind__kind__in=meal_kind)).order_by("-addingDate")
@@ -293,8 +290,8 @@ def filter(request):
 
             return render(request, "home.html", 
                           {'AllMeal':AllMeal, 'currentTime':currentTime,
-                            'allFavouriteMeals': allFavouriteMeals,
-                            'meals_available':meals_available, 'filterPage':True})
+                           'allFavouriteMeals': allFavouriteMeals,
+                           'meals_available':meals_available, 'filterPage':True})
 
         return HttpResponseRedirect("/home/")
 

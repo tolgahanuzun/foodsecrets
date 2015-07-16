@@ -75,14 +75,11 @@ class AccountFormImage(forms.Form):
         self.user = kwargs.pop('user', None)
         super(AccountFormImage, self).__init__(*args, **kwargs)
 
-    def yaz(self):
-        value = self.data.get("hidden_field").split(",")
-        print base64.b64decode(value[1])
-
+ 
     def change(self):
         data = self.cleaned_data
 
-        if data.get("hidden_field"):
+        if data.get("hidden_field") != "":
             value = self.data.get("hidden_field").split(",")
             
             image_data = base64.b64decode(value[1])
