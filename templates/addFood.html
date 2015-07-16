@@ -5,15 +5,15 @@
 {% load static %}
 
 <div class="row" id="Logincont_add">
-	<div class="col-sm-12" id="acontent" >
+	<div class="col-md-12" id="acontent" >
 		
 		<form  accept-charset="UTF-8" enctype="multipart/form-data" action="/home/addmeal/" method="POST">
 		{% csrf_token %}
-
-			<div class="col-sm-6">
-				<center> <h4> Meal Add </h4></center>	
+<center> <h2> Meal Add </h2></center>	
+			<div class="col-md-6">
+				
 	 			
-	 			<div class="panel panel-default">
+	 			<div class="panel panel-default" style="margin-bottom:10px;">
         	<div class="panel-body">
 
         	  {% for area in form_addMeal %}
@@ -39,9 +39,9 @@
          	</div>
         </div>
 
-				<div class="col-md-6 nonecol" >
+				<div class="col-md-5 nonecol" id="select_div" 	>
 					<div class="col-md-12 nonecol">
-						<div class="panel panel-default">
+						<div>
 						  <div class="panel-body">   
 								{% for area in form_addMeal %}
 
@@ -59,10 +59,11 @@
 					</div>	
 						    					
 					<div class="col-md-12 nonecol">
-						<div class="panel panel-default">
+						<div>
 						  <div class="panel-body">   
+
               	
-              	<input type="file" name="{{ form_addMeal.meal_image.name }}" id="{{ form_addMeal.meal_image.name }}">
+              	<input type="file" class="filestyle" data-buttonName="btn-primary" name="{{ form_addMeal.meal_image.name }}" id="{{ form_addMeal.meal_image.name }}" style="opacity:1;" data-badge="false" >
 				 				<input type="hidden" name="{{ form_addMeal.meal_hidden.name }}" id="{{ form_addMeal.meal_hidden.name }}">
 
 						  </div>
@@ -71,10 +72,10 @@
 
 				</div>
 						    			
-				<div class="col-md-6 nonecol">
-					<div class="panel panel-default">
-						<div class="panel-body">   
-						<center id="img_style" ><div style="width:225px;">	
+				<div class="col-md-6 nonecol" id="image_select">
+					<div>
+						<div>   
+						<center ><div style="width:225px;">	
 								<img src="{% static 'images/meal/default_meal_image.jpg' %}" id="prevMeal" class="img-responsive img-rounded center-block">
 						  </div></center>  
 						  
@@ -114,7 +115,7 @@
 			</div> 
 				 
 
-			<div class="col-sm-6" style="margin-top: 39px;">
+			<div class="col-md-6" >
       	<div class="panel panel-default">
     			<div class="panel-body">   
 			    	
