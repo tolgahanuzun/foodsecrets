@@ -8,12 +8,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
+from django.core.files.base import ContentFile
 from django.db.models import Q
 from django.http import *
 
 from .models import *
 from profiles.models import * 
 from materials.models import *
+import base64
 
 
 class AddingToMeal(forms.ModelForm):
@@ -62,13 +64,21 @@ class AddingToMeal(forms.ModelForm):
         return self.data.get("name")
 
     def save(self, commit=True):
-        meal = super(AddingToMeal, self).save(commit=False)
 
-        if commit:
-            meal.name = data.get("name")
-            meal.description = data.get("description")
-            meal.meal_kind = data.get("food_kind")
-            meal.save()
+        meal = Meal()
+        meal.name = self.data.get("name")
+        meal.description = self.data.get("description")
+
+        meal_kind = MealKind.objects.get(kind=self.data.get("meal_kind"))
+        meal.meal_kind = meal_kind
+        meal.user = self.user
+
+        if self.data.get("meal_hidden") != "":
+            value = self.data.get("meal_hidden").split(",")
+            image_data = base64.b64decode(value[1])
+            meal.image = ContentFile(image_data, str(self.user.id) + '.png')
+
+        meal.save()
  
         return meal
 

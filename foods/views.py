@@ -22,17 +22,13 @@ def addMeal(request):
             
         
             if form_addMeal.is_valid() and materialList_formset.is_valid():
-                meal = form_addMeal.save(commit=False)
-                meal.user = request.user
+                meal = form_addMeal.save()
                 materialList_formset = MaterialListFormSet(request.POST, instance=meal)
+                materialList_formset.save()
 
-                if materialList_formset.is_valid():
-                    meal.save()
-                    materialList_formset.save()
-
-                    totalCalories = form_addMeal.totalCalories(meal)
-                    meal.totalCalories = totalCalories
-                    meal.save() 
+                totalCalories = form_addMeal.totalCalories(meal)
+                meal.totalCalories = totalCalories
+                meal.save() 
 
                 return HttpResponseRedirect("/home/addmeal/")
             else:
