@@ -256,10 +256,13 @@ function cropMealImage(image) {
     });
 
     $('.export').click(function(e) {
-        //e.preventDefault();
+        e.preventDefault();
         var imageData = $('.image-editor').cropit('export');
 
+        $('#prevMeal').attr('src', imageData);
         $('#meal_hidden').val(imageData);
+        $('.modal .close').click();
+
     });
 }
 
@@ -283,5 +286,6 @@ $(document).ready(function(){
         choiceMealImage(this);
     });
 });
+
 //$('.selectpicker').selectpicker();
 
