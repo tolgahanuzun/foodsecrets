@@ -139,7 +139,7 @@
 						     	
 						  
 						  <!-- favori butonu-->
-						  {% if homePage or mostFavouritesPage %}
+						  {% if homePage or mostFavouritesPage or filterPage or searchPage %}
 						    {% if request.user != meal.user %}
 							    <div class="pull-right stars active" style="background: transparent;border: transparent;">
 
@@ -218,7 +218,7 @@
 		</div>
 	       
 	</div>
-    {% if myFavouritesPage or mostFavouritesPage or myMealsPage %}
+    {% if myFavouritesPage or mostFavouritesPage or myMealsPage or filterPage or searchPage%}
       <a id="backhomepage" href="/home/" class="fa fa-home"></a>
     {% endif %}
 </div>

@@ -1,4 +1,4 @@
-	{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block test%}
 
@@ -7,7 +7,7 @@
 <div class="row" id="Logincont_add">
 	<div class="col-sm-12" id="acontent" >
 		
-		<form  accept-charset="UTF-8" action="/home/addmeal/" method="POST">
+		<form  accept-charset="UTF-8" enctype="multipart/form-data" action="/home/addmeal/" method="POST">
 		{% csrf_token %}
 
 			<div class="col-sm-6">
@@ -75,7 +75,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">   
 						<center id="img_style" ><div style="width:225px;">	
-								<img src="/static/images/meal/default_meal_image.jpg" id="prevMeal" class="img-responsive img-rounded center-block">
+								<img src="{% static 'images/meal/default_meal_image.jpg' %}" id="prevMeal" class="img-responsive img-rounded center-block">
 						  </div></center>  
 						  
 					    
@@ -97,7 +97,7 @@
 															  Resize image
 															</div>
 															<input type="range" class="cropit-image-zoom-input" style="position: static;">
-															<input type="submit" class="btn btn-default export" name="image" value="Save Image">
+															<button class="btn btn-default export" name="image">Save Image </button>
 													</div>
 
 												</div>
