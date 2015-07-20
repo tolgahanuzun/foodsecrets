@@ -454,14 +454,18 @@ max-height: 420px;
 
   /* padding-top: 90px; */
 
-@media (min-width: 1024px) and (max-width: 1025px){
-#content1{padding-top:0px;}
+@media (min-width: 1023px) and (min-height: : 78px){
+#content-2{padding-top:100px;}
 }
 
-@media (min-width: 1260px) and (max-width: 1310px){
-#content1{padding-top:50px;}
+@media (min-width: 1200px) and (max-width: 1310px){
+#content-2{padding-top:40px;}
+}
+@media (min-width: 1310px) and (max-width: 1810px){
+#content-2{padding-top:120px;}
 }
 @media (min-width: 100px) and (max-width: 440px){
+#content-2{padding-top:60px;}
 .smartdiv{  width: 100%;
   padding: 4px;
   box-sizing: content-box;}
