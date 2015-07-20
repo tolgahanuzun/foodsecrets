@@ -452,7 +452,7 @@ max-height: 420px;
 #image_select{margin:5px;padding: 5px 0px 0px 5px;width: 55%;}
 }
 
-  /* padding-top: 90px; */
+  /*
 
 @media (min-width: 1023px) and (max-width:1200px){
 #content-2{padding-top:150px;}
@@ -469,4 +469,28 @@ max-height: 420px;
 .smartdiv{  width: 100%;
   padding: 4px;
   box-sizing: content-box;}
+}
+
+
+@media (min-width: 1023px) and (max-width:1200px){
+#content1{padding-top:150px;}
+}
+
+@media (min-width: 1200px) and (max-width: 1310px){
+#content1{padding-top:180px;}
+}
+@media (min-width: 1310px) and (max-width: 1810px){
+#content1{padding-top:200px;}
+}
+@media (min-width: 100px) and (max-width: 440px){
+#content1{padding-top:60px;}
+}
+*/
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
 }

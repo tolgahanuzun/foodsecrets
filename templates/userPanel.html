@@ -17,10 +17,10 @@
             	<img src="{{ im.url }}"  class="img-responsive imagefix" id="imgprofill" >
 						{% endthumbnail %}
 					{% else %}
-					  <img src="{% static 'images/user/default_user_image.png' %}"  border="0"   class="img-responsive" id="imgprofill" style="background:none;">	
+						  <img src="{% static 'images/user/default_user_image.png' %}"  border="0"   class="img-responsive" id="imgprofill" style="background:none;">	
 					{% endif %}
-
 				</div>
+				
 				<div class="profile-usertitle" style="background:none;">
 					<div class="profile-usertitle-name" style="background:none;">
 						{{ user.get_full_name }}
@@ -29,13 +29,11 @@
 			</div>
 		</div>
 
-	  <div class=" panel-login" >
-		 	<div class="panel-heading clearfix" style="background:none;"></div>
 	
-			<div class="panel-body" style="background:none;">
-				<div class="row">
-					<div class="col-lg-12 clearfix">
-						<div class="col-xs-12 col-sm-6 ">
+	  <div class="panel-login" >
+		 	<div class="panel-heading clearfix" style="background:none;"></div>
+				<div class="panel-body" style="background:none;">
+						<div class=" col-md-6">
              	<div class="panel panel-default" id="paneluser">
   							<div class="panel-body" style="background:none;">
   							 	<label>First Name</label> : {{ user.first_name }}
@@ -55,7 +53,7 @@
 							</div>
 						</div>
           
-          	<div class="col-xs-12 col-sm-6 ">
+          	<div class=" col-md-6 ">
              	<div class="panel panel-default" id="paneluser">
   							<div class="panel-body">
   								<label>Last Name</label> : {{ user.last_name }}
@@ -72,11 +70,10 @@
   								<label>Post</label>: {{ send }} send{{ send|pluralize }}
  								</div>
 							</div>
-          	</div>
-          </div>
-				</div>
+	         	</div>
 			</div> 
 		</div>
+	
 	</div>
 		<!-- Comeback -->
 		<a id="backhomepage" href="/home/" class="fa fa-home"></a>	    
