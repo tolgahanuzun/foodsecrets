@@ -147,11 +147,11 @@ $(document).ready(function() {
 /* Small Button */
 
 $(document).ready(function() {
-   $('.meal').on('click', function (){
+    $('.meal').on('click', function (){
    
         url = "/home/meal/"+$(this).attr('id')
         window.location = url
-   });
+    });
 });
 
 /*favorite*/
@@ -164,15 +164,13 @@ $(document).ready(function() {
 
         $.ajax({
             url: url,
-            }).done(function(res, status) {
+            }).done(function(res) {
             
                 var value = parseInt($(self).find("span").text());
 
                 if(res == "Sub")
                 {
                     $(self).removeClass('fa-star').addClass('fa-star-o');
-                    console.log(value);
-                    console.log( (value-1).toString())
                     $(self).find("span").text((value-1).toString());
                 }
                 else
@@ -215,9 +213,13 @@ $(function () {
 /* Crop User Image */
 
 function cropUserImage(image) {
+    $('.image-editor').cropit('destroy');
     $('.image-editor').cropit({
         imageState: { src: image }
-    });
+        }
+    );
+
+    $('#myModal').modal('show');
 
     $('.export').click(function(e) {
         //e.preventDefault();
@@ -228,11 +230,8 @@ function cropUserImage(image) {
 }
 
 function choiceUserImage(input) {
-     if (input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
-
-        $('#change_image').attr('data-toggle', "modal");
-        $('#change_image').attr('data-target', ".bs-example-modal-lg");
 
         reader.onload = function (e) {
             cropUserImage(e.target.result)
@@ -251,9 +250,12 @@ $(document).ready(function(){
 /* Crop Meal Image */
 
 function cropMealImage(image) {
+    $('.image-editor').cropit('destroy');
     $('.image-editor').cropit({
         imageState: { src: image }
     });
+
+    $('#myModal').modal('show');
 
     $('.export').click(function(e) {
         e.preventDefault();
@@ -261,7 +263,7 @@ function cropMealImage(image) {
 
         $('#prevMeal').attr('src', imageData);
         $('#meal_hidden').val(imageData);
-        $('.modal .close').click();
+        $('#myModal_close').click();
 
     });
 }
@@ -269,9 +271,6 @@ function cropMealImage(image) {
 function choiceMealImage(input) {
      if (input.files && input.files[0]) {
         var reader = new FileReader();
-
-        $('#meal_image').attr('data-toggle', "modal");
-        $('#meal_image').attr('data-target', ".bs-example-modal-lg");
 
         reader.onload = function (e) {
             cropMealImage(e.target.result)
@@ -287,5 +286,12 @@ $(document).ready(function(){
     });
 });
 
-//$('.selectpicker').selectpicker();
+/*$(document).ready(function (){
+    $.endlessPaginate({
+        paginateOnScroll: true,
+        paginateOnScrollMargin: 1
+    });
+});*/
 
+
+//$('.selectpicker').selectpicker();
