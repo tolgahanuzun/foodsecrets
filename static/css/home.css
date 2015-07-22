@@ -494,3 +494,10 @@ max-height: 420px;
    height: 0;
    clear: both;
 }
+
+/* Endless Pagination */
+.endless_container{
+    clear: both;
+    width: 100%;
+    text-align: center;
+}
