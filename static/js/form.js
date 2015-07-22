@@ -85,7 +85,6 @@ $(function () {
 
 
 /* Options */
-
 $(document).ready(function() {
     
     var i = 0;
@@ -133,58 +132,60 @@ $(document).ready(function() {
 
   });
 });
+/******************/
 
-/* Close Button */
 
-$(document).ready(function() {
-   $('#account-close').on('click', function (){
+/************************************************
+      1 ) Show Meal Attribute
+      2 ) Account Settings Page => Home Page 
+      3 ) Favourite Attribute
+      4 ) Select All Attribute
+*************************************************/
+
+$(document).on('click', '.meal', function (){
+    url = "/home/meal/"+$(this).attr('id');
+    window.location = url;
+
+});
+
+
+$(document).on('click', '#account-close', function (){
    
-        url = "/home/"
-        window.location = url
-   });
+        url = "/home/";
+        window.location = url;
+
 });
 
-/* Small Button */
 
-$(document).ready(function() {
-    $('.meal').on('click', function (){
-   
-        url = "/home/meal/"+$(this).attr('id')
-        window.location = url
-    });
-});
-
-/*favorite*/
-$(document).ready(function() {
-    $('.star').on('click', function (){
+$(document).on('click', '.star', function (){
             
-        var meal_id = $(this).attr('id');  
-        var url = "/home/favourite/toggle/"+meal_id;  
-        var self = this;
+    var meal_id = $(this).attr('id');  
+    var url = "/home/favourite/toggle/"+meal_id;  
+    var self = this;
 
-        $.ajax({
-            url: url,
-            }).done(function(res) {
+    $.ajax({
+        url: url,
+        }).done(function(res) {
             
-                var value = parseInt($(self).find("span").text());
+            var value = parseInt($(self).find("span").text());
 
-                if(res == "Sub")
-                {
-                    $(self).removeClass('fa-star').addClass('fa-star-o');
-                    $(self).find("span").text((value-1).toString());
-                }
-                else
-                {
-                    $(self).removeClass('fa-star-o').addClass('fa-star');
-                    $(self).find("span").text((value+1).toString());
-                }
-        });
-
+            if(res == "Sub")
+            {
+                $(self).removeClass('fa-star').addClass('fa-star-o');
+                $(self).find("span").text((value-1).toString());
+            }
+            else
+            {
+                $(self).removeClass('fa-star-o').addClass('fa-star');
+                $(self).find("span").text((value+1).toString());
+            }
     });
+
 });
+/*************************/
 
-/* Select All */
 
+/* Select All Attribute */
 $(document).ready(function() {
    $('#selectall').change(function(event) {  //on click
        if(this.checked) { // check select status
@@ -193,9 +194,11 @@ $(document).ready(function() {
            $(".checkbox_container").prop("checked", false);
        }
    });
- 
 });
+/*************************/
 
+
+/* Search Attribute */
 $(function () {
     $('a[href="#search"]').on('click', function(event) {
         event.preventDefault();
@@ -209,9 +212,10 @@ $(function () {
         }
     });
 });
+/********************/
+
 
 /* Crop User Image */
-
 function cropUserImage(image) {
     $('.image-editor').cropit('destroy');
     $('.image-editor').cropit({
@@ -246,9 +250,10 @@ $(document).ready(function(){
         choiceUserImage(this);
     });
 });
+/********************/
+
 
 /* Crop Meal Image */
-
 function cropMealImage(image) {
     $('.image-editor').cropit('destroy');
     $('.image-editor').cropit({
@@ -285,13 +290,6 @@ $(document).ready(function(){
         choiceMealImage(this);
     });
 });
-
-/*$(document).ready(function (){
-    $.endlessPaginate({
-        paginateOnScroll: true,
-        paginateOnScrollMargin: 1
-    });
-});*/
-
+/**************************/
 
 //$('.selectpicker').selectpicker();
