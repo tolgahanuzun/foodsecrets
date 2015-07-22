@@ -11,29 +11,48 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
+import re
+
 # Create your views here.
 
 def addMeal(request):
 
     if request.user.is_authenticated():
         if request.method == "POST":
+            
             form_addMeal = AddingToMeal(request.POST, user=request.user)
             materialList_formset = MaterialListFormSet(request.POST)
-            
-        
+
+            material_error = None
+            empty_material = 0
+
+            for material in request.POST.keys():
+                instance = re.search("materiallist_set-(\d)-material", material)
+                if instance:
+                    if request.POST[material] == "":
+                        empty_material += 1
+
+            available_material = int(request.POST["materiallist_set-TOTAL_FORMS"]) - empty_material
+
             if form_addMeal.is_valid() and materialList_formset.is_valid():
-                meal = form_addMeal.save()
-                materialList_formset = MaterialListFormSet(request.POST, instance=meal)
-                materialList_formset.save()
+                if available_material > 0:
 
-                totalCalories = form_addMeal.totalCalories(meal)
-                meal.totalCalories = totalCalories
-                meal.save() 
+                    meal = form_addMeal.save()
+                    materialList_formset = MaterialListFormSet(request.POST, instance=meal)
+                    materialList_formset.save()
 
-                return HttpResponseRedirect("/home/addmeal/")
-            else:
-                return render(request, "addFood.html", {'form_addMeal':form_addMeal,
-                                                        'materialList_formset':materialList_formset})
+                    totalCalories = form_addMeal.totalCalories(meal)
+                    meal.totalCalories = totalCalories
+                    meal.save() 
+
+                    return HttpResponseRedirect("/home/addmeal/")
+                
+            if materialList_formset.is_valid() or available_material == 0:
+                material_error = "Lütfen geçerli malzeme ve miktar bilgisi giriniz !"
+                       
+            return render(request, "addFood.html", {'form_addMeal':form_addMeal,
+                                                    'materialList_formset':materialList_formset,
+                                                    'material_error':material_error})
         else:
             form_addMeal = AddingToMeal()
             materialList_formset = MaterialListFormSet()
