@@ -81,12 +81,12 @@
 						  
 					    
 					    <center>
-								<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+								<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
-											  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-											  <h4 class="modal-title" id="myLargeModalLabel">Images Crop</h4>
+											  <button id="myModal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+											  <h4 class="modal-title" id="myLargeModalLabel">Image Crop</h4>
 
 											  <div class="modal-body">
 
@@ -132,13 +132,17 @@
 				    	
 				    	  {{ materialList_formset.management_form }}
 
-				    	  <!--{{ materialList_formset }}--> 
+				    	  <!--{{ materialList_formset }}-->
+				    	  
+				    	  {% if material_error != None %}
+				          {{ material_error }}
+				        {% endif %} 
+
 				    	  {% for form in materialList_formset %}
 
 				    	    <tr class="hidden" >
-				 
+				           
 			  		    	  {% for area in form %}
-                      
                       {% if area.name = "material" %}
 						    	      <td > {{ area }} {% if area.errors %} * {% endif %}</td>
 						    	    {% elif area.name == "amount" %}
