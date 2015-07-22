@@ -9,6 +9,9 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, auth
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator
+from endless_pagination.decorators import page_template
+
 
 from .models import *
 from .forms import *
@@ -60,8 +63,8 @@ def register(request):
             else:
                 values = form_register.previous_values()
                 return render(request, "register.html",
-                               { 'form_register':form_register, 'form_login':form_login,
-                            'values':values})
+                              { 'form_register':form_register, 'form_login':form_login,
+                              'values':values})
         else:
             form_register = RegistrationForm()
             return render(request, "register.html",
@@ -173,8 +176,8 @@ def favouriteToggle(request, key):
     else:
         return HttpResponseRedirect("/")
 
-
-def mostFavourites(request):
+@page_template("../templates/pagination.html")
+def mostFavourites(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
         AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:3]
         allFavouriteMeals = request.user.profile.favourites.all()
@@ -182,14 +185,15 @@ def mostFavourites(request):
 
         meals_available = mealsAvailable(AllMeal)
 
-        return render(request, "home.html", 
+        return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                        'allFavouriteMeals': allFavouriteMeals,
                        'mostFavouritesPage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
-def myFavourites(request):
+@page_template("../templates/pagination.html")
+def myFavourites(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
         
         if request.method == "GET":
@@ -220,13 +224,14 @@ def myFavourites(request):
 
         meals_available = mealsAvailable(AllMeal)
 
-        return render(request, "home.html", 
+        return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                        'myFavouritesPage':True, 'meals_available':meals_available})
     else:
         return HttpResponseRedirect("/")
 
-def myMeals(request):
+@page_template("../templates/pagination.html")
+def myMeals(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
         if request.method == "GET":
@@ -259,13 +264,14 @@ def myMeals(request):
 
         meals_available = mealsAvailable(AllMeal)
 
-        return render(request, "home.html", 
+        return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
-                       'myMealsPage':True, 'meals_available':meals_available})
+                       'myMealsPage':True, 'meals_available':meals_available })
     else:
         return HttpResponseRedirect("/")
 
-def filter(request):
+@page_template("../templates/pagination.html")
+def filter(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
         if request.method == "POST":
             meal_kind = request.POST.getlist("kind_select")
@@ -288,7 +294,7 @@ def filter(request):
             allFavouriteMeals = request.user.profile.favourites.all()
             currentTime = timezone.localtime(timezone.now())
 
-            return render(request, "home.html", 
+            return render(request, template, 
                           {'AllMeal':AllMeal, 'currentTime':currentTime,
                            'allFavouriteMeals': allFavouriteMeals,
                            'meals_available':meals_available, 'filterPage':True})
@@ -298,7 +304,8 @@ def filter(request):
     else:
         return HttpResponseRedirect("/")
 
-def search(request):
+@page_template("../templates/pagination.html")
+def search(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
         AllMeal = []
@@ -361,7 +368,7 @@ def search(request):
         if len(AllMeal) == 0:
             meals_available = False
     
-        return render(request, "home.html", 
+        return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                       'allFavouriteMeals': allFavouriteMeals,
                       'searchPage':True, 'meals_available':meals_available})
@@ -369,7 +376,8 @@ def search(request):
     else:
         return HttpResponseRedirect("/")
 
-def home(request):
+@page_template("../templates/pagination.html")
+def home(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
         AllMeal = Meal.objects.order_by("-addingDate")
@@ -378,7 +386,10 @@ def home(request):
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
-        return render(request, "home.html", 
+        #if request.is_ajax():
+        #    template = page_template
+
+        return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
                        'allFavouriteMeals': allFavouriteMeals,
                        'homePage':True, 'meals_available':meals_available})
