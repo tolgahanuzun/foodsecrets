@@ -12,3 +12,5 @@ include/
 /static/images/cache/
 
 node_modules/
+django-endless-pagination/
+static/js/endless-pagination.js
