@@ -1,6 +1,10 @@
 Django==1.8.2
 Pillow==2.9.0
 argparse==1.2.1
+django-endless-pagination==2.0
 sorl-thumbnail==12.3
 wsgiref==0.1.2
+
+
+Add static/js/ => endless-pagination.js
 npm install cropit
