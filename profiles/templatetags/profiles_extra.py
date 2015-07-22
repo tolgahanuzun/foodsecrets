@@ -52,18 +52,24 @@ def timeDifference(created, current=None):
             elif current.day - 1 == created.day:
                 if str(created.minute) == "0":
                     return u"Dün  ," + str(created.hour) + ":" + str(created.minute) + "0"
+                elif len(str(created.minute)) == 1:
+                    return u"Dün  ," + str(created.hour) + ":" + "0" + str(created.minute)
                 else:
                     return u"Dün  ," + str(created.hour) + ":" + str(created.minute)
 
         month = month_information[str(created.month)]
         if str(created.minute) == "0":    
             return str(created.day) + " " + month + " , " + str(created.hour) + ":" + str(created.minute) + "0"
+        elif len(str(created.minute)) == 1:
+            return str(created.day) + " " + month + " , " + str(created.hour) + ":" + "0" + str(created.minute)
         else:
             return str(created.day) + " " + month + " , " + str(created.hour) + ":" + str(created.minute)
     else:
         month = month_information[str(created.month)]
         if str(created.minute) == "0":    
             return str(created.day) + " " + month + " " +str(created.year) +" , " + str(created.hour) + ":" + str(created.minute) + "0"
+        elif len(str(created.minute)) == 1:
+            return str(created.day) + " " + month + " " +str(created.year) +" , " + str(created.hour) + ":" + "0" + str(created.minute)
         else:
             return str(created.day) + " " + month + " " +str(created.year) +" , " + str(created.hour) + ":" + str(created.minute) 
         
