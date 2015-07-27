@@ -179,7 +179,7 @@ def favouriteToggle(request, key):
 @page_template("../templates/pagination.html")
 def mostFavourites(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:3]
+        AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:20]
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
@@ -202,22 +202,19 @@ def myFavourites(request, template="../templates/home.html", extra_context=None)
             for meal_id in remove_mealList:
                 try:
                     meal = Meal.objects.get(id=int(meal_id))
-                except:
-                    ############################
-                    # Güzel hata mesajı verdir #
-                    ############################   
-                    return HttpResponse(u"Buna Yetkiniz Yok!")
 
-                if meal in request.user.profile.favourites.all():
-                    request.user.profile.favourites.remove(meal)
-                    request.user.save()
-                    meal.favourite -= 1 
-                    meal.save()
-                else:
-                    ############################
-                    # Güzel hata mesajı verdir #
-                    ############################   
-                    return HttpResponse(u"Buna Yetkiniz Yok!")
+                    if meal in request.user.profile.favourites.all():
+                        request.user.profile.favourites.remove(meal)
+                        request.user.save()
+                        meal.favourite -= 1 
+                        meal.save()
+                    else:
+                        # Güzel bir hata mesajı verdir.
+                        pass
+
+                except:
+                    # Güzel bir hata mesajı verdir.
+                    pass
 
         AllMeal = request.user.profile.favourites.all().order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
@@ -241,23 +238,20 @@ def myMeals(request, template="../templates/home.html", extra_context=None):
             for meal_id in remove_mealList:
                 try:
                     meal = Meal.objects.get(id=int(meal_id))
+                    
+                    if meal in user_mealList:
+                        material_list = MaterialList.objects.filter(meal=meal)
+                        for material in material_list:
+                            material.delete()
+
+                        meal.delete()
+                    else:
+                        # Güzel bir hata mesajı verdir.
+                        pass
+
                 except:
-                    ############################
-                    # Güzel hata mesajı verdir #
-                    ############################   
-                    return HttpResponse(u"Buna Yetkiniz Yok!")
-
-                if meal in user_mealList:
-                    material_list = MaterialList.objects.filter(meal=meal)
-                    for material in material_list:
-                        material.delete()
-
-                    meal.delete()
-                else:
-                    ############################
-                    # Güzel hata mesajı verdir #
-                    ############################   
-                    return HttpResponse(u"Buna Yetkiniz Yok!")
+                    # Güzel bir hata mesajı verdir.
+                    pass
 
         AllMeal = Meal.objects.filter(user=request.user).order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
@@ -308,12 +302,12 @@ def filter(request, template="../templates/home.html", extra_context=None):
 def search(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
-        AllMeal = []
-        meals_available = True
-        allFavouriteMeals = request.user.profile.favourites.all()
-        currentTime = timezone.localtime(timezone.now())
-        
         if request.method == "POST":
+            AllMeal = []
+            meals_available = True
+            allFavouriteMeals = request.user.profile.favourites.all()
+            currentTime = timezone.localtime(timezone.now())
+            
             search_method = request.POST.get("search_method")
             search_word = request.POST.get("search_word")
 
@@ -364,14 +358,16 @@ def search(request, template="../templates/home.html", extra_context=None):
                                     if user_meals.count() != 0:
                                         for meal in user_meals:
                                             AllMeal.append(meal)
-        
-        if len(AllMeal) == 0:
-            meals_available = False
+
+            if len(AllMeal) == 0:
+                meals_available = False
     
-        return render(request, template, 
-                      {'AllMeal':AllMeal, 'currentTime':currentTime,
-                      'allFavouriteMeals': allFavouriteMeals,
-                      'searchPage':True, 'meals_available':meals_available})
+            return render(request, template, 
+                            {'AllMeal':AllMeal, 'currentTime':currentTime,
+                            'allFavouriteMeals': allFavouriteMeals,
+                            'searchPage':True, 'meals_available':meals_available})
+
+        return HttpResponseRedirect("/home/")
 
     else:
         return HttpResponseRedirect("/")
@@ -385,9 +381,6 @@ def home(request, template="../templates/home.html", extra_context=None):
     
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
-
-        #if request.is_ajax():
-        #    template = page_template
 
         return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
