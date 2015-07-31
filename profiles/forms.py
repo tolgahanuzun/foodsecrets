@@ -59,7 +59,7 @@ class RegistrationForm(UserCreationForm):
             user.save()
             
             user_profile = Profile()
-            user_profile.profile = user
+            user_profile.user = user
             user_profile.phone = self.cleaned_data["phone"]
             user_profile.save()
         
@@ -84,7 +84,7 @@ class AccountFormImage(forms.Form):
             
             image_data = base64.b64decode(value[1])
 
-            user_profile = Profile.objects.get(profile=self.user) 
+            user_profile = Profile.objects.get(user=self.user) 
             user_profile.image = ContentFile(image_data, str(self.user.id) + '.png')
             user_profile.save()
 
@@ -116,7 +116,7 @@ class AccountFormUser(forms.Form):
 
     def change(self):
 
-        user_profile = Profile.objects.get(profile=self.user)
+        user_profile = Profile.objects.get(user=self.user)
         data = self.cleaned_data
 
         self.user.first_name = data.get("first_name")
@@ -124,7 +124,7 @@ class AccountFormUser(forms.Form):
         self.user.email = data.get("email")
         self.user.save()
 
-        user_profile.profile = self.user
+        user_profile.user = self.user
         user_profile.phone = data.get("phone")
         user_profile.secret_profile = data.get("secret_profile")
         user_profile.save()

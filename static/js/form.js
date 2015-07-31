@@ -142,6 +142,52 @@ $(document).ready(function() {
       4 ) Select All Attribute
 *************************************************/
 
+$(document).on('click', '.userLink', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/" + "meals/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserMeal', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/meals/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserFavourites', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/favourites/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserMostFavourites', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/mostfavourites/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserMostFavourites', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/mostfavourites/"
+    window.location = url; 
+});
+
+
 $(document).on('click', '.meal', function (){
     url = "/home/meal/"+$(this).attr('id');
     window.location = url;
@@ -167,22 +213,48 @@ $(document).on('click', '.star', function (){
         url: url,
         }).done(function(res) {
             
-            var value = parseInt($(self).find("span").text());
-
+            var value1 = parseInt($(self).find("span").text());
+            
             if(res == "Sub")
             {
                 $(self).removeClass('fa-star').addClass('fa-star-o');
-                $(self).find("span").text((value-1).toString());
+                $(self).find("span").text((value1-1).toString());
             }
             else
             {
                 $(self).removeClass('fa-star-o').addClass('fa-star');
-                $(self).find("span").text((value+1).toString());
+                $(self).find("span").text((value1+1).toString());
             }
     });
 
 });
 /*************************/
+
+/* Follow / UnFollow */
+
+$(document).on('click', '.otherUserFollowToggle', function (e){
+            
+    e.preventDefault()
+    var username = $(this).attr('id');  
+    var url = "/home/follow/toggle/"+username;  
+    var self = this;
+
+    $.ajax({
+        url: url,
+        }).done(function(res) {
+
+            if(res == "follow")
+            {
+                $(self).text("Unfollow");
+            }
+            else
+            {
+                $(self).text("Follow");
+            }
+    });
+
+});
+/*********************/
 
 
 /* Select All Attribute */

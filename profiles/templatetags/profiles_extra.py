@@ -3,6 +3,8 @@
 from django import template
 from django.utils import timezone
 
+from foods.models import Meal
+
 register = template.Library()
 
 @register.filter
@@ -14,8 +16,38 @@ def subtract(value, arg):
 def hasMeal(mealList, meal):
     if meal in mealList:
         return True
-    else:
-        return False
+    
+    return False
+
+@register.filter
+def hasUser(userList, user):
+    if user in userList:
+        return True
+
+    return False
+
+@register.filter
+def mealCount(user):
+    meal_count = Meal.objects.filter(user=user).count()
+
+    return meal_count
+
+@register.filter
+def mostMealCount(user):
+    most_mealCount = 0
+    MostMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
+
+    for meal in MostMeal:
+        if meal.user == user:
+            most_mealCount += 1
+
+    return most_mealCount
+
+@register.filter
+def splitUrl(currentUrl):
+    wordList = currentUrl.split("/")
+
+    return wordList[len(wordList)-2]
 
 @register.filter
 def timeDifference(created, current=None):

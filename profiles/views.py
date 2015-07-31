@@ -19,6 +19,14 @@ from foods.models import Meal
 
 import re
 
+def write(arg):
+    print "*****************"
+    print arg
+    print "*****************"
+
+def tryPage(request):
+    return render(request, "follow.html")
+
 # Kullanıcı girişini yapan fonksiyon.
 def login(request):
 
@@ -176,10 +184,32 @@ def favouriteToggle(request, key):
     else:
         return HttpResponseRedirect("/")
 
+def followToggle(request, username):
+    if request.user.is_authenticated():
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return HttpResponseRedirect("/home/")
+
+        if user in request.user.profile.following.all():
+            request.user.profile.following.remove(user) 
+            request.user.save()
+            print "burdayım2"
+
+            return HttpResponse("unfollow")
+        else:
+            print "burdayım1"
+            request.user.profile.following.add(user) 
+            request.user.save()
+
+            return HttpResponse("follow")
+    else:
+        return HttpResponseRedirect("/")
+
 @page_template("../templates/pagination.html")
 def mostFavourites(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
-        AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:20]
+        AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
@@ -389,26 +419,52 @@ def home(request, template="../templates/home.html", extra_context=None):
     else:
         return HttpResponseRedirect("/")
 
-def showProfile(request, username):
+@page_template("../templates/pagination.html")
+def showProfile(request, username, mod="meals" ,template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
-        if request.user.username != username:
-            try:
-                user = User.objects.get(username=username)
-                send = Meal.objects.filter(user=user).count()
-            except Exception,e:
-                return HttpResponseRedirect("/home/")
+        
+        other_profilePageFav = False
+        other_profilePageMeals = False
+        other_profilePageMostFav = False
 
-            if not user.profile.secret_profile:
-                return render(request, "userPanel.html", {'user':user, 'send':send})
+        try:
+            user = User.objects.get(username=username)
+            
+            if mod == "meals":
+                AllMeal = Meal.objects.filter(user=user)
+                other_profilePageMeals = True
+            elif mod == "favourites":
+                AllMeal = user.profile.favourites.all()
+                other_profilePageFav = True
             else:
-                return HttpResponse(u"Gizli")
+                AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
+                other_profilePageMostFav = True
+
+            meals_available = mealsAvailable(AllMeal)
+            allFavouriteMeals = request.user.profile.favourites.all()
+            currentTime = timezone.localtime(timezone.now())
+        except Exception,e:
+            return HttpResponseRedirect("/home/")
+
+        if request.user.username == username:
+            return render(request, template, 
+                            {'AllMeal':AllMeal, 'currentTime':currentTime,
+                             'user_profilePage':True, 'meals_available':meals_available})
         else:
-            send = Meal.objects.filter(user=request.user).count()
-            return render(request, "userPanel.html", {'user':request.user, 'send':send})
+            if user.profile.secret_profile:
+                return HttpResponse(u"Gizli Profil")
+            
+            otherUser = user
+
+            return render(request, template, 
+                            {'AllMeal':AllMeal, 'currentTime':currentTime,
+                             'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
+                             'other_profilePage':True,'meals_available':meals_available,
+                             'other_profilePageFav':other_profilePageFav,
+                             'other_profilePageMeals':other_profilePageMeals,
+                             'other_profilePageMostFav':other_profilePageMostFav })
+    
     else:
         return HttpResponseRedirect("/")
-
-
-
 
 
