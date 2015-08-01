@@ -147,7 +147,7 @@ $(document).on('click', '.userLink', function (e){
     e.preventDefault();
     var username = $(this).attr('id');
 
-    url = "/home/" + username + "/" + "meals/"
+    url = "/home/" + username + "/meals/"
     window.location = url; 
 });
 
@@ -246,10 +246,14 @@ $(document).on('click', '.otherUserFollowToggle', function (e){
             if(res == "follow")
             {
                 $(self).text("Unfollow");
+                $(self).removeClass("btn-primary");
+                $(self).addClass("btn-danger");
             }
             else
             {
                 $(self).text("Follow");
+                $(self).removeClass("btn-danger");
+                $(self).addClass("btn-primary");
             }
     });
 

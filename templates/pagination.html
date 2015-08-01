@@ -1,91 +1,135 @@
 {% load endless %}
+{% load thumbnail %}
 {% load profiles_extra %}
 {% load static %}
 
-{% paginate 10,5 AllMeal %}
-{% for meal in AllMeal %}
+{% if profileFollowersPage or other_profileFollowersPage or profileFollowingPage or other_profileFollowingPage %}
+	
+	{% paginate 2,1 AllFollows %}
+	{% for otherUser in AllFollows %}
+	  <div class="container">
+			<div class="row">
+				
+				<div class="col-sm-3">
+					<div class="card">
+						<canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+					
+						<div class="avatar">
+							<img src="" alt="" />
+						</div>
+						
+						<div class="content">
+							<p>
+								{% if otherUser.profile.secret_profile %} 
+									<a href="#" id="{{ otherUser.username }}" class="btn disabled userLink"> <u>{{ otherUser.get_full_name }}</u></a>
+								{% else %}
+								 	<a href="#" id="{{ otherUser.username }}" class="userLink"><u> {{ otherUser.get_full_name }} </u></a>
+								{% endif %}<br>
+							</p>
+							<p><a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
+				 				Unfollow
+				 			</a></p>
+						</div>
 
-	<article class="panel panel-primary">
+					</div>
+				</div>
 
-		<div class="panel-heading icon">
-			<i class="fa fa-plus"></i>
+			</div>
 		</div>
- 
-		<div class="panel-heading">
-			<h2 class="panel-title">
-			  {% if homePage %}
 
-			    {% if meal.user.profile.secret_profile and meal.user != request.user %}
-			  		<a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
-			    {% else %}
-			      <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
-			    {% endif %}
+		{% if otherUser.profile.image %}
+			<img class="src-image" src="{{ otherUser.profile.image.url }}"/>
+		{% else %}
+			<img class="src-image" src="{{ 'default_user_image.png'|encodeBase64:'user' }}"/>
+		{% endif %}						
 
-			  {% elif myMealsPage or user_profilePage or other_profilePageMeals %}
-          {{ meal.name }} ( {{ meal.meal_kind }} ) 
+	{% endfor %}
+	{% show_more "loading..." %}
 
-			  {% else %}
+{% else %}
+	{% paginate 10,5 AllMeal %}
+	{% for meal in AllMeal %}
 
-			    {% if meal.user.profile.secret_profile and meal.user != request.user %}
-			  		 {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u></a> )
-			    {% else %}
-			       {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u></a> )
-			    {% endif %}
-			    
-			  {% endif %} 
-		     	
-		  
-			  <!-- favori butonu-->
-			  {% if homePage or mostFavouritesPage or filterPage or searchPage or other_profilePage or user_profilePage %}
-			    {% if request.user != meal.user %}
-				    <div class="pull-right stars active" style="background: transparent;border: transparent;">
+		<article class="panel panel-primary">
 
-					  	{% if allFavouriteMeals|hasMeal:meal %}
-						  
-						  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
-						  	 border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button>	
-							{% else %}
-					  		
-					  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
-					  		border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button> 	
-							{% endif %}
-							
-						</div>
-					{% else %}
-					 	<div class="pull-right" style="background: transparent;border: transparent;">
-							<span class="icon_fav"> {{ meal.favourite }} favourite{{ meal.favourite|pluralize }} </span>
-						</div>
+			<div class="panel-heading icon">
+				<i class="fa fa-plus"></i>
+			</div>
+	 
+			<div class="panel-heading">
+				<h2 class="panel-title">
+				  {% if homePage %}
+
+				    {% if meal.user.profile.secret_profile and meal.user != request.user %}
+				  		<a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    {% else %}
+				      <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    {% endif %}
+
+				  {% elif myMealsPage or user_profilePage or other_profilePageMeals %}
+	          {{ meal.name }} ( {{ meal.meal_kind }} ) 
+
+				  {% else %}
+
+				    {% if meal.user.profile.secret_profile and meal.user != request.user %}
+				  		 {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u></a> )
+				    {% else %}
+				       {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u></a> )
+				    {% endif %}
+				    
+				  {% endif %} 
+			     	
+				  <!-- favori butonu-->
+				  {% if homePage or mostFavouritesPage or filterPage or searchPage or other_profilePage or user_profilePage %}
+				    {% if request.user != meal.user %}
+					    <div class="pull-right stars active" style="background: transparent;border: transparent;">
+
+						  	{% if allFavouriteMeals|hasMeal:meal %}
+							  
+							  	<button id="{{meal.id}}" class="fa fa-star star" style="background: transparent;
+							  	 border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button>	
+								{% else %}
+						  		
+						  		<button id="{{meal.id}}" class="fa fa-star-o star" style="background: transparent;
+						  		border: transparent;"><span class="icon_fav" id="{{ meal.id }}"> {{ meal.favourite }} </span></button> 	
+								{% endif %}
+								
+							</div>
+						{% else %}
+						 	<div class="pull-right" style="background: transparent;border: transparent;">
+								<span class="icon_fav"> {{ meal.favourite }} favourite{{ meal.favourite|pluralize }} </span>
+							</div>
+						{% endif %}
 					{% endif %}
-				{% endif %}
 
-				{% if myFavouritesPage or myMealsPage %}
-					{% if meals_available %}
-				  	<div class="pull-right stars active" style="background: transparent;border: transparent;">
-				  		<input type="checkbox" id="{{ meal.id }}" name="meal" value="{{ meal.id }}" class="checkbox_container">
-				  	</div>
-				  {% endif %}
-				{% endif %}
+					{% if myFavouritesPage or myMealsPage %}
+						{% if meals_available %}
+					  	<div class="pull-right stars active" style="background: transparent;border: transparent;">
+					  		<input type="checkbox" id="{{ meal.id }}" name="meal" value="{{ meal.id }}" class="checkbox_container">
+					  	</div>
+					  {% endif %}
+					{% endif %}
+				
+				</h2> 
+			</div>
 			
-			</h2> 
-		</div>
-		
-		<div class="panel-body" id="contenttext">
-			{{ meal.description }}
-		</div>
-		
-		<div class="panel-footer">
-		 <button type="button" id="{{ meal.id }}" class="pull-right btn btn-primary btn-sm meal" style="margin-top: -5px;">Show Meal</button>
-			<small>
-	      
-				<!--{{ meal.addingDate|timesince:currentTime }}-->
-				{{ meal.addingDate|timeDifference:currentTime }}
+			<div class="panel-body" id="contenttext">
+				{{ meal.description }}
+			</div>
+			
+			<div class="panel-footer">
+			 <button type="button" id="{{ meal.id }}" class="pull-right btn btn-primary btn-sm meal" style="margin-top: -5px;">Show Meal</button>
+				<small>
+		      
+					<!--{{ meal.addingDate|timesince:currentTime }}-->
+					{{ meal.addingDate|timeDifference:currentTime }}
 
-			</small>
+				</small>
+			</div>
+			
+		</article>
 
-		</div>
-		
-	</article>
+	{% endfor %}
+	{% show_more "loading..." %}
 
-{% endfor %}
-
-{% show_more "loading..." %}
+{% endif %}

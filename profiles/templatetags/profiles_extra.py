@@ -5,6 +5,9 @@ from django.utils import timezone
 
 from foods.models import Meal
 
+import base64
+import os
+
 register = template.Library()
 
 @register.filter
@@ -48,6 +51,17 @@ def splitUrl(currentUrl):
     wordList = currentUrl.split("/")
 
     return wordList[len(wordList)-2]
+
+@register.filter
+def encodeBase64(imgSrc, imgDir):
+    path = os.getcwd() + "/static/images/" + imgDir + "/" + imgSrc
+
+    with open(path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+        
+    encoded_string = "data:image/png;base64," + encoded_string
+
+    return encoded_string
 
 @register.filter
 def timeDifference(created, current=None):

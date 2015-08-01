@@ -14,6 +14,11 @@
     				paginateOnScroll: true,
     				paginateOnScrollMargin: 1
         });
+
+        $( document ).ajaxComplete( function() {
+        	$('body').live('each');
+
+        });
     </script>
   {% endblock %}
 
@@ -63,9 +68,29 @@
 							{{ request.user.get_full_name }}
 						{% endif%}
 					</div>
-					<div class="col-"></div>
+					<div class="col-">
+						{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == False %}
+				 			<a href="#" id="{{ otherUser.username }}" class="btn btn-primary otherUserFollowToggle">
+				 				Follow 
+				 			</a>
+				 			<!--{% if otherUser.profile.following.all|hasUser:request.user %}
+				 				<span class="unfFollow"> Seni Takip Ediyor </span>
+				 			{% endif %}-->
+					 	{% endif %}
+
+					 	{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == True %}
+							<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
+					 			Unfollow
+					 		</a>
+					 		<!--{% if otherUser.profile.following.all|hasUser:request.user %}
+					 			<span class="unfFollow"> Birbirinizi Takip Ediyorsunuz </span>
+					 		{% endif %}-->
+					 	{% endif %}
+					</div>
 	
 				</div>
+
+				
 				<!--           -->
 
 				<!-- Sliderbar -->
@@ -195,7 +220,7 @@
 				 		{% endif %}
 				 	</li>
 
-				 		{% if request.get_full_path|splitUrl == "followers" %}
+				 	{% if request.get_full_path|splitUrl == "followers" %}
 				 		<li role="presentation" class="active">
 				 	{% else %}
 				 		<li role="presentation">
@@ -218,15 +243,18 @@
 				 	{% else %}
 				 		<li role="presentation">
 				 	{% endif %}
-				 		<a href="#">
-				 			Following
-				 			{% if other_profilePage %}
-				 				<br>{{ otherUser.profile.following.all.count }}
-				 			{% else %}
-				 				<br>{{ request.user.profile.following.all.count }}
-				 			{% endif %}
-				 		</a>
-				 	</li>
+				 		{% if other_profilePage %}
+					 		<a href="#">
+					 			Following
+					 			<br>{{ otherUser.profile.following.all.count }}
+					 		</a>
+						{% else %}
+					 		<a href="/home/following/">
+					 			Following
+					 			<br>{{ request.user.profile.following.all.count }}
+					 		</a>
+						{% endif %}
+					</li>
 
 				 	{%if other_profilePage != True %}
 				 		<li role="presentation">
@@ -235,30 +263,6 @@
 				 				<br>Meal
 				 			</a>
 				 		</li>
-				 	{% endif %}
-
-				 	{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == False %}
-				 		<li role="presentation" class="menuList"> 
-				 			<a href="#" id="{{ otherUser.username }}" class="otherUserFollowToggle">
-				 				Follow
-				 				<br><br> 
-				 			</a>
-				 		</li>
-				 		<!--{% if otherUser.profile.following.all|hasUser:request.user %}
-				 			<span class="infFollow"> Seni Takip Ediyor </span>
-				 		{% endif %}-->
-				 	{% endif %}
-
-				 	{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == True %}
-				 		<li role="presentation" class="menuList">
-				 			<a href="#" id="{{ otherUser.username }}" class="otherUserFollowToggle">
-				 				Unfollow
-				 				<br><br>
-				 			</a>
-				 		</li>
-				 		<!--{% if otherUser.profile.following.all|hasUser:request.user %}
-				 			<span class="infFollow"> Birbirinizi Takip Ediyorsunuz </span>
-				 		{% endif %}-->
 				 	{% endif %}
 
 				</ul>
@@ -273,15 +277,8 @@
         {% endif %}
       {% endif %}
 			
-			<!--{% include "follow.html" %}--> 
 			<div class="line text-muted" id="transp"></div>
 			{% include "pagination.html" %}
-			<!--{{ pages.previous }} {% show_current_number %} {{ pages.next }}-->
-
-      <!--{% if page.has_next %}
-      	<input type="hidden" id="{{ request.get_full_path }}" class="currentUrl"/>
-				<a id="{{ page.number|add:1 }}" class="btn btn-default loadMore"> Load More </a>
-			{% endif %}--> 
 
 			{% if myFavouritesPage or myMealsPage %}
 			  {% if meals_available %}

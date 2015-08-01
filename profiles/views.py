@@ -192,14 +192,14 @@ def followToggle(request, username):
             return HttpResponseRedirect("/home/")
 
         if user in request.user.profile.following.all():
-            request.user.profile.following.remove(user) 
+            request.user.profile.following.remove(user)
+            user.profile.followers.remove(request.user) 
             request.user.save()
-            print "burdayım2"
 
             return HttpResponse("unfollow")
         else:
-            print "burdayım1"
-            request.user.profile.following.add(user) 
+            request.user.profile.following.add(user)
+            user.profile.followers.add(request.user) 
             request.user.save()
 
             return HttpResponse("follow")
@@ -293,6 +293,24 @@ def myMeals(request, template="../templates/home.html", extra_context=None):
                        'myMealsPage':True, 'meals_available':meals_available })
     else:
         return HttpResponseRedirect("/")
+
+@page_template("../templates/pagination.html")
+def myFollowers(request, template="../templates/home.html", extra_context=None):
+    if request.user.is_authenticated():
+
+        AllFollows = request.user.profile.followers.all()
+
+        return render(request, template, 
+                      {'AllFollows':AllFollows, 'profileFollowersPage':True}) 
+
+@page_template("../templates/pagination.html")
+def myFollowing(request, template="../templates/home.html", extra_context=None):
+    if request.user.is_authenticated():
+
+        AllFollows = request.user.profile.following.all()
+
+        return render(request, template, 
+                      {'AllFollows':AllFollows, 'profileFollowingPage':True}) 
 
 @page_template("../templates/pagination.html")
 def filter(request, template="../templates/home.html", extra_context=None):
