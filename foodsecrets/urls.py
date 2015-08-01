@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^home/follow/toggle/(?P<username>[\w]+)$', 'profiles.views.followToggle'),
     url(r'^home/favourites/$', 'profiles.views.myFavourites'),
     url(r'^home/mostfavourites/$', 'profiles.views.mostFavourites'),
+    url(r'^home/followers/$', 'profiles.views.myFollowers'),
+    url(r'^home/following/$', 'profiles.views.myFollowing'),
     url(r'^home/addmeal/$', 'foods.views.addMeal'),
     url(r'^home/meals/$', 'profiles.views.myMeals'),
     url(r'^home/meal/(?P<key>[\d]+)$', 'foods.views.showMeal'),
