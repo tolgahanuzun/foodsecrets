@@ -20,7 +20,7 @@ import base64
 
 class AddingToMeal(forms.ModelForm):
     name = forms.CharField(label=u"İsim", max_length=100, required=True)
-    description = forms.CharField(label=u"Tarif", max_length=1000, 
+    description = forms.CharField(label=u"Tarif", max_length=10000, 
                                 required=True, widget=forms.Textarea)
     meal_kind = forms.ModelChoiceField(label=u"Kind", queryset=MealKind.objects.all(), 
                                        required=True)
