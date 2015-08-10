@@ -2,6 +2,7 @@
 
 from django import template
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from foods.models import Meal
 
@@ -62,6 +63,29 @@ def encodeBase64(imgSrc, imgDir):
     encoded_string = "data:image/png;base64," + encoded_string
 
     return encoded_string
+
+@register.filter
+def controlFollowing(user, other_user):
+    user = User.objects.get(username=user)
+    other_user = User.objects.get(username=other_user)
+
+    if other_user in user.profile.following.all():
+        return True
+
+    return False 
+
+@register.filter
+def mealDescription(text):
+    show_text = ""
+    split_text = text.split(" ")
+
+    for i in range(len(split_text)):
+        if i == 60:
+            break
+
+        show_text += split_text[i] + " "
+
+    return show_text + "   ..." 
 
 @register.filter
 def timeDifference(created, current=None):
