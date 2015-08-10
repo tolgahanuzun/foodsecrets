@@ -444,23 +444,35 @@ def showProfile(request, username, mod="meals" ,template="../templates/home.html
         other_profilePageFav = False
         other_profilePageMeals = False
         other_profilePageMostFav = False
+        other_profileFollowersPage = False
+        other_profileFollowingPage = False
 
         try:
             user = User.objects.get(username=username)
             
-            if mod == "meals":
-                AllMeal = Meal.objects.filter(user=user)
-                other_profilePageMeals = True
-            elif mod == "favourites":
-                AllMeal = user.profile.favourites.all()
-                other_profilePageFav = True
-            else:
-                AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
-                other_profilePageMostFav = True
+            if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
+                if mod == "meals":
+                    AllMeal = Meal.objects.filter(user=user)
+                    other_profilePageMeals = True
+                elif mod == "favourites":
+                    AllMeal = user.profile.favourites.all()
+                    other_profilePageFav = True
+                else:   # mod == mostfavourites
+                    AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
+                    other_profilePageMostFav = True
+        
+                meals_available = mealsAvailable(AllMeal)
+                allFavouriteMeals = request.user.profile.favourites.all()
+                currentTime = timezone.localtime(timezone.now())
+        
+            else: # mod == following or mod == followers
+                if mod == "followers":
+                    AllFollows = user.profile.followers.all()
+                    other_profileFollowersPage = True
+                else: #mod == following
+                    AllFollows = user.profile.following.all()
+                    other_profileFollowingPage = True
 
-            meals_available = mealsAvailable(AllMeal)
-            allFavouriteMeals = request.user.profile.favourites.all()
-            currentTime = timezone.localtime(timezone.now())
         except Exception,e:
             return HttpResponseRedirect("/home/")
 
@@ -474,13 +486,19 @@ def showProfile(request, username, mod="meals" ,template="../templates/home.html
             
             otherUser = user
 
-            return render(request, template, 
-                            {'AllMeal':AllMeal, 'currentTime':currentTime,
-                             'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
-                             'other_profilePage':True,'meals_available':meals_available,
-                             'other_profilePageFav':other_profilePageFav,
-                             'other_profilePageMeals':other_profilePageMeals,
-                             'other_profilePageMostFav':other_profilePageMostFav })
+            if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
+                return render(request, template, 
+                                {'AllMeal':AllMeal, 'currentTime':currentTime,
+                                 'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
+                                 'other_profilePage':True,'meals_available':meals_available,
+                                 'other_profilePageFav':other_profilePageFav,
+                                 'other_profilePageMeals':other_profilePageMeals,
+                                 'other_profilePageMostFav':other_profilePageMostFav })
+            else: # mod == following or mod == followers
+                return render(request, template, 
+                                {'AllFollows':AllFollows, 'other_profilePage':True, 'otherUser':otherUser,
+                                 'other_profileFollowersPage':other_profileFollowersPage,
+                                 'other_profileFollowingPage':other_profileFollowingPage })     
     
     else:
         return HttpResponseRedirect("/")
