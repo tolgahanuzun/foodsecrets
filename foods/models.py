@@ -23,7 +23,7 @@ class MealKind(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name=u"Adı")
-    description = models.TextField(max_length=1000, verbose_name=u"Tarif")
+    description = models.TextField(max_length=10000, verbose_name=u"Tarif")
     user = models.ForeignKey(User, verbose_name=u"Kullanıcı")
     meal_kind = models.ForeignKey(MealKind, verbose_name=u"Tür")
     totalCalories = models.FloatField(default=0, blank=True, verbose_name=u"Toplam Kalori")
