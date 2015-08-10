@@ -135,13 +135,6 @@ $(document).ready(function() {
 /******************/
 
 
-/************************************************
-      1 ) Show Meal Attribute
-      2 ) Account Settings Page => Home Page 
-      3 ) Favourite Attribute
-      4 ) Select All Attribute
-*************************************************/
-
 $(document).on('click', '.userLink', function (e){
     
     e.preventDefault();
@@ -184,6 +177,24 @@ $(document).on('click', '.otherUserMostFavourites', function (e){
     var username = $(this).attr('id');
 
     url = "/home/" + username + "/mostfavourites/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserFollowers', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/followers/"
+    window.location = url; 
+});
+
+$(document).on('click', '.otherUserFollowing', function (e){
+    
+    e.preventDefault();
+    var username = $(this).attr('id');
+
+    url = "/home/" + username + "/following/"
     window.location = url; 
 });
 
