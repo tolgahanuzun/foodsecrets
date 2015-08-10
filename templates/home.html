@@ -226,7 +226,7 @@
 				 		<li role="presentation">
 				 	{% endif %}
 				 		{% if other_profilePage %}
-					 		<a href="#">
+					 		<a href="#" id="{{ otherUser.username }}" class="otherUserFollowers">
 					 			Followers
 					 			<br>{{ otherUser.profile.followers.all.count }}
 					 		</a>
@@ -244,7 +244,7 @@
 				 		<li role="presentation">
 				 	{% endif %}
 				 		{% if other_profilePage %}
-					 		<a href="#">
+					 		<a href="#" id="{{ otherUser.username }}" class="otherUserFollowing">
 					 			Following
 					 			<br>{{ otherUser.profile.following.all.count }}
 					 		</a>

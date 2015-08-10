@@ -5,45 +5,66 @@
 
 {% if profileFollowersPage or other_profileFollowersPage or profileFollowingPage or other_profileFollowingPage %}
 	
-	{% paginate 2,1 AllFollows %}
-	{% for otherUser in AllFollows %}
-	  <div class="container">
-			<div class="row">
-				
-				<div class="col-sm-3">
-					<div class="card">
-						<canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
-					
-						<div class="avatar">
-							<img src="" alt="" />
-						</div>
+	{% paginate 8,4 AllFollows %}
+	<div class="container">
+		<div class="row">
+			{% for otherUser in AllFollows %}
 						
-						<div class="content">
-							<p>
-								{% if otherUser.profile.secret_profile %} 
-									<a href="#" id="{{ otherUser.username }}" class="btn disabled userLink"> <u>{{ otherUser.get_full_name }}</u></a>
-								{% else %}
-								 	<a href="#" id="{{ otherUser.username }}" class="userLink"><u> {{ otherUser.get_full_name }} </u></a>
-								{% endif %}<br>
-							</p>
-							<p><a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
-				 				Unfollow
-				 			</a></p>
+						<div class="col-sm-3">
+							<div class="card">
+								<canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+							
+								<div class="avatar">
+									<img src="" alt="" />
+								</div>
+								
+								<div class="content">
+									
+									<p>
+										{% if otherUser.profile.secret_profile %} 
+											<a href="#" id="{{ otherUser.username }}" class="btn disabled userLink"> <u>{{ otherUser.get_full_name }}</u></a>
+										{% else %}
+										 	<a href="#" id="{{ otherUser.username }}" class="btn userLink"><u> {{ otherUser.get_full_name }} </u></a>
+										{% endif %}<br>
+									</p>
+									<p>
+										{% if profileFollowingPage or other_profileFollowingPage %}
+											<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
+						 						Unfollow
+						 					</a>
+						 				{% endif %}
+
+						 				{% if profileFollowersPage or other_profileFollowersPage %}
+
+						 					{% if request.user.username|controlFollowing:otherUser.username %}
+						 						<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
+						 							Unfollow
+						 						</a>
+						 					{% else %}
+						 						<a href="#" id="{{ otherUser.username }}" class="btn btn-primary otherUserFollowToggle">
+						 							Follow
+						 						</a>
+						 					{% endif %}
+
+						 				{% endif %}
+						 			</p>
+
+								</div>
+
+							</div>
 						</div>
 
-					</div>
-				</div>
 
-			</div>
+				{% if otherUser.profile.image %}
+					<img class="src-image" src="{{ otherUser.profile.image.url }}"/>
+				{% else %}
+					<img class="src-image" src="{{ 'default_user_image.png'|encodeBase64:'user' }}"/>
+				{% endif %}						
+
+			{% endfor %}
 		</div>
-
-		{% if otherUser.profile.image %}
-			<img class="src-image" src="{{ otherUser.profile.image.url }}"/>
-		{% else %}
-			<img class="src-image" src="{{ 'default_user_image.png'|encodeBase64:'user' }}"/>
-		{% endif %}						
-
-	{% endfor %}
+	</div>
+	<br>
 	{% show_more "loading..." %}
 
 {% else %}
@@ -114,7 +135,7 @@
 			</div>
 			
 			<div class="panel-body" id="contenttext">
-				{{ meal.description }}
+				{{ meal.description|mealDescription }}
 			</div>
 			
 			<div class="panel-footer">
