@@ -13,12 +13,20 @@ class Profile(models.Model):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone = models.CharField(max_length=15,validators=[phone_regex], blank=True, 
                              verbose_name=u"Telefon Numarası") # validators should be a list
-    secret_profile = models.BooleanField(default=False, blank=True, verbose_name=u"Profili Gizle")
+    secret_profile = models.BooleanField(default=False, blank=True, 
+                                         verbose_name=u"Profili Gizle")
     favourites = models.ManyToManyField(Meal, blank=True, verbose_name=u"Favoriler")
-    image = models.ImageField(default=None, blank=True, upload_to="user", verbose_name=u"Kullanıcı Resmi")
+    image = models.ImageField(default=None, blank=True, upload_to="user", 
+                              verbose_name=u"Kullanıcı Resmi")
 
-    followers = models.ManyToManyField(User, blank=True, related_name="followers", verbose_name=u"Takipçiler")
-    following = models.ManyToManyField(User, blank=True, related_name="following", verbose_name=u"Takip Ettikleri")
+    followers = models.ManyToManyField(User, blank=True, related_name="followers",
+                                       verbose_name=u"Takipçiler")
+    following = models.ManyToManyField(User, blank=True, related_name="following", 
+                                       verbose_name=u"Takip Ettikleri")
+    received_requests = models.ManyToManyField(User, blank=True, related_name="received_requests", 
+                                               verbose_name=u"Alınan Arkadaşlık İstekleri")
+    send_requests = models.ManyToManyField(User, blank=True, related_name="send_requests",
+                                           verbose_name=u"Gönderilen Arkadaşlık İstekleri")
 
 
     class Meta:
