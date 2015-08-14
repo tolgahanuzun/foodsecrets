@@ -213,9 +213,11 @@ $(document).on('click', '#account-close', function (){
 
 });
 
+/* Favourite Meakl */
 
 $(document).on('click', '.star', function (){
             
+
     var meal_id = $(this).attr('id');  
     var url = "/home/favourite/toggle/"+meal_id;  
     var self = this;
@@ -224,18 +226,21 @@ $(document).on('click', '.star', function (){
         url: url,
         }).done(function(res) {
             
-            var value1 = parseInt($(self).find("span").text());
+            //var value1 = parseInt($(self).find("span").text());
             
             if(res == "Sub")
             {
                 $(self).removeClass('fa-star').addClass('fa-star-o');
-                $(self).find("span").text((value1-1).toString());
+                //$(self).find("span").text((value1-1).toString());
             }
             else
             {
                 $(self).removeClass('fa-star-o').addClass('fa-star');
-                $(self).find("span").text((value1+1).toString());
+                //$(self).find("span").text((value1+1).toString());
             }
+
+            window.location.reload();
+
     });
 
 });
@@ -245,7 +250,7 @@ $(document).on('click', '.star', function (){
 
 $(document).on('click', '.otherUserFollowToggle', function (e){
             
-    e.preventDefault()
+    e.preventDefault();
     var username = $(this).attr('id');  
     var url = "/home/follow/toggle/"+username;  
     var self = this;
@@ -254,23 +259,114 @@ $(document).on('click', '.otherUserFollowToggle', function (e){
         url: url,
         }).done(function(res) {
 
-            if(res == "follow")
+            if(res == "follow-unfollow")
             {
                 $(self).text("Unfollow");
                 $(self).removeClass("btn-primary");
                 $(self).addClass("btn-danger");
             }
-            else
+            else if(res == "unfollow-follow")
             {
                 $(self).text("Follow");
                 $(self).removeClass("btn-danger");
                 $(self).addClass("btn-primary");
             }
+            else if(res == "follow_request-cancel_request")
+            {
+                $(self).text("Cancel Request");
+                $(self).removeClass("btn-success");
+                $(self).addClass("btn-danger");
+            }
+            else if(res == "cancel_request-follow_request" || res == "unfollow-follow_request")
+            {
+                $(self).text("Follow Request");
+                $(self).removeClass("btn-danger");
+                $(self).addClass("btn-success");
+            }
+
+            window.location.reload();
+
     });
 
 });
+
 /*********************/
 
+/*  Secret Profile Follow Request */
+
+$(document).on('click', '.secretProfileFollowRequestToggle', function (e){
+            
+    e.preventDefault();
+
+    var username = $(this).attr('id');
+    var url = "/home/follow/requesttoggle/"+username;  
+    var self = this;
+
+    $.ajax({
+        url: url,
+        }).done(function(res) {
+
+            if(res == "follow_request-cancel_request")
+            {
+                $(self).text("Cancel Request");
+                $(self).removeClass("btn-success");
+                $(self).addClass("btn-danger");
+            }
+            else if(res == "cancel_request-follow_request")
+            {
+                $(self).text("Follow Request");
+                $(self).removeClass("btn-danger");
+                $(self).addClass("btn-success");
+            }
+
+            window.location.replace(window.location.href);
+            
+    });
+
+});
+
+/**********************************/
+
+/* Accept Request */
+
+$(document).on('click', '.acceptRequest', function (e){
+            
+    e.preventDefault();
+
+    var username = $(this).attr('id');
+    var url = "/home/request/accept/"+username;  
+    var self = this;
+
+    $.ajax({
+        url: url,
+        }).done(function(res) {
+            window.location.replace(window.location.href);
+    });
+
+});
+
+/******************/
+
+/* Accept Request */
+
+$(document).on('click', '.cancelRequest', function (e){
+            
+    e.preventDefault();
+
+    var username = $(this).attr('id');
+    var url = "/home/request/cancel/"+username;  
+    var self = this;
+
+    $.ajax({
+        url: url,
+        }).done(function(res) {
+            window.location.replace(window.location.href);
+    });
+
+
+});
+
+/******************/
 
 /* Select All Attribute */
 $(document).ready(function() {

@@ -177,8 +177,17 @@
 							
 				  </form>
 
-						
 					<ul class="nav navbar-nav" id="newlogin">
+
+						<div class="notification">
+	  					<a href="/home/friendrequests/">
+	    					<img src="{% static 'images/friend_requests.png' %}">
+	    					{% if request.user.profile.received_requests.all.count != 0 %}
+	    						<span>{{ request.user.profile.received_requests.all.count }}</span>
+	    					{% endif %}
+	  					</a>
+						</div>
+
 						<li class="dropdown" id="newdrop">
 							<a href="" class="dropdown-toggle" data-toggle="dropdown">Hello {{ request.user.first_name }} <span class="fa fa-user pull-right"></span></a>
 							<ul class="dropdown-menu" id="newdropdownmenu">

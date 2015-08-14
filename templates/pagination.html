@@ -3,13 +3,16 @@
 {% load profiles_extra %}
 {% load static %}
 
-{% if profileFollowersPage or other_profileFollowersPage or profileFollowingPage or other_profileFollowingPage %}
+{% if profileFollowPage or friendRequestsPage %}
 	
-	{% paginate 8,4 AllFollows %}
-	<div class="container">
-		<div class="row">
-			{% for otherUser in AllFollows %}
-						
+	{% paginate 8,4 AllUsers %}
+			{% for other_user in AllUsers %}
+			
+				{% if forloop.counter|modulo:4 == 1 %}
+					<div class="container">
+						<div class="row">
+				{% endif %}
+
 						<div class="col-sm-3">
 							<div class="card">
 								<canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
@@ -21,32 +24,60 @@
 								<div class="content">
 									
 									<p>
-										{% if otherUser.profile.secret_profile %} 
-											<a href="#" id="{{ otherUser.username }}" class="btn disabled userLink"> <u>{{ otherUser.get_full_name }}</u></a>
+										{% if other_user.profile.secret_profile %}
+											{% if request.user|controlFollowing:other_user %}
+												<a href="#" id="{{ other_user.username }}" class="btn userLink"> 
+													<u>	{{ other_user.get_full_name }}	</u>	
+												</a>
+											{% else %}
+												<a href="#" id="{{ other_user.username }}" class="btn	disabled userLink"> 
+													<u>	{{ other_user.get_full_name }}	</u>	
+												</a>
+											{% endif %}
 										{% else %}
-										 	<a href="#" id="{{ otherUser.username }}" class="btn userLink"><u> {{ otherUser.get_full_name }} </u></a>
+										 	<a href="#" id="{{ other_user.username }}" class="btn userLink"><u> {{ other_user.get_full_name }} </u></a>
 										{% endif %}<br>
 									</p>
 									<p>
-										{% if profileFollowingPage or other_profileFollowingPage %}
-											<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
-						 						Unfollow
-						 					</a>
-						 				{% endif %}
-
-						 				{% if profileFollowersPage or other_profileFollowersPage %}
-
-						 					{% if request.user.username|controlFollowing:otherUser.username %}
-						 						<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
-						 							Unfollow
+											
+										{% if profileFollowPage %}
+											
+											{% if request.user == other_user %}
+												<a href="/home/account/user/"  class="btn btn-default">
+						 							Profili Düzenle
 						 						</a>
-						 					{% else %}
-						 						<a href="#" id="{{ otherUser.username }}" class="btn btn-primary otherUserFollowToggle">
-						 							Follow
-						 						</a>
+											{% else %}
+												
+												{% if request.user|controlFollowing:other_user %}
+							 						<a href="#" id="{{ other_user.username }}" class="btn btn-danger otherUserFollowToggle">
+							 							Unfollow
+							 						</a>
+							 					{% elif other_user.profile.secret_profile %}
+							 						{% if request.user|controlSendRequests:other_user %}
+							 							<a href="#" id="{{ other_user.username }}" class="btn btn-danger secretProfileFollowRequestToggle">
+							 								Cancel Request
+							 							</a>
+							 						{% else %}
+							 							<a href="#" id="{{ other_user.username }}" class="btn btn-success secretProfileFollowRequestToggle">
+							 								Follow Request
+							 							</a>
+							 						{% endif%}
+							 					{% else %}
+							 						<a href="#" id="{{ other_user.username }}" class="btn btn-primary otherUserFollowToggle">
+							 							Follow
+							 						</a>
+							 					{% endif %}
+
 						 					{% endif %}
 
 						 				{% endif %}
+
+						 				{% if friendRequestsPage %}
+						 					<a href="#" id="{{ other_user }}" class="btn btn-success acceptRequest">Accept</a>
+						 					<a href="#" id="{{ other_user }}" class="btn btn-danger cancelRequest">Cancel</a>
+						 				{% endif %}
+
+
 						 			</p>
 
 								</div>
@@ -54,17 +85,19 @@
 							</div>
 						</div>
 
-
-				{% if otherUser.profile.image %}
-					<img class="src-image" src="{{ otherUser.profile.image.url }}"/>
+				{% if other_user.profile.image %}
+					<img class="src-image" src="{{ other_user.profile.image.url }}"/>
 				{% else %}
 					<img class="src-image" src="{{ 'default_user_image.png'|encodeBase64:'user' }}"/>
-				{% endif %}						
-
-			{% endfor %}
-		</div>
-	</div>
-	<br>
+				{% endif %}
+				
+				{% if forloop.counter|divisibleby:4 or AllFollows|size == forloop.counter %}		
+						</div>
+					</div>
+					<br>
+				{% endif %}
+	{% endfor %}
+	
 	{% show_more "loading..." %}
 
 {% else %}
@@ -79,23 +112,45 @@
 	 
 			<div class="panel-heading">
 				<h2 class="panel-title">
+
 				  {% if homePage %}
 
-				    {% if meal.user.profile.secret_profile and meal.user != request.user %}
-				  		<a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    {% if meal.user.profile.secret_profile and meal.user != request.user and request.user|controlFollowing:meal.user == False%}
+				  		<a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> 
+				  			<u> {{ meal.user.get_full_name }} </u> 
+				  		</a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
 				    {% else %}
-				      <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u> </a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    	{% if meal.user == request.user %}
+				    		<a href="/home/meals/" id="{{ meal.user.username }}"> 
+				    			<u> {{ meal.user.get_full_name }} </u> 
+				    		</a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    	{% else %}
+				      	<a href="#" id="{{ meal.user.username }}" class="userLink"> 
+				      		<u> {{ meal.user.get_full_name }} </u>
+				      	</a>  bir   {{ meal.meal_kind }}   ekledi. ( {{ meal.name }})
+				    	{% endif %}
+				    
 				    {% endif %}
 
-				  {% elif myMealsPage or user_profilePage or other_profilePageMeals %}
+				  {% elif myMealsPage or other_profilePageMeals %}
 	          {{ meal.name }} ( {{ meal.meal_kind }} ) 
 
 				  {% else %}
 
-				    {% if meal.user.profile.secret_profile and meal.user != request.user %}
-				  		 {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> <u>{{ meal.user.get_full_name }}</u></a> )
+				    {% if meal.user.profile.secret_profile and meal.user != request.user and request.user|controlFollowing:meal.user == False %}
+				  		{{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="btn disabled userLink" style="padding:0;"> 
+				  												<u> {{ meal.user.get_full_name }} </u>
+				  											</a> )
 				    {% else %}
-				       {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="userLink"> <u>{{ meal.user.get_full_name }}</u></a> )
+				    	{% if meal.user == request.user %}
+				    	  {{ meal.name }} ( <a href="/home/meals/" id="{{ meal.user.username }}"> 
+				    	  										<u> {{ meal.user.get_full_name }} </u>
+				    	  									</a> )
+				    	{% else %}
+				        {{ meal.name }} ( <a href="#" id="{{ meal.user.username }}" class="userLink"> 
+				        										<u> {{ meal.user.get_full_name }} </u>
+				        									</a> )
+				    	{% endif %}
 				    {% endif %}
 				    
 				  {% endif %} 

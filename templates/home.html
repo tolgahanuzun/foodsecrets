@@ -15,10 +15,10 @@
     				paginateOnScrollMargin: 1
         });
 
-        $( document ).ajaxComplete( function() {
+        /*$( document ).ajaxComplete( function() {
         	$('body').live('each');
 
-        });
+        });*/
     </script>
   {% endblock %}
 
@@ -142,10 +142,10 @@
 					  <h2 class="degis2"> Your Filter Search</h2>
 					{% elif mostFavouritesPage %}
 					  <h2 class="degis2"> Most Favourite Meals </h2>
-					{% elif user_profilePage%}
-					  <h2 class="degis2"> Your Profile </h2>
-					{% elif other_profilePageFav %}
-						<h2 class="degis2"> {{ otherUser.get_full_name }}'s Favourites </h2>
+					{% elif profileFollowersPage %}
+						<h2 class="degis2"> Your Followers Users </h2>
+					{% elif profileFollowingPage %}
+						<h2 class="degis2"> Your Following Users </h2>
 					{% elif other_profilePage%}
 					  <h2 class="degis2"> {{ otherUser.get_full_name }}'s Profile </h2>
 					{% else %}
@@ -302,10 +302,16 @@
 				</div>
 				
 				<div class="panel-body degis4" >
-				  {% if meals_available and page.has_next %}
-						That is all.
-					{% elif meals_available == False %}
+					{% if meals_available == False and meals_available != None %}
 					  Meal not available
+					{% endif %}
+
+					{% if users_available == False and users_available != None %}
+						User not available
+					{% endif %}
+
+					{% if requests_available == False and requests_available != None %}
+					 Friend's request not available
 					{% endif %}
 				</div>
 
