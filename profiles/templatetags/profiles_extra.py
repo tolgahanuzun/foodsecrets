@@ -12,6 +12,19 @@ import os
 register = template.Library()
 
 @register.filter
+def modulo(value1, value2):
+    return value1 % value2
+
+@register.filter
+def size(array):   
+    try:
+        count = array.count()
+    except:
+        count = len(array)
+
+    return count    
+
+@register.filter
 def subtract(value, arg):
     return value - arg
 
@@ -66,13 +79,17 @@ def encodeBase64(imgSrc, imgDir):
 
 @register.filter
 def controlFollowing(user, other_user):
-    user = User.objects.get(username=user)
-    other_user = User.objects.get(username=other_user)
-
     if other_user in user.profile.following.all():
         return True
 
     return False 
+
+@register.filter
+def controlSendRequests(user, other_user):
+    if other_user in user.profile.send_requests.all():
+        return True
+
+    return False
 
 @register.filter
 def mealDescription(text):
