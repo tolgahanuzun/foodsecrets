@@ -19,6 +19,22 @@ from foods.models import Meal
 
 import re
 
+####### Global Variable #######
+
+# filter function #
+meal_kind_buffer = ""
+amount_buffer = ""
+min_amount_buffer = ""
+max_amount_buffer = ""
+###################
+
+# search function #
+search_method_buffer=""
+search_word_buffer=""
+###################
+
+###############################
+
 def write(arg):
     print "*****************"
     print arg
@@ -151,9 +167,14 @@ def organize(word):
         return word.lower()
 
 
-def mealsAvailable(all_meal):
-    if all_meal.count() == 0:
-        return False
+def arrayAvailable(array):
+    try:
+        if array.count() == 0:
+            return False
+
+    except:
+        if len(array) == 0:
+            return False
 
     return True
 
@@ -170,7 +191,6 @@ def favouriteToggle(request, key):
             meal.save()
 
             request.user.profile.favourites.remove(meal)
-            request.user.save()
 
             return HttpResponse("Sub")
         else:
@@ -178,7 +198,6 @@ def favouriteToggle(request, key):
             meal.save()
 
             request.user.profile.favourites.add(meal)
-            request.user.save()
 
             return HttpResponse("Add")
     else:
@@ -191,18 +210,105 @@ def followToggle(request, username):
         except:
             return HttpResponseRedirect("/home/")
 
-        if user in request.user.profile.following.all():
-            request.user.profile.following.remove(user)
-            user.profile.followers.remove(request.user) 
-            request.user.save()
+        control_state1 = user in request.user.profile.following.all()
+        control_state2 = user in request.user.profile.send_requests.all()
 
-            return HttpResponse("unfollow")
-        else:
-            request.user.profile.following.add(user)
-            user.profile.followers.add(request.user) 
-            request.user.save()
+        if request.user != user:
+            
+            if user.profile.secret_profile:
+                if control_state1:
+                    request.user.profile.following.remove(user)
+                    user.profile.followers.remove(request.user) 
+            
+                    return HttpResponse("unfollow-follow_request")
+                else:
+                    return request_followToggle(request, username)
+            else:
+                if user in request.user.profile.following.all():
+                    request.user.profile.following.remove(user)
+                    user.profile.followers.remove(request.user) 
+            
+                    return HttpResponse("unfollow-follow")
+                else:
+                    request.user.profile.following.add(user)
+                    user.profile.followers.add(request.user) 
 
-            return HttpResponse("follow")
+                    return HttpResponse("follow-unfollow")
+
+        return HttpResponse("")
+    else:
+        return HttpResponseRedirect("/")
+
+def request_followToggle(request, username):
+    if request.user.is_authenticated():
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return HttpResponseRedirect("/home/")
+
+        if request.user != user:
+            if user in request.user.profile.send_requests.all():
+                request.user.profile.send_requests.remove(user)
+                user.profile.received_requests.remove(request.user)
+
+                return HttpResponse("cancel_request-follow_request")
+            else:
+                request.user.profile.send_requests.add(user)
+                user.profile.received_requests.add(request.user)
+                
+                return HttpResponse("follow_request-cancel_request")
+
+        return HttpResponse("")
+
+    else:
+        return HttpResponseRedirect("/")
+
+def acceptRequest(request, username):
+    if request.user.is_authenticated():
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return HttpResponseRedirect("/home/")
+
+        if request.user != user:
+            request.user.profile.followers.add(user)
+            user.profile.following.add(request.user)
+
+            request.user.profile.received_requests.remove(user)
+            user.profile.send_requests.remove(request.user)
+
+        return HttpResponse("")
+
+    else:
+        return HttpResponseRedirect("/")
+
+def cancelRequest(request, username):
+    if request.user.is_authenticated():
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return HttpResponseRedirect("/home/")
+
+        if request.user != user:
+            request.user.profile.received_requests.remove(user)
+            user.profile.send_requests.remove(request.user)
+
+        return HttpResponse("")
+
+    else:
+        return HttpResponseRedirect("/")
+
+
+@page_template("../templates/pagination.html")
+def friendRequests(request, template="../templates/home.html", extra_context=None):
+    if request.user.is_authenticated():
+        AllUsers = request.user.profile.received_requests.all()
+        requests_available = arrayAvailable(AllUsers)
+
+        return render(request, template, 
+                      {'AllUsers':AllUsers, 'friendRequestsPage':True,
+                       'requests_available':requests_available }) 
+
     else:
         return HttpResponseRedirect("/")
 
@@ -213,7 +319,7 @@ def mostFavourites(request, template="../templates/home.html", extra_context=Non
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
 
-        meals_available = mealsAvailable(AllMeal)
+        meals_available = arrayAvailable(AllMeal)
 
         return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
@@ -249,7 +355,7 @@ def myFavourites(request, template="../templates/home.html", extra_context=None)
         AllMeal = request.user.profile.favourites.all().order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
 
-        meals_available = mealsAvailable(AllMeal)
+        meals_available = arrayAvailable(AllMeal)
 
         return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
@@ -286,7 +392,7 @@ def myMeals(request, template="../templates/home.html", extra_context=None):
         AllMeal = Meal.objects.filter(user=request.user).order_by("-addingDate")
         currentTime = timezone.localtime(timezone.now())
 
-        meals_available = mealsAvailable(AllMeal)
+        meals_available = arrayAvailable(AllMeal)
 
         return render(request, template, 
                       {'AllMeal':AllMeal, 'currentTime':currentTime,
@@ -298,50 +404,76 @@ def myMeals(request, template="../templates/home.html", extra_context=None):
 def myFollowers(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
-        AllFollows = request.user.profile.followers.all()
+        AllUsers = request.user.profile.followers.all()
+        users_available = arrayAvailable(AllUsers)
 
         return render(request, template, 
-                      {'AllFollows':AllFollows, 'profileFollowersPage':True}) 
+                      {'AllUsers':AllUsers, 'profileFollowPage':True,
+                       'profileFollowersPage':True,
+                       'users_available':users_available})
+
+    else:
+        return HttpResponseRedirect("/")
 
 @page_template("../templates/pagination.html")
 def myFollowing(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
-        AllFollows = request.user.profile.following.all()
+        AllUsers = request.user.profile.following.all()
+        users_available = arrayAvailable(AllUsers)
 
         return render(request, template, 
-                      {'AllFollows':AllFollows, 'profileFollowingPage':True}) 
+                      {'AllUsers':AllUsers, 'profileFollowPage':True,
+                       'profileFollowingPage':True,
+                       'users_available':users_available})
+    else:
+        return HttpResponseRedirect("/")
 
 @page_template("../templates/pagination.html")
 def filter(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
+
+        global meal_kind_buffer
+        global amount_buffer
+        global min_amount_buffer
+        global max_amount_buffer
+        
         if request.method == "POST":
-            meal_kind = request.POST.getlist("kind_select")
-            amount = request.POST.get("amount")
-            min_amount = amount.split("-")[0]
-            max_amount = amount.split("-")[1]
-            print meal_kind
+            meal_kind_buffer = meal_kind = request.POST.getlist("kind_select")
+            amount_buffer = amount = request.POST.get("amount")
+            min_amount_buffer = min_amount = amount.split("-")[0]
+            max_amount_buffer = max_amount = amount.split("-")[1]
+        else:
+            meal_kind = meal_kind_buffer
+            amount = amount_buffer
+            min_amount = min_amount_buffer
+            max_amount = max_amount_buffer
 
-            if len(meal_kind) != 0:
-                AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & 
-                                              Q(totalCalories__lte=max_amount) & 
-                                              Q(meal_kind__kind__in=meal_kind)).order_by("-addingDate")
-            else:
-                AllMeal = Meal.objects.filter(Q(totalCalories__gte=min_amount) & 
-                                              Q(totalCalories__lte=max_amount)).order_by("-addingDate")
-            
-            meals_available = True
-            if len(AllMeal) == 0:
-                meals_available = False
-            allFavouriteMeals = request.user.profile.favourites.all()
-            currentTime = timezone.localtime(timezone.now())
+        following_list = request.user.profile.following.all()
 
-            return render(request, template, 
-                          {'AllMeal':AllMeal, 'currentTime':currentTime,
-                           'allFavouriteMeals': allFavouriteMeals,
-                           'meals_available':meals_available, 'filterPage':True})
+        if len(meal_kind) != 0:
+            AllMeal = Meal.objects.filter(Q(user__profile__secret_profile=False) |
+                                          Q(user__in=following_list) | 
+                                          Q(user=request.user)).filter(
+                                          Q(totalCalories__gte=min_amount) & 
+                                          Q(totalCalories__lte=max_amount) & 
+                                          Q(meal_kind__kind__in=meal_kind)).order_by("-addingDate")
+        else:
+            AllMeal = Meal.objects.filter(Q(user__profile__secret_profile=False) |
+                                          Q(user__in=following_list) | 
+                                          Q(user=request.user)).filter(
+                                          Q(totalCalories__gte=min_amount) & 
+                                          Q(totalCalories__lte=max_amount)).order_by("-addingDate")
+        
+        meals_available = arrayAvailable(AllMeal)
+        allFavouriteMeals = request.user.profile.favourites.all()
+        currentTime = timezone.localtime(timezone.now())
 
-        return HttpResponseRedirect("/home/")
+        return render(request, template, 
+                      {'AllMeal':AllMeal, 'currentTime':currentTime,
+                       'allFavouriteMeals': allFavouriteMeals,
+                       'meals_available':meals_available, 'filterPage':True})
+
 
     else:
         return HttpResponseRedirect("/")
@@ -350,72 +482,80 @@ def filter(request, template="../templates/home.html", extra_context=None):
 def search(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
+        global search_method_buffer
+        global search_word_buffer
+
         if request.method == "POST":
-            AllMeal = []
-            meals_available = True
-            allFavouriteMeals = request.user.profile.favourites.all()
-            currentTime = timezone.localtime(timezone.now())
-            
-            search_method = request.POST.get("search_method")
-            search_word = request.POST.get("search_word")
+            search_method_buffer = search_method = request.POST.get("search_method")
+            search_word_buffer = search_word = request.POST.get("search_word")
+        else:
+            search_method = search_method_buffer
+            search_word = search_word_buffer
 
-            if search_word != "":
-                if search_method == "1" or search_method == "2":
-                    
-                    AllMeals = Meal.objects.order_by("-addingDate")
-            
-                    if AllMeals.count() != 0:
-                        if search_method == "1":
-                            for meal in AllMeals:
-                                if organize(meal.name) == organize(search_word):
-                                    AllMeal.append(meal)
-                        else:
-                            for meal in AllMeals:
-                                if re.search( organize(search_word), organize(meal.name)):
-                                    AllMeal.append(meal)
+        AllUsers = [] # search users
+        AllMeal = []
+        allFavouriteMeals = request.user.profile.favourites.all()
+        currentTime = timezone.localtime(timezone.now())
+        following_list = request.user.profile.following.all()
 
-                elif search_method == "3" or search_method == "4":
-                    material_list = MaterialList.objects.all().order_by("-meal__addingDate")
+        if search_word != "":
+            if search_method == "1" or search_method == "2":
+                
+                AllMeals = Meal.objects.filter(Q(user__profile__secret_profile=False) |
+                                               Q(user__in=following_list) | 
+                                               Q(user=request.user)).order_by("-addingDate")
+        
+                if AllMeals.count() != 0:
+                    if search_method == "1":
+                        for meal in AllMeals:
+                            if organize(meal.name) == organize(search_word):
+                                AllMeal.append(meal)
+                    else:
+                        for meal in AllMeals:
+                            if re.search( organize(search_word), organize(meal.name)):
+                                AllMeal.append(meal)
 
-                    if material_list.count() != 0:
-                        if search_method == "3":
-                            for material_object in material_list:
-                                if organize(material_object.material.name) == organize(search_word):
-                                    AllMeal.append(material_object.meal)
-                        else:
-                            for material_object in material_list:
-                                if re.search(organize(search_word), organize(material_object.material.name)):
-                                    AllMeal.append(material_object.meal)                                     
-                else:
-                    user_list = User.objects.all()
+            elif search_method == "3" or search_method == "4":
+                material_list = MaterialList.objects.filter(Q(meal__user__profile__secret_profile=False) |
+                                                            Q(meal__user__in=following_list) | 
+                                                            Q(meal__user=request.user)).order_by("-meal__addingDate")
 
-                    if user_list.count() != 0:
-                        if search_method == "5":
-                            for user_objects in user_list:
-                                if organize(user_objects.get_full_name()) == organize(search_word):
-                                    user_meals = Meal.objects.filter(user=user_objects).order_by("-addingDate")
+                if material_list.count() != 0:
+                    if search_method == "3":
+                        for material_object in material_list:
+                            if organize(material_object.material.name) == organize(search_word):
+                                AllMeal.append(material_object.meal)
+                    else:
+                        for material_object in material_list:
+                            if re.search(organize(search_word), organize(material_object.material.name)):
+                                AllMeal.append(material_object.meal)                                     
+            else:
+                user_list = User.objects.all()
 
-                                    if user_meals.count() != 0:
-                                        for meal in user_meals:
-                                            AllMeal.append(meal)
-                        else:
-                            for user_objects in user_list:
-                                if re.search(organize(search_word), organize(user_objects.get_full_name())):
-                                    user_meals = Meal.objects.filter(user=user_objects).order_by("-addingDate")
-                                    
-                                    if user_meals.count() != 0:
-                                        for meal in user_meals:
-                                            AllMeal.append(meal)
+                if user_list.count() != 0:
+                    if search_method == "5":
+                        for user_objects in user_list:
+                            if organize(user_objects.get_full_name()) == organize(search_word):
+                                AllUsers.append(user_objects)
 
-            if len(AllMeal) == 0:
-                meals_available = False
-    
+                    else:
+                        for user_objects in user_list:
+                            if re.search(organize(search_word), organize(user_objects.get_full_name())):
+                                AllUsers.append(user_objects)
+                                
+
+        if search_method == "5" or search_method == "6":
+            users_available = arrayAvailable(AllUsers)
             return render(request, template, 
-                            {'AllMeal':AllMeal, 'currentTime':currentTime,
+                      {'AllUsers':AllUsers, 'profileFollowPage':True,
+                       'users_available':users_available})
+        else:
+            meals_available = arrayAvailable(AllMeal)
+
+            return render(request, template, 
+                           {'AllMeal':AllMeal, 'currentTime':currentTime,
                             'allFavouriteMeals': allFavouriteMeals,
                             'searchPage':True, 'meals_available':meals_available})
-
-        return HttpResponseRedirect("/home/")
 
     else:
         return HttpResponseRedirect("/")
@@ -424,8 +564,9 @@ def search(request, template="../templates/home.html", extra_context=None):
 def home(request, template="../templates/home.html", extra_context=None):
     if request.user.is_authenticated():
 
-        AllMeal = Meal.objects.order_by("-addingDate")
-        meals_available = mealsAvailable(AllMeal)
+        following_list = request.user.profile.following.all()
+        AllMeal = Meal.objects.filter( Q(user__in=following_list) | Q(user=request.user) ).order_by("-addingDate")
+        meals_available = arrayAvailable(AllMeal)
     
         allFavouriteMeals = request.user.profile.favourites.all()
         currentTime = timezone.localtime(timezone.now())
@@ -444,15 +585,14 @@ def showProfile(request, username, mod="meals" ,template="../templates/home.html
         other_profilePageFav = False
         other_profilePageMeals = False
         other_profilePageMostFav = False
-        other_profileFollowersPage = False
-        other_profileFollowingPage = False
+        profileFollowPage = False
 
         try:
             user = User.objects.get(username=username)
             
             if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
                 if mod == "meals":
-                    AllMeal = Meal.objects.filter(user=user)
+                    AllMeal = Meal.objects.filter(user=user).order_by("-addingDate")
                     other_profilePageMeals = True
                 elif mod == "favourites":
                     AllMeal = user.profile.favourites.all()
@@ -461,44 +601,39 @@ def showProfile(request, username, mod="meals" ,template="../templates/home.html
                     AllMeal = Meal.objects.filter(favourite__gt=0).order_by("-favourite", "-addingDate")[:5]
                     other_profilePageMostFav = True
         
-                meals_available = mealsAvailable(AllMeal)
+                meals_available = arrayAvailable(AllMeal)
                 allFavouriteMeals = request.user.profile.favourites.all()
                 currentTime = timezone.localtime(timezone.now())
         
             else: # mod == following or mod == followers
                 if mod == "followers":
-                    AllFollows = user.profile.followers.all()
-                    other_profileFollowersPage = True
+                    AllUsers = user.profile.followers.all()
+                    profileFollowPage = True
                 else: #mod == following
-                    AllFollows = user.profile.following.all()
-                    other_profileFollowingPage = True
+                    AllUsers = user.profile.following.all()
+                    profileFollowPage = True
+
+                users_available = arrayAvailable(AllUsers)
 
         except Exception,e:
             return HttpResponseRedirect("/home/")
+        
+        otherUser = user
 
-        if request.user.username == username:
+        if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
             return render(request, template, 
                             {'AllMeal':AllMeal, 'currentTime':currentTime,
-                             'user_profilePage':True, 'meals_available':meals_available})
-        else:
-            if user.profile.secret_profile:
-                return HttpResponse(u"Gizli Profil")
-            
-            otherUser = user
-
-            if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
-                return render(request, template, 
-                                {'AllMeal':AllMeal, 'currentTime':currentTime,
-                                 'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
-                                 'other_profilePage':True,'meals_available':meals_available,
-                                 'other_profilePageFav':other_profilePageFav,
-                                 'other_profilePageMeals':other_profilePageMeals,
-                                 'other_profilePageMostFav':other_profilePageMostFav })
-            else: # mod == following or mod == followers
-                return render(request, template, 
-                                {'AllFollows':AllFollows, 'other_profilePage':True, 'otherUser':otherUser,
-                                 'other_profileFollowersPage':other_profileFollowersPage,
-                                 'other_profileFollowingPage':other_profileFollowingPage })     
+                             'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
+                             'other_profilePage':True,'meals_available':meals_available,
+                             'other_profilePageFav':other_profilePageFav,
+                             'other_profilePageMeals':other_profilePageMeals,
+                             'other_profilePageMostFav':other_profilePageMostFav })
+        else: # mod == following or mod == followers
+            return render(request, template, 
+                            {'AllUsers':AllUsers, 'otherUser':otherUser,
+                             'other_profilePage':True,
+                             'profileFollowPage':profileFollowPage,
+                             'users_available':users_available })     
     
     else:
         return HttpResponseRedirect("/")
