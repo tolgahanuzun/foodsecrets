@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^home/account/user/$', 'profiles.views.accountUser'),
     url(r'^home/account/password/$', 'profiles.views.accountPassword'),
     url(r'^home/account/image/$', 'profiles.views.accountImage'),
+    url(r'^home/blockuser/(?P<username>[\w]+)$', 'profiles.views.blockUserToggle'),
     url(r'^home/favourite/toggle/(?P<key>[\d]+)$', 'profiles.views.favouriteToggle'),
     url(r'^home/follow/toggle/(?P<username>[\w]+)$', 'profiles.views.followToggle'),
     url(r'^home/follow/requesttoggle/(?P<username>[\w]+)$', 'profiles.views.request_followToggle'),
