@@ -233,7 +233,7 @@ def followToggle(request, username):
                     request.user.profile.following.add(user)
                     user.profile.followers.add(request.user) 
 
-                    return HttpResponse("follow-unfollow")
+                    return HttpResponse("follow-following")
 
         return HttpResponse("")
     else:
@@ -297,6 +297,40 @@ def cancelRequest(request, username):
 
     else:
         return HttpResponseRedirect("/")
+
+def blockUserToggle(request, username):
+    if request.user.is_authenticated():
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return HttpResponseRedirect("/home/")
+
+        if request.user != user:
+            if user in request.user.profile.myBlocked.all():
+                request.user.profile.myBlocked.remove(user)
+                user.profile.blockedMe.remove(request.user)
+
+                return HttpResponse("unblock-block")
+            else:
+                request.user.profile.following.remove(user)
+                request.user.profile.followers.remove(user)
+                user.profile.following.remove(request.user)
+                user.profile.followers.remove(request.user)
+                request.user.profile.send_requests.remove(user)
+                request.user.profile.received_requests.remove(user)
+                user.profile.send_requests.remove(request.user)
+                user.profile.received_requests.remove(request.user)
+
+                # Yemekleri favorilere ekleme olayı olabilir onlarda silinmeli.
+
+                request.user.profile.myBlocked.add(user)
+                user.profile.blockedMe.add(request.user)
+
+                return HttpResponse("block-unblock")
+
+
+    else:
+        return HttpResponseRedirect("")
 
 
 @page_template("../templates/pagination.html")
@@ -617,20 +651,18 @@ def showProfile(request, username, mod="meals" ,template="../templates/home.html
 
         except Exception,e:
             return HttpResponseRedirect("/home/")
-        
-        otherUser = user
 
         if mod == "meals" or mod == "favourites" or mod == "mostfavourites":
             return render(request, template, 
                             {'AllMeal':AllMeal, 'currentTime':currentTime,
-                             'allFavouriteMeals': allFavouriteMeals, 'otherUser':otherUser,
+                             'allFavouriteMeals': allFavouriteMeals, 'otherUser':user,
                              'other_profilePage':True,'meals_available':meals_available,
                              'other_profilePageFav':other_profilePageFav,
                              'other_profilePageMeals':other_profilePageMeals,
                              'other_profilePageMostFav':other_profilePageMostFav })
         else: # mod == following or mod == followers
             return render(request, template, 
-                            {'AllUsers':AllUsers, 'otherUser':otherUser,
+                            {'AllUsers':AllUsers, 'otherUser':user,
                              'other_profilePage':True,
                              'profileFollowPage':profileFollowPage,
                              'users_available':users_available })     
