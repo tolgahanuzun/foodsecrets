@@ -92,6 +92,13 @@ def controlSendRequests(user, other_user):
     return False
 
 @register.filter
+def controlMyBlocked(user, other_user):
+    if other_user in user.profile.myBlocked.all():
+        return True
+
+    return False
+
+@register.filter
 def mealDescription(text):
     show_text = ""
     split_text = text.split(" ")
