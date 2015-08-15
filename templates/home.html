@@ -69,22 +69,46 @@
 						{% endif%}
 					</div>
 					<div class="col-">
-						{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == False %}
-				 			<a href="#" id="{{ otherUser.username }}" class="btn btn-primary otherUserFollowToggle">
-				 				Follow 
-				 			</a>
-				 			<!--{% if otherUser.profile.following.all|hasUser:request.user %}
-				 				<span class="unfFollow"> Seni Takip Ediyor </span>
-				 			{% endif %}-->
+						{% if request.user|controlMyBlocked:otherUser == False %}
+							{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == False %}
+					 			<a href="#" id="{{ otherUser.username }}" class="btn btn-primary otherUserFollowToggle">
+					 				Follow 
+					 			</a>
+						 	{% endif %}
+
+						 	{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == True %}
+								<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
+						 			Unfollow
+						 		</a>
+						 	{% endif %}
 					 	{% endif %}
 
-					 	{% if other_profilePage and request.user.profile.following.all|hasUser:otherUser == True %}
-							<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserFollowToggle">
-					 			Unfollow
-					 		</a>
-					 		<!--{% if otherUser.profile.following.all|hasUser:request.user %}
-					 			<span class="unfFollow"> Birbirinizi Takip Ediyorsunuz </span>
-					 		{% endif %}-->
+					 	{% if other_profilePage %}
+					 		{% if request.user|controlMyBlocked:otherUser %}
+					 			<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserBlockToggle" onmouseover="mouseover_tag(this)" onmouseout="mouseout_tag(this)">Blocked</a>
+					 		{% else %}
+						 		<button id="blockToggle" class="btn btn- btn-danger" data-toggle="modal" data-target=".bootstrap-modal">Block</button>
+						 		<div class="modal fade bootstrap-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    						<div class="modal-dialog">
+	        					<div class="modal-content">
+	            				<div class="modal-header">
+	                			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                			<h4 class="modal-title" id="myModalLabel">Engelle</h4>
+	            				</div>
+	            				
+	            				<div class="modal-body">
+	                			{{ otherUser.get_full_name }} kullanıcısını engellemek istediğine emin misin ?
+	            				</div>
+	            				
+	            				<div class="modal-footer">
+	                			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                			<a href="#" id="{{ otherUser.username }}" class="btn btn-danger otherUserBlockToggle">Block</a>
+	            				</div>
+	        					</div>
+	    						</div>
+								</div>
+							{% endif %}
+
 					 	{% endif %}
 					</div>
 	
@@ -152,6 +176,7 @@
 					  <h2 class="degis2"> Your Meals </h2>
 					{% endif %}
 				</center>
+
 
 				<ul class="nav nav-tabs nav-justified">
 
@@ -265,6 +290,7 @@
 				 		</li>
 				 	{% endif %}
 
+
 				</ul>
 
 			</div>
@@ -278,6 +304,7 @@
       {% endif %}
 			
 			<div class="line text-muted" id="transp"></div>
+
 			{% include "pagination.html" %}
 
 			{% if myFavouritesPage or myMealsPage %}

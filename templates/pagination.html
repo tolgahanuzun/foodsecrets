@@ -25,7 +25,7 @@
 									
 									<p>
 										{% if other_user.profile.secret_profile %}
-											{% if request.user|controlFollowing:other_user %}
+											{% if request.user|controlFollowing:other_user or request.user == other_user %}
 												<a href="#" id="{{ other_user.username }}" class="btn userLink"> 
 													<u>	{{ other_user.get_full_name }}	</u>	
 												</a>
@@ -44,29 +44,32 @@
 											
 											{% if request.user == other_user %}
 												<a href="/home/account/user/"  class="btn btn-default">
-						 							Profili Düzenle
+						 							Edit Profile
 						 						</a>
 											{% else %}
-												
-												{% if request.user|controlFollowing:other_user %}
-							 						<a href="#" id="{{ other_user.username }}" class="btn btn-danger otherUserFollowToggle">
-							 							Unfollow
-							 						</a>
-							 					{% elif other_user.profile.secret_profile %}
-							 						{% if request.user|controlSendRequests:other_user %}
-							 							<a href="#" id="{{ other_user.username }}" class="btn btn-danger secretProfileFollowRequestToggle">
-							 								Cancel Request
-							 							</a>
-							 						{% else %}
-							 							<a href="#" id="{{ other_user.username }}" class="btn btn-success secretProfileFollowRequestToggle">
-							 								Follow Request
-							 							</a>
-							 						{% endif%}
-							 					{% else %}
-							 						<a href="#" id="{{ other_user.username }}" class="btn btn-primary otherUserFollowToggle">
-							 							Follow
-							 						</a>
-							 					{% endif %}
+												{% if request.user|controlMyBlocked:other_user == False %}
+													
+													{% if request.user|controlFollowing:other_user or request.user == other_user %}
+								 						<a href="#" id="{{ other_user.username }}" class="btn btn-info otherUserFollowToggle" onmouseover="mouseover_tag(this)" onmouseout="mouseout_tag(this)">Following</a>
+								 					{% elif other_user.profile.secret_profile %}
+								 						{% if request.user|controlSendRequests:other_user %}
+								 							<a href="#" id="{{ other_user.username }}" class="btn btn-danger secretProfileFollowRequestToggle">
+								 								Cancel Request
+								 							</a>
+								 						{% else %}
+								 							<a href="#" id="{{ other_user.username }}" class="btn btn-success secretProfileFollowRequestToggle">
+								 								Follow Request
+								 							</a>
+								 						{% endif%}
+								 					{% else %}
+								 						<a href="#" id="{{ other_user.username }}" class="btn btn-primary otherUserFollowToggle">
+								 							Follow
+								 						</a>
+								 					{% endif %}
+
+								 				{% else %}
+								 					<a href="#" id="{{ other_user.username }}" class="btn btn-danger otherUserBlockToggle" onmouseover="mouseover_tag(this)" onmouseout="mouseout_tag(this)">Blocked</a>
+								 				{% endif %}
 
 						 					{% endif %}
 
@@ -91,7 +94,7 @@
 					<img class="src-image" src="{{ 'default_user_image.png'|encodeBase64:'user' }}"/>
 				{% endif %}
 				
-				{% if forloop.counter|divisibleby:4 or AllFollows|size == forloop.counter %}		
+				{% if forloop.counter|divisibleby:4 or AllUsers|size == forloop.counter %}		
 						</div>
 					</div>
 					<br>
