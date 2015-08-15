@@ -259,11 +259,12 @@ $(document).on('click', '.otherUserFollowToggle', function (e){
         url: url,
         }).done(function(res) {
 
-            if(res == "follow-unfollow")
+            if(res == "follow-following")
             {
-                $(self).text("Unfollow");
+                $(self).text("Following");
                 $(self).removeClass("btn-primary");
-                $(self).addClass("btn-danger");
+                $(self).addClass("btn-info");
+
             }
             else if(res == "unfollow-follow")
             {
@@ -284,7 +285,7 @@ $(document).on('click', '.otherUserFollowToggle', function (e){
                 $(self).addClass("btn-success");
             }
 
-            window.location.reload();
+            window.location.replace(window.location.href);
 
     });
 
@@ -367,6 +368,83 @@ $(document).on('click', '.cancelRequest', function (e){
 });
 
 /******************/
+
+/* Block User */
+
+$(document).on('click', '.otherUserBlockToggle', function (e){
+            
+    e.preventDefault();
+
+    var username = $(this).attr('id');
+    var url = "/home/blockuser/"+username;  
+    var self = $("#blockToggle")
+
+    $.ajax({
+        url: url,
+        }).done(function(res) {
+
+            /*if(res == "unblock-block")
+            {
+                $(self).text("Block");
+                $(self).removeClass("btn-default");
+                $(self).addClass("btn-danger");
+            }
+            else if(res == "block-unblock")
+            {
+                $(self).text("Unblock");
+                $(self).removeClass("btn-danger");
+                $(self).addClass("btn-default");
+            }*/
+
+            window.location.replace(window.location.href);
+            
+    });
+
+});
+
+
+/*  Mouse Over and Mouse Out  */
+
+function mouseover_tag(tag){
+    var text= $(tag).text()
+    
+    if(text == "Blocked" )
+    {
+        $(tag).text("Unblock");
+        $(tag).removeClass("btn-danger");
+        $(tag).addClass("btn-default");
+    }
+
+    if(text == "Following" )
+    {
+        $(tag).text("Unfollow");
+        $(tag).removeClass("btn-info");
+        $(tag).addClass("btn-danger");
+    }
+    
+}
+
+function mouseout_tag(tag){
+    var text= $(tag).text()
+    
+    if(text == "Unblock" )
+    {
+        $(tag).text("Blocked");
+        $(tag).removeClass("btn-default");
+        $(tag).addClass("btn-danger");
+    }
+
+     if(text == "Unfollow" )
+    {
+        $(tag).text("Following");
+        $(tag).removeClass("btn-danger");
+        $(tag).addClass("btn-info");
+    }
+}
+
+/******************************/
+
+/**************/
 
 /* Select All Attribute */
 $(document).ready(function() {
