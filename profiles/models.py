@@ -28,6 +28,11 @@ class Profile(models.Model):
     send_requests = models.ManyToManyField(User, blank=True, related_name="send_requests",
                                            verbose_name=u"Gönderilen Arkadaşlık İstekleri")
 
+    myBlocked = models.ManyToManyField(User, blank=True, related_name="myBlocked", 
+                                       verbose_name="Engellediğim Kullanıcılar")
+    blockedMe = models.ManyToManyField(User, blank=True, related_name="blockedMe", 
+                                       verbose_name="Engellendiğim Kullanıcılar")
+
 
     class Meta:
         verbose_name = u"Profil Bilgisi"
