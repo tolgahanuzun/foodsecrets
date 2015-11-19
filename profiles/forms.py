@@ -48,7 +48,6 @@ class RegistrationForm(UserCreationForm):
            "password2":data.get("password2"),
            "vehicle":data.get("vehicle")
         }
-
         return values
     
     def save(self, commit=True):
