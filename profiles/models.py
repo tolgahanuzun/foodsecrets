@@ -16,3 +16,4 @@ class Profile(models.Model):
     secret_profile = models.BooleanField(default=False, blank=True, verbose_name=u"Profili Gizle")
     favourites = models.ManyToManyField(Meal, blank=True, verbose_name=u"Favoriler")
     image = models.ImageField(default=None, blank=True, upload_to="user", verbose_name="Kullanıcı Resmi")
+    
